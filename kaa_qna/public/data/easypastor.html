@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미래 목회를 위한 AI 신학 비서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', 'serif'],
+                    },
+                    colors: {
+                        dark: '#0f172a',
+                        primary: '#38bdf8', // Sky 400
+                        accent: '#facc15',  // Yellow 400
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            /* Slate 950 */
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Anti-Gravity Floating Animations */
+        @keyframes float-slow {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(1deg);
+            }
+        }
+
+        @keyframes float-medium {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes float-fast {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+        }
+
+        .float-medium {
+            animation: float-medium 4s ease-in-out infinite;
+        }
+
+        .float-fast {
+            animation: float-fast 3s ease-in-out infinite;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            /* Slate 800 with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        /* Background Glow */
+        .glow-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #38bdf8, #facc15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+
+<body class="antialiased relative">
+
+    <!-- Background Orbs -->
+    <div class="glow-bg top-[-100px] left-[-100px] float-slow"></div>
+    <div class="glow-bg bottom-[20%] right-[-200px] float-medium"
+        style="background: radial-gradient(circle, rgba(250, 204, 21, 0.1) 0%, rgba(0,0,0,0) 70%);"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-card !border-x-0 !border-t-0 !rounded-none !bg-slate-900/60">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-serif font-bold text-2xl tracking-wide text-white">
+                Easy <span class="text-primary">Pastor</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                <a href="#hero" class="hover:text-primary transition">Home</a>
+                <a href="#studio" class="hover:text-primary transition">Studio 기능</a>
+                <a href="#deep-research" class="hover:text-primary transition">딥리서치 공부법</a>
+                <a href="#contact"
+                    class="px-4 py-2 bg-primary/20 text-primary border border-primary/50 rounded-full hover:bg-primary hover:text-white transition">강의
+                    신청</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+            <div class="float-medium mb-6 inline-block">
+                <span class="px-4 py-1.5 rounded-full border border-slate-700 bg-slate-800/50 text-sm text-slate-300">
+                    <i class="fa-solid fa-sparkles text-accent mr-2"></i> NotebookLM & Gemini 통합 가이드
+                </span>
+            </div>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight mb-8">
+                미래 목회를 위한 <br />
+                <span class="text-gradient">AI 신학 비서</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+                단순한 자료 검색을 넘어, 내 서재의 신학적 깊이를 구조화하고<br class="hidden md:block">
+                동영상 대본, 오디오 등 멀티미디어로 출력하는 놀라운 경험.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#studio"
+                    class="px-8 py-4 bg-primary text-slate-900 font-bold rounded-full hover:bg-sky-300 transition shadow-[0_0_20px_rgba(56,189,248,0.4)]">
+                    기능 살펴보기 <i class="fa-solid fa-arrow-down ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: NotebookLM Studio -->
+    <section id="studio" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">콘텐츠 크리에이터로 거듭나다</h2>
+                <p class="text-xl text-primary">NotebookLM 스튜디오</p>
+                <div class="w-16 h-1 bg-accent mx-auto mt-6 rounded"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-card p-8 float-slow text-center group">
+                    <div
+                        class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition duration-300 border border-slate-700">
+                        <i class="fa-solid fa-headphones text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">오디오 오버뷰 제어</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        업로드한 신학 원서를 바탕으로 두 명의 AI가 대담합니다. 톤과 수준을 조절하여 심방 길 나만의 라디오를 만드세요.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-card p-8 float-medium text-center group delay-100">
+                    <div
+                        class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition duration-300 border border-slate-700">
+                        <i class="fa-brands fa-google text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">구글 문서 즉시 연동</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        채팅으로 완성한 설교 초안이나 연구 노트를 클릭 한 번으로 서식 깨짐 없이 Google Docs로 내보냅니다.
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass-card p-8 float-fast text-center group delay-200">
+                    <div
+                        class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition duration-300 border border-slate-700">
+                        <i class="fa-solid fa-person-chalkboard text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">슬라이드 뼈대 구성</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        방대한 주석을 향해 "슬라이드 각 장에 들어갈 제목과 핵심 문구로 정리해줘"라고 명령하면 발표용 아웃라인이 완성됩니다.
+                    </p>
+                </div>
+                <!-- Card 4 -->
+                <div class="glass-card p-8 float-slow text-center group delay-300">
+                    <div
+                        class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition duration-300 border border-slate-700">
+                        <i class="fa-solid fa-video text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">숏폼 동영상 대본</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        주일 설교 원고를 소스로, 현대인들이 모바일에서 소비하기 좋은 60초 유튜브 쇼츠용 대본(B-roll 포함)으로 재창조합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Gemini Deep Research -->
+    <section id="deep-research" class="py-24 relative bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight">지식의 바다를 항해하는<br><span
+                            class="text-gradient">4단계 신학 공부법</span></h2>
+                    <p class="text-xl text-slate-400 mb-8 font-light">Gemini 딥리서치와 NotebookLM의 강력한 결합.</p>
+
+                    <div class="space-y-6">
+                        <div class="glass-card p-6 flex gap-4 items-start">
+                            <div class="text-accent font-serif font-bold text-2xl">01</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">탐색 (Deep Research)</h4>
+                                <p class="text-sm text-slate-400">Gemini 딥리서치로 방대한 신학적 논거, 웹 문서, 논문을 수집하여 심층 보고서를 생성합니다.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 flex gap-4 items-start">
+                            <div class="text-accent font-serif font-bold text-2xl">02</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">소화 (Digest)</h4>
+                                <p class="text-sm text-slate-400">보고서를 NotebookLM에 넣고 '오디오 오버뷰'로 변환해 이동 시간에 귀로 들으며
+                                    묵상합니다.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 flex gap-4 items-start">
+                            <div class="text-accent font-serif font-bold text-2xl">03</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">추출 (Extract)</h4>
+                                <p class="text-sm text-slate-400">프롬프트를 통해 설교나 강의에 즉시 쓸 수 있는 구조화된 개요, 인용구, 예화를 뽑아냅니다.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 flex gap-4 items-start">
+                            <div class="text-accent font-serif font-bold text-2xl">04</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">출력 (Produce)</h4>
+                                <p class="text-sm text-slate-400">추출된 데이터를 구글 슬라이드, 인포그래픽, 숏폼 영상 스크립트로 제작하여 성도들에게 선포합니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <!-- Decorative Floating Elements mimicking Deep Research processing -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-[100px]">
+                    </div>
+                    <div class="relative glass-card p-8 float-medium border border-slate-700/50">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+                            alt="AI Deep Research"
+                            class="rounded-lg mb-6 w-full h-64 object-cover opacity-80 mix-blend-screen">
+                        <h3 class="font-serif text-2xl font-bold mb-2">연구의 자동화</h3>
+                        <p class="text-slate-400">"현대 사회의 우울증 통계와 이에 대한 개혁주의적 신학의 대안"<br>단 한 줄의 질문이 수십 장의 완벽한 보고서 단일 소스로
+                            탄생합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Quote & Call to Action -->
+    <section id="contact" class="py-32 relative text-center px-6">
+        <div class="max-w-4xl mx-auto glass-card p-12 md:p-16 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent"></div>
+            <i class="fa-solid fa-quote-left text-5xl text-slate-700 absolute top-8 left-8"></i>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6 relative z-10 text-white leading-relaxed">
+                "올바르게 다루어진 기술은 목회자의 설교 준비 시간을 줄여주고, 말씀 묵상의 깊이를 더해주는 <span class="text-accent">가장 훌륭한 동역자</span>입니다."
+            </h2>
+            <p class="text-slate-400 text-lg mb-10">— 신앙은 보수, 신학은 진보, 삶은 현실 (Easy Pastor)</p>
+
+            <a href="tel:010-5606-0845"
+                class="inline-block px-10 py-4 bg-white text-slate-900 font-bold rounded-full hover:bg-slate-200 transition">
+                강의 문의 / 세미나 신청하기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-10 text-center">
+        <div class="text-slate-500 font-light">
+            <p>© 2026 Easy Pastor AI Ministry. All Rights Reserved.</p>
+            <p class="text-sm mt-2">NotebookLM & Gemini Deep Research Master Class</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

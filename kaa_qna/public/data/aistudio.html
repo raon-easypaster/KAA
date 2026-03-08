@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초보자를 위한 Google AI Studio 완전 정복 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1', // Indigo 500
+                        accent: '#14b8a6',  // Teal 500
+                        bgdark: '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #818cf8, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chapter-badge {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+
+    <!-- Header -->
+    <header class="py-20 text-center relative overflow-hidden px-6 border-b border-slate-800">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15)_0,rgba(15,23,42,0)_60%)]">
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                초보자를 위한 <span class="text-gradient">Google AI Studio</span><br />
+                완전 정복 가이드 🚀
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 font-light mb-10">Gemini(제미나이)를 내 마음대로 조종하는 놀이터</p>
+            <div
+                class="inline-block glass-card p-6 md:p-8 text-left max-w-2xl border-l-4 border-l-primary leading-relaxed shadow-lg">
+                <p class="text-lg text-slate-200">
+                    Google AI Studio는 최근 새롭게 개편되면서 화면이 훨씬 깔끔해지고 기능도 강력해졌습니다.<br class="hidden md:block" />
+                    처음 접하시는 분들도 쉽게 따라 하실 수 있도록 <strong>차근차근 안내해 드릴게요!</strong>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-6 py-16 space-y-16">
+
+        <!-- 0. Warning -->
+        <div
+            class="bg-gradient-to-br from-rose-900/30 to-red-900/30 border border-rose-500/30 rounded-2xl p-8 md:p-10 shadow-[0_0_30px_rgba(244,63,94,0.1)] relative overflow-hidden">
+            <div class="absolute right-0 top-0 text-9xl text-rose-500/10 -mt-10 -mr-4"><i
+                    class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-6 text-rose-400 tracking-tight relative z-10">⚠️ 0. 꼭 알아두세요!
+                (AI 스튜디오는 '실험실'입니다)</h3>
+            <div class="space-y-4 text-slate-200 relative z-10 text-lg">
+                <p>가장 먼저 기억하셔야 할 점은, AI Studio는 완성된 일반 서비스(예: 챗GPT, 제미나이 웹사이트)가 아니라 <strong>AI를 테스트해보는
+                        '연구소(실험실)'</strong>라는 점입니다.</p>
+                <div class="bg-rose-950/50 p-5 rounded-xl border border-rose-500/20">
+                    <strong class="text-rose-300 block mb-2"><i class="fa-solid fa-skull mr-2"></i>결과물은 휘발성이
+                        있습니다:</strong>
+                    <span class="text-slate-300">이것저것 테스트해본 대화 내용이나 결과물이 영구적으로 보존되지 않고 날아갈 수 있습니다.</span>
+                </div>
+                <div class="bg-teal-950/50 p-5 rounded-xl border border-teal-500/20 mt-4">
+                    <strong class="text-teal-300 block mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>해결책:</strong>
+                    <span class="text-slate-300">마음에 드는 멋진 결과물이 나왔거나 중요한 코드를 얻었다면, 반드시 <strong>내 메모장이나 문서에 따로 복사해서 저장해두는
+                            습관</strong>을 가져주세요!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. Start -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white tracking-tight text-gradient">1. 시작하기</h3>
+            <div class="space-y-6 text-slate-300 text-lg">
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-computer-mouse text-primary mt-1 mr-4 text-xl"></i>
+                        <div><strong class="text-white">어디서 접속하나요?:</strong> <a href="https://aistudio.google.com"
+                                target="_blank"
+                                class="text-accent underline underline-offset-4 hover:text-white transition">aistudio.google.com</a>
+                            에 접속하세요.</div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-brands fa-google text-rose-400 mt-1 mr-4 text-xl"></i>
+                        <div><strong class="text-white">준비물:</strong> 평소 쓰시는 구글 계정 하나면 끝입니다.</div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-coins text-yellow-500 mt-1 mr-4 text-xl"></i>
+                        <div><strong class="text-white">비용:</strong> 놀랍게도 대부분의 엄청난 기능들을 무료로 마음껏 써볼 수 있습니다.</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. UI Overview -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight text-gradient">2. 주요 화면 살펴보기 <span
+                    class="text-xl font-light text-slate-400">(어디에 뭘 써야 할까?)</span></h3>
+            <p class="mb-8 text-lg text-slate-300">화면에 들어가면 복잡해 보일 수 있지만, 딱 <strong>3가지</strong>만 아시면 됩니다.</p>
+
+            <div class="grid grid-cols-1 gap-6 text-slate-300">
+                <div
+                    class="bg-slate-800/40 p-6 rounded-xl border border-slate-700 border-l-4 border-l-primary shadow-sm hover:translate-x-1 transition duration-300">
+                    <strong class="text-white text-xl flex items-center mb-3">① 모델 선택 <span
+                            class="text-sm font-normal text-slate-400 ml-2">(오른쪽 위)</span></strong>
+                    <p class="text-slate-400 mb-4">어떤 두뇌(AI)를 쓸지 고르는 곳입니다.</p>
+                    <ul class="space-y-2 mt-2">
+                        <li><span
+                                class="bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded text-sm font-mono mr-2">Gemini
+                                2.0 Flash</span> 빠르고 똘똘합니다. 평소에 가장 많이 쓰시면 됩니다.</li>
+                        <li><span
+                                class="bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded text-sm font-mono mr-2">Gemini
+                                1.5 Pro</span> 아주 똑똑한 학자 같습니다. 책 수십 권 분량의 엄청난 자료를 한 번에 읽고 분석할 때 씁니다.</li>
+                    </ul>
+                </div>
+
+                <div
+                    class="bg-slate-800/40 p-6 rounded-xl border border-slate-700 border-l-4 border-l-accent shadow-sm hover:translate-x-1 transition duration-300">
+                    <strong class="text-white text-xl flex items-center mb-3">② 시스템 인스트럭션 <span
+                            class="text-sm font-normal text-slate-400 ml-2">(왼쪽 위)</span></strong>
+                    <p class="text-slate-400">AI에게 <strong>'역할'</strong>이나 <strong>'절대 규칙'</strong>을 부여하는 곳입니다.</p>
+                    <div class="mt-3 bg-teal-950/40 border border-teal-500/20 p-4 rounded-lg">
+                        <strong class="text-teal-400 block mb-1 text-sm"><i
+                                class="fa-solid fa-quote-left mr-2"></i>예시</strong>
+                        <span class="text-teal-100 italic">"너는 이제부터 초등학생 1학년 담임 선생님이야. 무조건 아주 다정하고 쉬운 말투로 대답해 줘."</span>
+                    </div>
+                    <p class="text-slate-400 mt-3 text-sm">여기에 적어두면, 앞으로 어떤 질문을 하든 선생님의 말투로 대답해 줍니다.</p>
+                </div>
+
+                <div
+                    class="bg-slate-800/40 p-6 rounded-xl border border-slate-700 border-l-4 border-l-pink-500 shadow-sm hover:translate-x-1 transition duration-300">
+                    <strong class="text-white text-xl flex items-center mb-3">③ 프롬프트 창 <span
+                            class="text-sm font-normal text-slate-400 ml-2">(화면 가운데)</span></strong>
+                    <p class="text-slate-400">우리가 흔히 아는 채팅창입니다. AI에게 질문을 던지거나 일을 시키는 곳입니다. 파일이나 사진을 끌어다 놓을 수도 있습니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Key features -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight text-gradient">3. 마법 같은 핵심 기능들</h3>
+            <p class="mb-6 text-lg text-slate-300">AI 스튜디오에서는 일반 챗봇에서는 하기 힘든 일들을 할 수 있습니다.</p>
+            <div class="space-y-6 text-slate-300">
+                <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700">
+                    <strong class="text-white text-xl flex items-center mb-2"><i
+                            class="fa-solid fa-book-open-reader text-orange-400 mr-3 text-2xl"></i> 📚 엄청난 양의 문서 한 번에
+                        읽기</strong>
+                    <p class="text-slate-400 mb-2">회사 매뉴얼, 전공 서적 PDF, 심지어 1시간짜리 회의 녹화 영상이나 녹음 파일을 통째로 올리세요.</p>
+                    <p class="text-white italic bg-slate-900/50 p-3 rounded mt-3">"이 500페이지짜리 문서에서 2024년 예산과 관련된 부분만 찾아서
+                        3줄로 요약해 줘." <span class="text-slate-400 not-italic">같은 마법이 가능합니다.</span></p>
+                </div>
+
+                <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700">
+                    <strong class="text-white text-xl flex items-center mb-2"><i
+                            class="fa-solid fa-eye text-emerald-400 mr-3 text-2xl"></i> 👁️ 눈과 귀가 달린 AI (멀티모달)</strong>
+                    <p class="text-slate-400 mb-2">글자만 치는 게 아닙니다. 영수증 사진을 올리고 요청해 보세요.</p>
+                    <p class="text-white italic bg-slate-900/50 p-3 rounded mt-3">"이 영수증에서 먹은 음식 이름과 가격만 엑셀 표처럼 정리해 줘"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Save and Load -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white tracking-tight text-gradient">4. 🛠️ 내가 만든 앱/프롬프트
+                다시 찾기 (Build 메뉴)</h3>
+            <p class="mb-6 text-lg text-slate-300">열심히 규칙을 짜고 예시를 넣어서 나만의 '미니 AI 앱(프롬프트)'을 만들었다면, 잃어버리지 않게 저장하고 다시
+                찾아야겠죠?</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-300 mt-6">
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 hover:bg-slate-800/60 transition">
+                    <strong class="text-white block mb-2 text-xl"><i
+                            class="fa-solid fa-floppy-disk text-primary mr-2"></i> 저장하기</strong>
+                    <p class="text-slate-400">화면 상단에 있는 'Save(저장)' 버튼을 눌러 내 작업물에 이름을 붙여줍니다. <span class="text-sm">(예:
+                            '블로그 자동 작성 봇')</span></p>
+                </div>
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 hover:bg-slate-800/60 transition">
+                    <strong class="text-white block mb-2 text-xl"><i
+                            class="fa-solid fa-magnifying-glass text-accent mr-2"></i> 다시 찾기</strong>
+                    <p class="text-slate-400">화면 왼쪽 메뉴(사이드바)를 보시면 <strong class="text-slate-200">Build (빌드)</strong> 또는
+                        <strong class="text-slate-200">My Library (내 라이브러리)</strong> 라는 메뉴가 있습니다.</p>
+                </div>
+            </div>
+            <div class="bg-amber-950/30 border border-amber-500/20 p-5 rounded-xl mt-6">
+                <p class="text-amber-200">여기를 클릭하면, 내가 과거에 만들어서 저장해두었던 AI 앱과 프롬프트 목록이 쭉 나타납니다.<br />원하는 것을 클릭하면 예전에 세팅해둔
+                    그대로 창이 열려서 바로 이어서 작업할 수 있습니다!</p>
+            </div>
+        </div>
+
+        <!-- 5. Prompt Tips -->
+        <div
+            class="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 border border-indigo-500/30 rounded-2xl p-8 md:p-10 mb-12 shadow-[0_0_30px_rgba(99,102,241,0.1)] relative overflow-hidden">
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-indigo-400 tracking-tight relative z-10"><i
+                    class="fa-solid fa-lightbulb mr-3"></i> 5. 초보자를 위한 똑똑한 질문(프롬프트) 꿀팁</h3>
+            <div class="space-y-6 text-slate-200 relative z-10 text-lg">
+                <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800">
+                    <strong class="text-white text-xl block mb-3 border-b border-slate-700 pb-2">상황을 구체적으로
+                        설명하세요:</strong>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-rose-950/30 p-4 rounded border border-rose-500/20">
+                            <span class="text-rose-400 font-bold block mb-1">❌ 나쁜 예:</span>
+                            <span class="text-slate-400 italic">"다이어트 식단 짜줘"</span>
+                        </div>
+                        <div class="bg-teal-950/30 p-4 rounded border border-teal-500/20">
+                            <span class="text-teal-400 font-bold block mb-1">⭕ 좋은 예:</span>
+                            <span class="text-teal-100 italic">"나는 매운 걸 못 먹는 30대 직장인이야. 요리할 시간이 없으니 전자레인지만 써서 10분 안에 만들
+                                수 있는 다이어트 저녁 식단을 일주일치 표로 짜줘."</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800 mt-6">
+                    <strong class="text-white text-xl block mb-3 border-b border-slate-700 pb-2">원하는 정답의 '예시'를
+                        보여주세요:</strong>
+                    <p class="text-slate-300 mt-4">AI에게 "이런 식으로 대답해 줘"하고 예시를 한두 개만 보여주면 결과물이 100배는 좋아집니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guide Box -->
+        <div
+            class="p-8 bg-slate-800/80 border-l-8 border-primary rounded-r-2xl mb-20 text-slate-300 shadow-xl text-center">
+            <p class="text-xl leading-relaxed font-medium">자, 이제 AI 스튜디오라는 실험실에 들어가서 마음껏 상상력을 펼쳐보세요!<br />무언가 망가질 일은 없으니
+                이것저것 다 눌러보셔도 괜찮습니다.</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-10 border-t border-slate-800/80 text-slate-500 font-light mt-12 bg-slate-900/50">
+        <p>© 2026 Google AI Studio Guide. All Rights Reserved.</p>
+        <p class="text-sm mt-2 opacity-70">Empowering Beginners with Artificial Intelligence</p>
+    </footer>
+</body>
+
+</html>

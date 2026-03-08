@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 AI 실무 워크북 (AI Workshop) : 업무 효율화의 완성</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1', // Indigo 500
+                        accent: '#14b8a6',  // Teal 500
+                        bgdark: '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #818cf8, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chapter-badge {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+
+    <!-- Header -->
+    <header class="py-20 text-center relative overflow-hidden px-6 border-b border-slate-800">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15)_0,rgba(15,23,42,0)_60%)]">
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                2026 AI 실무 워크북<br />
+                <span class="text-gradient">(AI Workshop)</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 font-light mb-10">업무 효율화의 완성</p>
+            <div
+                class="inline-block glass-card p-6 md:p-8 text-left max-w-2xl border-l-4 border-l-primary leading-relaxed shadow-lg">
+                <p class="text-lg text-slate-200">
+                    본 워크북은 AI를 단순한 도구가 아닌 <strong
+                        class="text-accent underline decoration-accent/50 underline-offset-4">'업무 파트너'</strong>로
+                    정의하고,<br class="hidden md:block" /> 실무자의 작업 시간을 <strong>50% 이상 단축</strong>하는 것을 목표로 합니다.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-6 py-16 space-y-16">
+
+        <div class="flex flex-col items-center mb-12 relative">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-slate-800"></div>
+            </div>
+            <div class="relative flex justify-center">
+                <span class="bg-bgdark px-6 text-2xl font-bold text-slate-200 shadow-sm"><i
+                        class="fa-solid fa-rectangle-list mr-3 text-primary"></i>🟦 상세 목차 및 교육 내용</span>
+            </div>
+        </div>
+
+        <!-- Ch 1 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 1</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white tracking-tight">2026 AI 생태계와 업무 혁신의 이해</h3>
+            <div class="space-y-6 text-slate-300">
+                <p class="text-lg"><strong class="text-white text-xl">AI 트렌드 2026:</strong> 단순 챗봇을 넘어선 '액션 에이전트'와 '자율형
+                    비서'의 시대</p>
+                <div class="bg-indigo-950/40 border border-indigo-500/20 p-5 rounded-xl shadow-inner">
+                    <strong class="text-indigo-400 block mb-1 text-lg"><i class="fa-solid fa-lightbulb mr-2"></i>Expert
+                        Tip</strong>
+                    <span class="text-indigo-100">이제 AI는 "알려줘"가 아니라 <span
+                            class="bg-indigo-500/30 px-2 py-0.5 rounded text-white italic">"해줘"</span>의 영역으로
+                        진화했습니다.</span>
+                </div>
+
+                <h4 class="font-bold text-white text-xl mt-8 mb-4 flex items-center"><i
+                        class="fa-solid fa-toolbox text-slate-500 mr-2"></i>도구별 특성 마스터</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <div class="bg-slate-800 p-2 rounded-lg mr-4 mt-1"><i
+                                class="fa-brands fa-google text-primary text-xl"></i></div>
+                        <div><strong class="text-white text-lg">Gemini:</strong> 구글 워크스페이스(문서, 메일, 캘린더)와의 강력한 연동.
+                            <br /><span class="text-sm text-slate-400">(예: "지난주 회의록 찾아서 요약 메일 써줘")</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-slate-800 p-2 rounded-lg mr-4 mt-1"><i
+                                class="fa-solid fa-robot text-teal-400 text-xl"></i></div>
+                        <div><strong class="text-white text-lg">ChatGPT:</strong> 범용적인 창의적 작업 및 복잡한 데이터 분석, 고급 맞춤형
+                            챗봇(GPTs) 제작.</div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-slate-800 p-2 rounded-lg mr-4 mt-1"><i
+                                class="fa-solid fa-brain text-purple-400 text-xl"></i></div>
+                        <div><strong class="text-white text-lg">Claude:</strong> 업계 최고 수준의 긴 문서 분석 능력 및 인간적인 비즈니스 톤 구사.
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-slate-800 p-2 rounded-lg mr-4 mt-1"><i
+                                class="fa-solid fa-magnifying-glass-chart text-sky-400 text-xl"></i></div>
+                        <div><strong class="text-white text-lg">Perplexity:</strong> 실시간 웹 검색 기반의 팩트 체크 및 출처가 명시된 리서치
+                            보고서 작성.</div>
+                    </li>
+                </ul>
+
+                <div class="pt-6 mt-6 border-t border-slate-700/50">
+                    <p class="text-lg"><strong class="text-white text-xl">마인드셋 전환:</strong> "명령하지 말고, 상황을 설명하라" -
+                        Context(맥락) 중심의 소통법</p>
+                    <div class="mt-4 bg-teal-950/40 border border-teal-500/20 p-5 rounded-xl shadow-inner">
+                        <strong class="text-teal-400 block mb-1 text-lg"><i
+                                class="fa-solid fa-check-square mr-2"></i>Checklist</strong>
+                        <span class="text-teal-100">질문에 '배경', '대상', '목적'이 포함되어 있나요?</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch 2 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 2</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white tracking-tight">성과를 만드는 프롬프트 엔지니어링 (실습)</h3>
+            <div class="space-y-6 text-slate-300">
+                <h4 class="font-bold text-white text-xl mt-4 mb-4 flex items-center"><i
+                        class="fa-solid fa-cube text-slate-500 mr-2"></i>RTF(Role-Task-Format) 프레임워크 상세</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-800/50 border border-slate-700 p-5 rounded-xl">
+                        <div class="text-primary font-bold text-lg mb-2"><i class="fa-solid fa-user-tie mr-2"></i>Role
+                        </div>
+                        <p class="text-slate-300 text-sm">"너는 글로벌 IT 기업의 15년 차 전략 기획자야."</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 p-5 rounded-xl">
+                        <div class="text-accent font-bold text-lg mb-2"><i class="fa-solid fa-list-check mr-2"></i>Task
+                        </div>
+                        <p class="text-slate-300 text-sm">"신규 서비스의 SWOT 분석을 수행하고 차별화 전략 3가지를 도출해."</p>
+                    </div>
+                    <div class="bg-slate-800/50 border border-slate-700 p-5 rounded-xl">
+                        <div class="text-pink-400 font-bold text-lg mb-2"><i
+                                class="fa-solid fa-file-invoice mr-2"></i>Format</div>
+                        <p class="text-slate-300 text-sm">"결과는 3단락의 보고서 형태와 핵심 요약 표(Table)로 제시해줘."</p>
+                    </div>
+                </div>
+
+                <h4 class="font-bold text-white text-xl mt-8 mb-4 flex items-center"><i
+                        class="fa-solid fa-wand-magic-sparkles text-slate-500 mr-2"></i>고급 기술</h4>
+                <ul class="space-y-3 bg-slate-800/30 p-6 rounded-xl border border-slate-800">
+                    <li><strong class="text-white text-lg block mb-1">Few-Shot Prompting</strong> <span
+                            class="text-slate-400">"다음은 우리 회사의 사과문 스타일이야: [예시1], [예시2]. 이 스타일을 참고해서 이번 배송 지연 건에 대한 사과문을
+                            작성해줘."</span></li>
+                    <li class="border-t border-slate-700/50 pt-3"><strong class="text-white text-lg block mb-1">Variable
+                            Injection</strong> <span class="text-slate-400">[날짜], [고객명], [상품명] 변수를 포함한 고객 응대 템플릿
+                            제작법.</span></li>
+                    <li class="border-t border-slate-700/50 pt-3"><strong class="text-white text-lg block mb-1">Chain of
+                            Thought</strong> <span class="text-slate-400">"단계별로 생각해서 논리적인 근거를 먼저 설명한 뒤 최종 결론을
+                            내줘."</span></li>
+                </ul>
+
+                <div
+                    class="mt-8 p-6 bg-gradient-to-r from-slate-900 to-indigo-950 rounded-xl border-l-4 border-accent shadow-lg">
+                    <strong class="text-accent block mb-2 text-xl"><i class="fa-solid fa-laptop-code mr-2"></i>[실습
+                        1]</strong>
+                    <p class="text-white text-lg">"내 업무 성격에 맞는 '전담 비서' 페르소나 설계 및 커스텀 인스트럭션 설정하기"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch 3 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 3</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">직무별 맞춤형 AI 활용 시나리오</h3>
+            <div class="space-y-8 text-slate-300">
+
+                <div class="relative pl-8 border-l-2 border-primary/50">
+                    <div class="absolute w-4 h-4 bg-primary rounded-full -left-[9px] top-1"></div>
+                    <h4 class="font-bold text-2xl text-white mb-4">기획/마케팅</h4>
+                    <div class="space-y-3 bg-slate-800/50 p-5 rounded-xl border border-slate-700/50">
+                        <p><span
+                                class="inline-block px-2 py-1 bg-slate-700 text-xs rounded text-slate-300 mr-2 uppercase tracking-wide">Scenario</span>
+                            경쟁사 뉴스레터 100개 분석 → 핵심 키워드 추출 → 우리만의 차별화된 콘텐츠 캘린더 생성.</p>
+                        <p><span
+                                class="inline-block px-2 py-1 bg-slate-700 text-xs rounded text-slate-300 mr-2 uppercase tracking-wide">Detail</span>
+                            페르소나별(1인 가구, 직장인, 학생) 타겟 광고 카피 10안 동시 생성.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 border-l-2 border-accent/50">
+                    <div class="absolute w-4 h-4 bg-accent rounded-full -left-[9px] top-1"></div>
+                    <h4 class="font-bold text-2xl text-white mb-4">영업/CS</h4>
+                    <div class="space-y-3 bg-slate-800/50 p-5 rounded-xl border border-slate-700/50">
+                        <p><span
+                                class="inline-block px-2 py-1 bg-slate-700 text-xs rounded text-slate-300 mr-2 uppercase tracking-wide">Scenario</span>
+                            고객 불만 이메일 분석 → 감정 점수 측정 → 즉각적인 보상안이 포함된 공감 답장 초안 작성.</p>
+                        <p><span
+                                class="inline-block px-2 py-1 bg-slate-700 text-xs rounded text-slate-300 mr-2 uppercase tracking-wide">Detail</span>
+                            통화 녹취록(STT)을 기반으로 상담 일지 자동 기록 및 CRM 업데이트.</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 border-l-2 border-pink-500/50">
+                    <div class="absolute w-4 h-4 bg-pink-500 rounded-full -left-[9px] top-1"></div>
+                    <h4 class="font-bold text-2xl text-white mb-4">인사/HR</h4>
+                    <div class="space-y-3 bg-slate-800/50 p-5 rounded-xl border border-slate-700/50">
+                        <p><span
+                                class="inline-block px-2 py-1 bg-slate-700 text-xs rounded text-slate-300 mr-2 uppercase tracking-wide">Scenario</span>
+                            특정 직무 기술서(JD)와 지원자 이력서 비교 분석 → 적합도 평가 및 압박 면접 질문 리포트.</p>
+                        <p><span
+                                class="inline-block px-2 py-1 bg-slate-700 text-xs rounded text-slate-300 mr-2 uppercase tracking-wide">Detail</span>
+                            사내 규정집(PDF)을 학습시킨 '복지 및 인사 제도 헬프데스크' 구축.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-8 p-6 bg-gradient-to-r from-slate-900 to-teal-950 rounded-xl border-l-4 border-accent shadow-lg">
+                    <strong class="text-accent block mb-2 text-xl"><i class="fa-solid fa-laptop-code mr-2"></i>[실습
+                        2]</strong>
+                    <p class="text-white text-lg">"최근 3개월간의 시장 동향 보고서를 요약하여 내일 있을 주간 회의 발표 스크립트 만들기"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch 4 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 4</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">데이터 분석 및 시각화 자동화</h3>
+            <div class="space-y-6 text-slate-300">
+                <div
+                    class="bg-slate-800/30 p-6 rounded-xl border border-slate-800 hover:border-slate-600 transition duration-300">
+                    <strong class="text-white text-xl flex items-center mb-3"><i
+                            class="fa-brands fa-python text-yellow-500 mr-3 text-2xl"></i> 파이썬 기반 데이터 분석</strong>
+                    <p class="text-slate-400 text-lg">코드 한 줄 몰라도 <span class="text-white">"이 엑셀 파일에서 매출이 가장 높은 요일과 날씨의
+                            상관관계를 분석해줘"</span>라고 요청하기.</p>
+                </div>
+
+                <div
+                    class="bg-slate-800/30 p-6 rounded-xl border border-slate-800 hover:border-slate-600 transition duration-300">
+                    <strong class="text-white text-xl flex items-center mb-3"><i
+                            class="fa-solid fa-database text-sky-400 mr-3 text-2xl"></i> 비정형 데이터의 구조화</strong>
+                    <p class="text-slate-400 text-lg">수천 개의 고객 리뷰(텍스트)를 분석하여 '긍정/부정' 키워드 빈도표로 변환.</p>
+                </div>
+
+                <div
+                    class="bg-slate-800/30 p-6 rounded-xl border border-slate-800 hover:border-slate-600 transition duration-300">
+                    <strong class="text-white text-xl flex items-center mb-3"><i
+                            class="fa-solid fa-chart-pie text-pink-400 mr-3 text-2xl"></i> 시각화 전략</strong>
+                    <p class="text-slate-400 text-lg">"경영진 보고용으로 가장 적합한 인터랙티브한 차트 3종을 제안하고 시각화해줘."</p>
+                </div>
+
+                <div
+                    class="mt-8 p-6 bg-gradient-to-r from-slate-900 to-sky-950 rounded-xl border-l-4 border-accent shadow-lg">
+                    <strong class="text-accent block mb-2 text-xl"><i class="fa-solid fa-laptop-code mr-2"></i>[실습
+                        3]</strong>
+                    <p class="text-white text-lg">"지난 1년간의 매출 현황 PDF 파일을 업로드하고, 전년 대비 성장률을 꺾은선 그래프로 시각화하기"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch 5 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 5</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">멀티모달 AI: 이미지와 비디오 활용</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-300">
+                <div class="col-span-1 md:col-span-2 bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <strong class="text-white text-xl flex items-center mb-2"><i
+                            class="fa-solid fa-image text-emerald-400 mr-3"></i> 비즈니스 이미지 생성</strong>
+                    <p class="text-slate-400">"심플하고 현대적인 플랫 디자인 스타일의 클라우드 서비스 아이콘 5종 세트 제작해줘."</p>
+                </div>
+
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <strong class="text-white text-xl flex items-center mb-2"><i
+                            class="fa-solid fa-crop-simple text-purple-400 mr-3"></i> 브랜드 일관성 유지</strong>
+                    <p class="text-slate-400">Negative Prompt(제외할 요소)와 Seed 번호를 활용하여 일관된 캐릭터/스타일 유지 기법.</p>
+                </div>
+
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <strong class="text-white text-xl flex items-center mb-2"><i
+                            class="fa-solid fa-film text-rose-400 mr-3"></i> 영상 제작 및 편집</strong>
+                    <p class="text-slate-400">AI 아바타를 활용한 신규 입사자 교육 가이드 및 다국어 자막 자동 생성.</p>
+                </div>
+            </div>
+
+            <div
+                class="mt-8 p-6 bg-gradient-to-r from-slate-900 to-purple-950 rounded-xl border-l-4 border-accent shadow-lg">
+                <strong class="text-accent block mb-2 text-xl"><i class="fa-solid fa-laptop-code mr-2"></i>[실습
+                    4]</strong>
+                <p class="text-white text-lg">"신제품 런칭 카드뉴스 제작: AI로 배경 이미지를 생성하고, 각 슬라이드별 카피와 배치 기획하기"</p>
+            </div>
+        </div>
+
+        <!-- Ch 6 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 6</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">AI 에이전트와 워크플로우 자동화</h3>
+            <div class="space-y-6 text-slate-300">
+
+                <div class="bg-slate-800/30 border border-slate-700 p-6 rounded-xl">
+                    <strong class="text-white text-lg block mb-2"><i
+                            class="fa-solid fa-network-wired text-primary mr-2"></i>에이전트의 이해</strong>
+                    <p class="text-slate-400">사용자의 개입 없이 <span class="text-white">"이 프로젝트의 예산을 분석해서 부족한 부분을 보충할 방안을 찾고
+                            담당자에게 메일 보내놔"</span>라는 복합 명령 수행 원리.</p>
+                </div>
+
+                <div class="bg-slate-800/30 border border-slate-700 p-6 rounded-xl">
+                    <strong class="text-white text-lg flex items-center justify-between mb-4">
+                        <span><i class="fa-solid fa-code-branch text-accent mr-2"></i>No-Code 연동 (Zapier/Make)</span>
+                    </strong>
+                    <div
+                        class="flex flex-col md:flex-row items-center justify-center gap-4 bg-slate-900 p-4 rounded-lg font-mono text-sm border border-slate-800">
+                        <div class="text-center px-4 py-2 bg-slate-800 rounded text-slate-200">구글 폼 응답</div>
+                        <i class="fa-solid fa-arrow-right text-primary hidden md:block"></i><i
+                            class="fa-solid fa-arrow-down text-primary md:hidden"></i>
+                        <div
+                            class="text-center px-4 py-2 flex flex-col items-center bg-indigo-900/50 rounded border border-indigo-500/50 text-indigo-200">
+                            <i class="fa-solid fa-microchip mb-1"></i> AI 분류
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-primary hidden md:block"></i><i
+                            class="fa-solid fa-arrow-down text-primary md:hidden"></i>
+                        <div class="text-center px-4 py-2 bg-slate-800 rounded text-slate-200">Teams 알림 & 구글 시트</div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/30 border border-slate-700 p-6 rounded-xl">
+                    <strong class="text-white text-lg block mb-2"><i
+                            class="fa-solid fa-user-astronaut text-orange-400 mr-2"></i>나만의 전용 도구(Gems/GPTs)</strong>
+                    <p class="text-slate-400">우리 팀만 사용하는 특수 용어와 프로세스를 학습시킨 전용 AI 비서 만들기.</p>
+                </div>
+
+                <div
+                    class="mt-8 p-6 bg-gradient-to-r from-slate-900 to-orange-950 rounded-xl border-l-4 border-accent shadow-lg">
+                    <strong class="text-accent block mb-2 text-xl"><i class="fa-solid fa-laptop-code mr-2"></i>[실습
+                        5]</strong>
+                    <p class="text-white text-lg">"매일 특정 뉴스 사이트를 모니터링하여 우리 회사와 관련된 기사만 요약해 슬랙으로 전송하는 자동화 구축"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ch 7 -->
+        <div class="glass-card p-8 md:p-10 relative overflow-hidden">
+            <div class="chapter-badge">Chapter 7</div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">보안 및 AI 거버넌스</h3>
+            <div class="space-y-6 text-slate-300">
+                <h4 class="font-bold text-slate-200 text-xl flex items-center"><i
+                        class="fa-solid fa-shield-halved text-rose-500 mr-2"></i>기업 보안 가이드</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 border-l-4 border-l-rose-500">
+                        <strong class="text-white block mb-1">Data Masking</strong>
+                        <span class="text-slate-400 text-sm">민감한 개인정보나 대외비 문서를 입력하기 전 마스킹 처리하는 법.</span>
+                    </div>
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 border-l-4 border-l-slate-400">
+                        <strong class="text-white block mb-1">Opt-out</strong>
+                        <span class="text-slate-400 text-sm">내 데이터를 AI 학습에 사용하지 않도록 설정하는 방법(Privacy Setting).</span>
+                    </div>
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 border-l-4 border-l-yellow-500">
+                        <strong class="text-white block mb-1">할루시네이션(환각) 대응</strong>
+                        <span class="text-slate-400 text-sm">AI의 답변이 의심될 때 '역질문'을 통해 논리적 모순을 찾아내는 법.</span>
+                    </div>
+                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 border-l-4 border-l-sky-500">
+                        <strong class="text-white block mb-1">저작권 및 법적 리스크</strong>
+                        <span class="text-slate-400 text-sm">생성물에 대한 상업적 권리와 폰트/이미지 저작권 확인 프로세스.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appendix -->
+        <div
+            class="bg-gradient-to-br from-amber-900/30 to-orange-900/30 border border-orange-500/30 rounded-2xl p-8 md:p-10 mb-12 shadow-[0_0_30px_rgba(249,115,22,0.1)] relative overflow-hidden">
+            <div class="absolute right-0 top-0 text-9xl text-orange-500/10 -mt-10 -mr-4"><i
+                    class="fa-solid fa-bookmark"></i></div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-orange-400 tracking-tight relative z-10"><i
+                    class="fa-solid fa-layer-group mr-3"></i> 🟧 부록: 업무 치트키 (Appendix)</h3>
+            <div class="space-y-8 text-slate-200 relative z-10 text-lg">
+                <!-- 1. [Template] -->
+                <div>
+                    <h4 class="text-white font-bold text-xl mb-4 flex items-center"><i
+                            class="fa-solid fa-copy text-orange-400 mr-2"></i> 1. [Template] 즉시 복사해서 쓰는 황금 프롬프트 (대표 10선)
+                    </h4>
+                    <ul class="space-y-3 pl-8 list-none">
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">보고서 초안 작성:</strong> "너는 [직무] 전문가야. [주제]에 대한 보고서를
+                            작성해줘. 대상은 [상사/고객]이며, 주요 내용은 [A, B, C]를 포함해야 해. 목차-서론-본론-결론-제언 순서로 구성해줘."</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">이메일 톤 변환:</strong> "다음 이메일을 더 [정중한/설득력 있는/간결한] 톤으로
+                            수정해줘. [이메일 본문 입력]"</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">아이디어 브레인스토밍:</strong> "[프로젝트 명]을 위한 창의적인 마케팅 아이디어
+                            10개를 제안해줘. 기존의 [비슷한 사례]와는 차별화된 접근이 필요해."</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">긴 문서 요약:</strong> "아래 텍스트를 바쁜 경영진이 1분 안에 파악할 수 있도록
+                            3개의 핵심 포인트와 1개의 액션 아이템으로 요약해줘. [텍스트 입력]"</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">회의록 정리:</strong> "다음 회의 녹취록을 바탕으로 결정 사항, 담당자, 마감 기한을
+                            표 형태로 정리해줘. [녹취록 입력]"</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">외국어 비즈니스 메일:</strong> "한국어로 작성한 아래 내용을 원어민 수준의 비즈니스
+                            영어 메일로 번역해줘. 자연스러운 관용구를 사용해줘."</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">엑셀 수식 생성:</strong> "엑셀에서 A열에 날짜, B열에 금액이 있을 때, 특정 월의
+                            합계를 구하는 복잡한 수식을 만들어주고 사용법을 설명해줘."</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">데이터 인사이트 도출:</strong> "이 데이터셋에서 발견할 수 있는 가장 의외의 패턴
+                            3가지를 분석하고, 이를 비즈니스 기회로 연결할 방안을 제시해."</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">면접관 페르소나:</strong> "너는 [회사명]의 면접관이야. 내가 지원한 [직무]에 대해
+                            압박 질문을 5개 해주고, 내 답변에 대해 피드백해줘."</li>
+                        <li class="bg-slate-900/50 p-4 rounded-lg border-l-2 border-orange-500/50"><strong
+                                class="text-orange-300 block mb-1">코드 리뷰/작성:</strong> "특정 웹페이지에서 데이터를 크롤링하는 파이썬 코드를
+                            작성해줘. 주석을 상세히 달아줘."</li>
+                    </ul>
+                </div>
+
+                <!-- 2. [Tool Link] -->
+                <div class="pt-6 border-t border-orange-500/20">
+                    <h4 class="text-white font-bold text-xl mb-4 flex items-center"><i
+                            class="fa-solid fa-link text-orange-400 mr-2"></i> 2. [Tool Link] 2026년 필수 생산성 AI 도구 리스트
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-8">
+                        <div class="bg-slate-900/50 p-4 rounded-lg"><strong
+                                class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">글쓰기/업무 보조</strong>
+                            <span class="text-white">ChatGPT, Claude, Gemini, Notion AI</span></div>
+                        <div class="bg-slate-900/50 p-4 rounded-lg"><strong
+                                class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">리서치/검색</strong> <span
+                                class="text-white">Perplexity, Genspark, SearchGPT</span></div>
+                        <div class="bg-slate-900/50 p-4 rounded-lg"><strong
+                                class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">데이터 분석/시각화</strong>
+                            <span class="text-white">Julius AI, Row64, Tableau Pulse</span></div>
+                        <div class="bg-slate-900/50 p-4 rounded-lg"><strong
+                                class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">이미지/디자인</strong> <span
+                                class="text-white">Midjourney, Canva Magic Studio, Adobe Firefly</span></div>
+                        <div class="bg-slate-900/50 p-4 rounded-lg"><strong
+                                class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">비디오/프레젠테이션</strong>
+                            <span class="text-white">HeyGen, Gamma, Runway</span></div>
+                        <div class="bg-slate-900/50 p-4 rounded-lg"><strong
+                                class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">자동화/연동</strong> <span
+                                class="text-white">Zapier, Make, Lyzr AI</span></div>
+                    </div>
+                </div>
+
+                <!-- 3. [Checklist] -->
+                <div class="pt-6 border-t border-orange-500/20">
+                    <h4 class="text-white font-bold text-xl mb-4 flex items-center"><i
+                            class="fa-solid fa-list-check text-orange-400 mr-2"></i> 3. [Checklist] 우리 팀 디지털 AI 성숙도 진단
+                    </h4>
+                    <ul class="space-y-3 pl-8 list-none">
+                        <li class="flex items-start bg-slate-900/50 p-3 rounded"><i
+                                class="fa-regular fa-square-check mt-1 mr-3 text-slate-500"></i><span>우리 팀은 유료 버전의 AI
+                                모델(ChatGPT Plus 등)을 1개 이상 사용 중인가?</span></li>
+                        <li class="flex items-start bg-slate-900/50 p-3 rounded"><i
+                                class="fa-regular fa-square-check mt-1 mr-3 text-slate-500"></i><span>팀원들이 자신의 직무에 맞는
+                                프롬프트 템플릿을 3개 이상 보유하고 있는가?</span></li>
+                        <li class="flex items-start bg-slate-900/50 p-3 rounded"><i
+                                class="fa-regular fa-square-check mt-1 mr-3 text-slate-500"></i><span>회의록 정리, 이메일 초안 작성
+                                등 반복 업무의 50% 이상을 AI에게 맡기는가?</span></li>
+                        <li class="flex items-start bg-slate-900/50 p-3 rounded"><i
+                                class="fa-regular fa-square-check mt-1 mr-3 text-slate-500"></i><span>AI 사용 시 개인정보 및 기업
+                                기밀 보안 가이드라인을 숙지하고 있는가?</span></li>
+                        <li class="flex items-start bg-slate-900/50 p-3 rounded"><i
+                                class="fa-regular fa-square-check mt-1 mr-3 text-slate-500"></i><span>AI가 생성한 결과물을 그대로
+                                믿지 않고 반드시 팩트 체크하는 프로세스가 있는가?</span></li>
+                        <li class="flex items-start bg-slate-900/50 p-3 rounded"><i
+                                class="fa-regular fa-square-check mt-1 mr-3 text-slate-500"></i><span>팀 내에서 효율적인 프롬프트나
+                                AI 활용 사례를 정기적으로 공유하는가?</span></li>
+                    </ul>
+                    <div class="mt-4 pl-8">
+                        <div
+                            class="inline-block bg-orange-950/50 border border-orange-500/30 p-4 rounded-lg text-orange-200 text-base">
+                            <strong class="text-white block mb-2">결과 판정:</strong>
+                            ✓ 4개 이상 Yes: <span class="text-orange-400 font-bold">AI 선도 팀</span><br />
+                            ✓ 2-3개 Yes: <span class="text-slate-300">도입 단계</span><br />
+                            ✓ 1개 이하 Yes: <span class="text-slate-500">교육 시급</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. [Cheat Sheet] -->
+                <div class="pt-6 border-t border-orange-500/20">
+                    <h4 class="text-white font-bold text-xl mb-4 flex items-center"><i
+                            class="fa-solid fa-keyboard text-orange-400 mr-2"></i> 4. [Cheat Sheet] 주요 AI 도구 공통 단축키 및
+                        명령어</h4>
+                    <div class="pl-8 space-y-4">
+                        <div class="bg-slate-900/50 p-4 rounded-lg">
+                            <strong class="text-slate-300 mb-2 block text-sm uppercase tracking-wide">공통</strong>
+                            <ul class="space-y-2">
+                                <li><kbd
+                                        class="bg-slate-700 font-mono px-2 py-0.5 rounded text-sm text-white">Shift</kbd>
+                                    + <kbd
+                                        class="bg-slate-700 font-mono px-2 py-0.5 rounded text-sm text-white">Enter</kbd>
+                                    : 줄바꿈 (전송하지 않고 다음 줄로)</li>
+                                <li><kbd class="bg-slate-700 font-mono px-2 py-0.5 rounded text-sm text-white">↑</kbd>
+                                    (위쪽 화살표) : 직전에 보낸 프롬프트 다시 불러오기</li>
+                                <li><kbd class="bg-slate-700 font-mono px-2 py-0.5 rounded text-sm text-white">@</kbd>
+                                    또는 <kbd
+                                        class="bg-slate-700 font-mono px-2 py-0.5 rounded text-sm text-white">/</kbd> :
+                                    (특정 툴에서) 에이전트 호출 또는 명령어 메뉴 열기</li>
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-slate-900/50 p-4 rounded-lg">
+                                <strong class="text-teal-400 mb-2 block text-sm uppercase tracking-wide">ChatGPT
+                                    전용</strong>
+                                <ul class="space-y-3 text-base">
+                                    <li><kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">Ctrl</kbd>
+                                        + <kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">Shift</kbd>
+                                        + <kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">C</kbd><br /><span
+                                            class="text-slate-400 text-sm">코드 블록 복사</span></li>
+                                    <li><kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">Ctrl</kbd>
+                                        + <kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">/</kbd><br /><span
+                                            class="text-slate-400 text-sm">단축키 전체 목록 보기</span></li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/50 p-4 rounded-lg">
+                                <strong class="text-purple-400 mb-2 block text-sm uppercase tracking-wide">Claude
+                                    전용</strong>
+                                <ul class="space-y-3 text-base">
+                                    <li><kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">/artifacts</kbd><br /><span
+                                            class="text-slate-400 text-sm">생성된 코드나 문서를 별도 창(Artifacts)으로 보기</span></li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/50 p-4 rounded-lg">
+                                <strong class="text-primary mb-2 block text-sm uppercase tracking-wide">Gemini
+                                    전용</strong>
+                                <ul class="space-y-3 text-base">
+                                    <li><kbd
+                                            class="bg-slate-800 border border-slate-700 font-mono px-2 py-0.5 rounded text-xs text-white shadow">@Google
+                                            Drive</kbd><br /><span class="text-slate-400 text-sm">구글 드라이브 내 문서 바로 검색 및
+                                            분석</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Guide Box -->
+        <div class="p-8 bg-slate-800/80 border-l-8 border-primary rounded-r-2xl mb-20 text-slate-300 shadow-xl">
+            <h4 class="font-bold text-white mb-3 text-xl"><i class="fa-solid fa-circle-info text-primary mr-2"></i>[사용
+                가이드]</h4>
+            <p class="text-lg leading-relaxed">부록의 프롬프트를 메모장이나 스티커 메모에 붙여놓고 업무 시작 시 활용하세요. 실습 결과물은 워크북 내 '나의 레시피' 칸에
+                기록하여 자신만의 <strong class="text-white">'업무 자동화 자산'</strong>으로 만드시기 바랍니다.</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-10 border-t border-slate-800/80 text-slate-500 font-light mt-12 bg-slate-900/50">
+        <p>© 2026 AI Workshop. All Rights Reserved.</p>
+        <p class="text-sm mt-2 opacity-70">Empowering Professionals with Artificial Intelligence</p>
+    </footer>
+</body>
+
+</html>
