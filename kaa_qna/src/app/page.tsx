@@ -46,7 +46,7 @@ export default function HomePage() {
             </section>
 
             {/* ================= About ================= */}
-            <section className="section about-section">
+            <section className="section about-section" id="about">
                 <div className="container fade-up">
                     <h2 className="section-title">연구소 소개</h2>
                     <div className="about-declaration">
@@ -74,7 +74,7 @@ export default function HomePage() {
                     <div className="archive-group">
                         <h3 className="archive-group-title">💻 AI 교육 (Education)</h3>
                         <div className="archive-grid">
-                            <a href="https://drive.google.com/file/d/1rtH-_QNoTFRbGr3qRuNCj9GMjmYSVnb7/view?usp=drive_link" target="_blank" className="archive-card important">
+                            <a href="https://docs.google.com/presentation/d/1ETZXJQbe__UaHWJB3nsay8PQogtmzwcfXmnK8otADpo/edit?usp=sharing" target="_blank" className="archive-card important">
                                 <div>
                                     <span className="badge edu">AI 첫걸음</span>
                                     <h3>어서와 AI는 처음이지</h3>
@@ -117,13 +117,24 @@ export default function HomePage() {
                         <div className="archive-grid">
                             <a href="data/landing_page_guide.html" className="archive-card">
                                 <div>
-                                    <span className="badge info">Information</span>
+                                    <span className="badge info">목회자용</span>
                                     <h3>랜딩페이지란 무엇인가?<br />(Landing Page Guide)</h3>
                                     <p>목회자를 위한 랜딩페이지 제작 가이드입니다.</p>
                                 </div>
                                 <div className="card-footer">
                                     <span className="file-type">🔗 열람 가능</span>
                                     <span className="download-link">확인하기 ↗️</span>
+                                </div>
+                            </a>
+                            <a href="data/welfare_landing_guide.html" className="archive-card important">
+                                <div>
+                                    <span className="badge info">사회복지사용</span>
+                                    <h3>장애인 사회복지사를 위한<br />랜딩페이지 워크북</h3>
+                                    <p>90분 안에 끝내는 디지털 복지 소통의 첫걸음 (Canva · GitHub · Gemini)</p>
+                                </div>
+                                <div className="card-footer">
+                                    <span className="file-type">📋 워크북</span>
+                                    <span className="download-link">열람하기 ↗️</span>
                                 </div>
                             </a>
                             <a href="https://raon-easypaster.github.io/KAA/data/github.html" target="_blank" className="archive-card important">
@@ -269,16 +280,16 @@ export default function HomePage() {
                         <div className="contact-info">
                             <div className="info-item">
                                 <span className="label">주소</span>
-                                <span className="value">경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 2층 (카페 라온트리 내)</span>
+                                <span className="value">경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 3층</span>
                             </div>
                             <div className="info-item">
                                 <span className="label">전화</span>
                                 <span className="value">010-5606-0845</span>
                             </div>
                             <div className="map-btns">
-                                <a href="https://map.naver.com/v5/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%BC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
+                                <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%BC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
                                     target="_blank" className="btn" style={{ backgroundColor: '#03C75A', color: '#fff', border: 'none' }}>네이버 지도</a>
-                                <a href="https://m.map.kakao.com/actions/searchView?q=경기+부천시+소사구+소사본동+소삼로36번길+6"
+                                <a href="https://map.kakao.com/link/search/경기부천시소사구소사본동소삼로36번길6"
                                     target="_blank" className="btn" style={{ backgroundColor: '#FEE500', color: '#000', border: 'none' }}>카카오 맵</a>
                             </div>
                         </div>

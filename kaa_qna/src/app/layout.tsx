@@ -28,9 +28,26 @@ export default function RootLayout({
               <a href="/" className="logo">
                 🤖 한국AI연구소
               </a>
-              <a href="/qa" className="qa-shortcut-btn">
-                Q&A 바로가기 ↗️
-              </a>
+              <input type="checkbox" id="menu-toggle" className="menu-toggle-checkbox" />
+              <label htmlFor="menu-toggle" className="menu-toggle-label">
+                <span className="hamburger-line"></span>
+                <span className="hamburger-line"></span>
+                <span className="hamburger-line"></span>
+              </label>
+              <div className="nav-menu">
+                <a href="/#about" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
+                  한국AI연구소 소개
+                </a>
+                <a href="/#programs" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
+                  자료실 & 아카이브
+                </a>
+                <a href="/#contact" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
+                  오시는 길
+                </a>
+                <a href="/qa" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "var(--accent-soft)", color: "var(--primary)", border: "1px solid var(--accent)", cursor: "pointer" }}>
+                  Q&A 바로가기 ↗️
+                </a>
+              </div>
             </div>
           </nav>
         </header>
