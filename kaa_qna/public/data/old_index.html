@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국AI연구소 아카이브</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            /* 신뢰감과 미래지향적인 블루 톤 */
+            --primary-color: #154c79;
+            --accent-color: #2b7bc6;
+            --bg-color: #f0f4f8;
+
+            /* 강조 박스 색상 */
+            --highlight-bg: #eef7ff;
+            --highlight-border: #5fa8eb;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            /* 중앙 정렬 */
+        }
+
+        /* 헤더 스타일 */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(21, 76, 121, 0.08);
+            border-top: 5px solid var(--primary-color);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+        }
+
+        p.subtitle {
+            color: #5d758a;
+            margin-top: 12px;
+            font-size: 1.05rem;
+        }
+
+        /* 섹션 스타일 */
+        .section-box {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            border-bottom: 2px solid #ccdbe8;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* 카드 스타일 */
+        .card {
+            background: white;
+            border: 1px solid #e1e8ed;
+            border-radius: 16px;
+            padding: 25px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(21, 76, 121, 0.12);
+            border-color: var(--accent-color);
+        }
+
+        /* 최신/중요 자료 강조 */
+        .card.important {
+            background-color: var(--highlight-bg);
+            border: 2px solid var(--highlight-border);
+        }
+
+        /* 배지 스타일 (AI 연구소용으로 수정) */
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .badge.edu {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        /* 교육 */
+        .badge.info {
+            background: #e0f2f1;
+            color: #00695c;
+        }
+
+        /* 안내 */
+        .badge.web {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        /* 홈페이지/링크 */
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.45;
+            margin-bottom: 15px;
+            word-break: keep-all;
+            color: #2c3e50;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* 하단 버튼 스타일 */
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .file-type {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .download-icon {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>🤖 한국AI연구소 자료실</h1>
+            <p class="subtitle">미래를 여는 기술, 배움과 성장의 기록을 나눕니다 🚀</p>
+        </header>
+
+        <div class="section-box">
+            <h2 class="section-title">💻 AI 교육 (Education)</h2>
+            <div class="grid">
+
+                <a href="https://docs.google.com/presentation/d/1ETZXJQbe__UaHWJB3nsay8PQogtmzwcfXmnK8otADpo/edit?usp=sharing"
+                    target="_blank" class="card important">
+                    <div>
+                        <span class="badge edu">AI 첫걸음</span>
+                        <div class="card-title">어서와 AI는 처음이지</div>
+                        <div class="card-desc">처음 AI를 접하시는 분들을 위한 가이드 영상입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">📺 Video</span>
+                        <span class="download-icon">시청하기 ▶️</span>
+                    </div>
+                </a>
+
+                <a href="edu/gen_ai_basics.html" class="card">
+                    <div>
+                        <span class="badge edu">교육자료</span>
+                        <div class="card-title">생성형 AI 기초 과정<br>(Generative AI Basics)</div>
+                        <div class="card-desc">ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">📄 PDF 자료</span>
+                        <span class="download-icon">열람하기 ➡️</span>
+                    </div>
+                </a>
+
+                <a href="edu/workshop_2026.html" class="card">
+                    <div>
+                        <span class="badge edu">워크숍</span>
+                        <div class="card-title">2026 AI 실무 워크북<br>(AI Workshop)</div>
+                        <div class="card-desc">업무 효율화를 위한 AI 툴 활용 실습 예제 및 가이드입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">💾 자료 다운로드</span>
+                        <span class="download-icon">받기 📥</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2 class="section-title">📒 AI 자료 (data)</h2>
+            <div class="grid">
+
+                <a href="data/github.html" class="card important">
+                    <div>
+                        <span class="badge edu">Information</span>
+                        <div class="card-title">깃허브 랜딩페이지<br>(Generative AI Basics)</div>
+                        <div class="card-desc">깃허브에 랜딩페이지 올리는 방법 안내입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">📄 인포그래픽</span>
+                        <span class="download-icon">열람하기 ➡️</span>
+                    </div>
+                </a>
+
+                <a href="data/rd_aistudio.html" class="card">
+                    <div>
+                        <span class="badge edu">Information</span>
+                        <div class="card-title">라온동행교회 AI 활용법<br>(AI practical)</div>
+                        <div class="card-desc">라온동행교회 교인들을 위한 AI 사용 방법 안내입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">💾 자료 다운로드</span>
+                        <span class="download-icon">받기 📥</span>
+                    </div>
+                </a>
+
+                <a href="data/aistudio.html" class="card">
+                    <div>
+                        <span class="badge edu">Information</span>
+                        <div class="card-title">AI스튜디오 활용법<br>(AI Studio)</div>
+                        <div class="card-desc">Google AI Studio 사용 방법 안내입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">💾 자료 다운로드</span>
+                        <span class="download-icon">받기 📥</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2 class="section-title">📢 연구소 안내 (Information)</h2>
+            <div class="grid">
+
+                <a href="info/intro.html" class="card">
+                    <div>
+                        <span class="badge info">소개</span>
+                        <div class="card-title">연구소 소개 및 비전<br>(Vision & Mission)</div>
+                        <div class="card-desc">한국AI연구소가 걸어온 길과 앞으로의 로드맵을 소개합니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">📄 안내문</span>
+                        <span class="download-icon">확인하기 🔍</span>
+                    </div>
+                </a>
+
+                <a href="info/location.html" class="card">
+                    <div>
+                        <span class="badge info">오시는 길</span>
+                        <div class="card-title">위치 및 주차 안내<br>(Location)</div>
+                        <div class="card-desc">연구소 방문을 위한 대중교통 및 주차 정보 안내입니다.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">🗺️ 지도 보기</span>
+                        <span class="download-icon">이동 ➡️</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h2 class="section-title">🌐 공식 채널 (Links)</h2>
+            <div class="grid">
+
+                <a href="https://kaa-hub.vercel.app/" target="_blank" class="card important">
+                    <div>
+                        <span class="badge web">WEBSITE</span>
+                        <div class="card-title">KAA Hub<br>바로가기</div>
+                        <div class="card-desc">한국AI연구소의 다양한 자료와 툴을 한곳에서 만나보세요.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">🔗 External Link</span>
+                        <span class="download-icon">바로가기 ↗️</span>
+                    </div>
+                </a>
+
+                <a href="https://www.koreaai.org" target="_blank" class="card">
+                    <div>
+                        <span class="badge web">WEBSITE</span>
+                        <div class="card-title">한국AI연구소<br>공식 홈페이지</div>
+                        <div class="card-desc">최신 소식, 교육 신청 및 커뮤니티 활동을 확인하세요.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">🔗 External Link</span>
+                        <span class="download-icon">방문하기 ↗️</span>
+                    </div>
+                </a>
+
+                <a href="https://youtube.com" target="_blank" class="card">
+                    <div>
+                        <span class="badge web">MEDIA</span>
+                        <div class="card-title">공식 유튜브 채널<br>(YouTube)</div>
+                        <div class="card-desc">AI 트렌드 분석 및 온라인 강의 영상을 만나보세요.</div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="file-type">📺 Video</span>
+                        <span class="download-icon">시청하기 ▶️</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -74,7 +74,7 @@ export default function HomePage() {
                     <div className="archive-group">
                         <h3 className="archive-group-title">💻 AI 교육 (Education)</h3>
                         <div className="archive-grid">
-                            <a href="https://docs.google.com/presentation/d/1ETZXJQbe__UaHWJB3nsay8PQogtmzwcfXmnK8otADpo/edit?usp=sharing" target="_blank" className="archive-card important">
+                            <a href="https://drive.google.com/file/d/1rtH-_QNoTFRbGr3qRuNCj9GMjmYSVnb7/view?usp=drive_link" target="_blank" className="archive-card important">
                                 <div>
                                     <span className="badge edu">AI 첫걸음</span>
                                     <h3>어서와 AI는 처음이지</h3>
@@ -94,6 +94,18 @@ export default function HomePage() {
                                 </div>
                                 <div className="card-footer">
                                     <span className="file-type">🔗 외부 링크</span>
+                                    <span className="download-link">열람하기 ➡️</span>
+                                </div>
+                            </a>
+
+                            <a href="data/gen_ai_basics.html" className="archive-card important">
+                                <div>
+                                    <span className="badge edu">교육자료</span>
+                                    <h3>생성형 AI 기초 과정<br />(Generative AI Basics)</h3>
+                                    <p>ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.</p>
+                                </div>
+                                <div className="card-footer">
+                                    <span className="file-type">📄 PDF 자료</span>
                                     <span className="download-link">열람하기 ➡️</span>
                                 </div>
                             </a>
@@ -261,8 +273,8 @@ export default function HomePage() {
                     <div className="founder-history">
                         <h4>주요 경력</h4>
                         <ul>
-                            <li>전) 서울신학대학교 신학과</li>
-                            <li>전) 서울신학대학교 신학대학원</li>
+                            <li>서울신학대학교 신학과</li>
+                            <li>서울신학대학교 신학대학원</li>
                             <li>현) 한국AI연구소 공동대표</li>
                             <li>현) 로스터리 카페 라온트리 대표</li>
                             <li>현) 라온동행교회 담임목사</li>
