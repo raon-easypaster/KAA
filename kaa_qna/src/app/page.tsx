@@ -74,7 +74,7 @@ export default function HomePage() {
                     <div className="archive-group">
                         <h3 className="archive-group-title">💻 AI 교육 (Education)</h3>
                         <div className="archive-grid">
-                            <a href="https://drive.google.com/file/d/1rtH-_QNoTFRbGr3qRuNCj9GMjmYSVnb7/view?usp=drive_link" target="_blank" className="archive-card important">
+                            <a href="https://docs.google.com/presentation/d/1ETZXJQbe__UaHWJB3nsay8PQogtmzwcfXmnK8otADpo/edit?slide=id.g3c56f139b4b_0_854#slide=id.g3c56f139b4b_0_854" target="_blank" className="archive-card important">
                                 <div>
                                     <span className="badge edu">AI 첫걸음</span>
                                     <h3>어서와 AI는 처음이지</h3>
