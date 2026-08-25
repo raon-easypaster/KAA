@@ -1,8 +1,206 @@
 'use client';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+interface ArchiveItem {
+    id: string;
+    title: string;
+    description: string;
+    href: string;
+    target?: string;
+    category: string;
+    badgeClass: 'edu' | 'info' | 'web';
+    audience: 'pastor' | 'welfare' | 'general';
+    difficulty: '입문' | '중급' | '고급';
+    diffClass: 'easy' | 'medium' | 'hard';
+    time: string;
+    fileType: string;
+    actionText: string;
+    isImportant?: boolean;
+}
+
+const ARCHIVE_ITEMS: ArchiveItem[] = [
+    {
+        id: 'ai-first-step',
+        title: 'AI, 두려움을 넘어 일상으로 (어서와 AI는 처음이지)',
+        description: '42개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)',
+        href: '/data/ai_first_step.html',
+        target: '_blank',
+        category: 'AI 첫걸음',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 15분',
+        fileType: '💻 반응형 슬라이드',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'ai-education-guide',
+        title: '목회자와 사역자를 위한 AI 교육 가이드',
+        description: 'AI를 대하는 마인드셋과 소통 기술, 실무 적용 핵심 포인트를 안내합니다.',
+        href: '/data/ai_education_guide.html',
+        target: '_blank',
+        category: '가이드',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 30분',
+        fileType: '📄 인포그래픽',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'vibe-coding-workshop',
+        title: '목회자 바이브코딩 워크숍 (코드를 몰라도 도구를 만든다)',
+        description: '사역용 앱 3개와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.',
+        href: '/data/vibe_coding_workshop.html',
+        target: '_blank',
+        category: '워크숍 마스터',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '중급',
+        diffClass: 'medium',
+        time: '약 40분',
+        fileType: '🛠️ 마스터 강의안',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'gen-ai-basics',
+        title: '생성형 AI 기초 과정 (Generative AI Basics)',
+        description: 'ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.',
+        href: '/data/gen_ai_basics.html',
+        target: '_blank',
+        category: '교육자료',
+        badgeClass: 'edu',
+        audience: 'general',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 20분',
+        fileType: '📄 실무 가이드',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'ai-workshop',
+        title: '2026 AI 실무 워크북 (AI Workshop)',
+        description: '업무 효율화의 완성을 위한 가이드북입니다.',
+        href: '/data/ai_workshop.html',
+        target: '_blank',
+        category: '워크숍',
+        badgeClass: 'edu',
+        audience: 'general',
+        difficulty: '중급',
+        diffClass: 'medium',
+        time: '약 35분',
+        fileType: '🔗 열람 가능',
+        actionText: '확인하기 ↗️',
+        isImportant: false,
+    },
+    {
+        id: 'landing-page-guide',
+        title: '랜딩페이지란 무엇인가? (Landing Page Guide)',
+        description: '목회자를 위한 랜딩페이지 제작 가이드입니다.',
+        href: '/data/landing_page_guide.html',
+        target: '_blank',
+        category: '목회자용',
+        badgeClass: 'info',
+        audience: 'pastor',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 15분',
+        fileType: '🔗 열람 가능',
+        actionText: '확인하기 ↗️',
+        isImportant: false,
+    },
+    {
+        id: 'welfare-landing-guide',
+        title: '장애인 사회복지사를 위한 랜딩페이지 워크북',
+        description: '90분 안에 끝내는 디지털 복지 소통의 첫걸음 (Canva · GitHub · Gemini)',
+        href: '/data/welfare_landing_guide.html',
+        target: '_blank',
+        category: '사회복지사용',
+        badgeClass: 'info',
+        audience: 'welfare',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 25분',
+        fileType: '📋 워크북',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'github-guide',
+        title: '깃허브 랜딩페이지 구축 (GitHub Pages)',
+        description: '제미나이 생성 코드를 깃허브 웹사이트로 무료 배포하는 15단계 안내입니다.',
+        href: '/data/github.html',
+        target: '_blank',
+        category: '배포 실무',
+        badgeClass: 'info',
+        audience: 'general',
+        difficulty: '중급',
+        diffClass: 'medium',
+        time: '약 20분',
+        fileType: '📄 인포그래픽',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'rd-aistudio',
+        title: '라온동행교회 AI 활용법',
+        description: '라온동행교회 교인들을 위한 AI 사용 방법 안내입니다.',
+        href: '/data/rd_aistudio.html',
+        target: '_blank',
+        category: '교회 적용',
+        badgeClass: 'info',
+        audience: 'pastor',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 15분',
+        fileType: '🔗 열람 가능',
+        actionText: '확인하기 ↗️',
+        isImportant: false,
+    },
+    {
+        id: 'aistudio',
+        title: 'AI스튜디오 활용법 (AI Studio)',
+        description: 'Google AI Studio 사용 방법 안내입니다.',
+        href: '/data/aistudio.html',
+        target: '_blank',
+        category: '도구 활용',
+        badgeClass: 'info',
+        audience: 'general',
+        difficulty: '중급',
+        diffClass: 'medium',
+        time: '약 25분',
+        fileType: '🔗 열람 가능',
+        actionText: '확인하기 ↗️',
+        isImportant: false,
+    },
+    {
+        id: 'easypastor',
+        title: '미래 목회를 위한 AI 신학 비서 (Easy Pastor)',
+        description: 'NotebookLM 및 Gemini 통합 나만의 신학 비서 구축 가이드입니다.',
+        href: '/data/easypastor.html',
+        target: '_blank',
+        category: '신학 비서',
+        badgeClass: 'info',
+        audience: 'pastor',
+        difficulty: '고급',
+        diffClass: 'hard',
+        time: '약 30분',
+        fileType: '🔗 열람 가능',
+        actionText: '확인하기 ↗️',
+        isImportant: false,
+    },
+];
+
 export default function HomePage() {
+    const [audienceFilter, setAudienceFilter] = useState<'all' | 'pastor' | 'welfare' | 'general'>('all');
+
     useEffect(() => {
         const observerOptions = {
             threshold: 0.1,
@@ -24,10 +222,12 @@ export default function HomePage() {
         return () => observer.disconnect();
     }, []);
 
+    const filteredItems = audienceFilter === 'all'
+        ? ARCHIVE_ITEMS
+        : ARCHIVE_ITEMS.filter(item => item.audience === audienceFilter);
+
     return (
         <>
-
-
             {/* ================= Hero ================= */}
             <section className="hero hero-main">
                 <div className="container">
@@ -40,7 +240,90 @@ export default function HomePage() {
                         <p className="hero-subtitle">
                             한국AI연구소 아카이브는 AI 교육, 연구, 그리고 커뮤니티 성장을 돕는 자료를 지속적으로 공유하고 아카이빙하는 프로젝트입니다.
                         </p>
-                        <a href="#programs" className="btn btn-primary">자료실 바로가기 ⬇️</a>
+                        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                            <a href="#start-guide" className="btn btn-primary">시작점 찾기 🚀</a>
+                            <a href="#programs" className="btn btn-secondary">전체 자료실 ⬇️</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ================= 1. 시작점 선택 섹션 ================= */}
+            <section className="start-section" id="start-guide">
+                <div className="container fade-up">
+                    <div className="start-header">
+                        <span className="start-eyebrow">Custom Path</span>
+                        <h2 className="start-title">나에게 맞는 시작점 찾기</h2>
+                        <p className="start-subtitle">
+                            현재 고민이나 사역 상황에 맞춰 가장 알맞은 가이드와 워크숍을 추천해 드립니다.
+                        </p>
+                    </div>
+
+                    <div className="start-grid">
+                        {/* Option 1 */}
+                        <a href="/data/ai_first_step.html" target="_blank" className="start-card">
+                            <div>
+                                <span className="start-card-icon">🚀</span>
+                                <h3 className="start-card-title">AI 처음이에요</h3>
+                                <p className="start-card-desc">기초 개념부터 두려움을 깨는 42개 슬라이드 완벽 가이드</p>
+                            </div>
+                            <div className="start-card-footer">
+                                <span className="start-time-badge">⏱️ 약 15분</span>
+                                <span className="start-card-arrow">시작하기 →</span>
+                            </div>
+                        </a>
+
+                        {/* Option 2 */}
+                        <a href="/data/gen_ai_basics.html" target="_blank" className="start-card">
+                            <div>
+                                <span className="start-card-icon">💼</span>
+                                <h3 className="start-card-title">업무에 AI를 활용하고 싶어요</h3>
+                                <p className="start-card-desc">ChatGPT 기본 사용법과 실무 프롬프트 엔지니어링</p>
+                            </div>
+                            <div className="start-card-footer">
+                                <span className="start-time-badge">⏱️ 약 20분</span>
+                                <span className="start-card-arrow">시작하기 →</span>
+                            </div>
+                        </a>
+
+                        {/* Option 3 */}
+                        <a href="/data/easypastor.html" target="_blank" className="start-card">
+                            <div>
+                                <span className="start-card-icon">🧠</span>
+                                <h3 className="start-card-title">나만의 AI를 만들고 싶어요</h3>
+                                <p className="start-card-desc">목회 데이터로 구축하는 AI 신학 비서 (NotebookLM & Gemini)</p>
+                            </div>
+                            <div className="start-card-footer">
+                                <span className="start-time-badge">⏱️ 약 25분</span>
+                                <span className="start-card-arrow">시작하기 →</span>
+                            </div>
+                        </a>
+
+                        {/* Option 4 */}
+                        <a href="/data/vibe_coding_workshop.html" target="_blank" className="start-card">
+                            <div>
+                                <span className="start-card-icon">🛠️</span>
+                                <h3 className="start-card-title">바이브코딩으로 앱을 만들고 싶어요</h3>
+                                <p className="start-card-desc">코드 없이 말로 사역용 웹앱 3개와 교회 홈페이지 제작</p>
+                            </div>
+                            <div className="start-card-footer">
+                                <span className="start-time-badge">⏱️ 약 40분</span>
+                                <span className="start-card-arrow">시작하기 →</span>
+                            </div>
+                        </a>
+
+                        {/* Option 5 */}
+                        <a href="/data/ai_education_guide.html" target="_blank" className="start-card">
+                            <div>
+                                <span className="start-card-icon">📖</span>
+                                <h3 className="start-card-title">강의를 진행하고 싶어요</h3>
+                                <p className="start-card-desc">목회자·사역자 AI 교육자를 위한 마인드셋 & 프롬프트 커리큘럼</p>
+                            </div>
+                            <div className="start-card-footer">
+                                <span className="start-time-badge">⏱️ 약 30분</span>
+                                <span className="start-card-arrow">시작하기 →</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -63,7 +346,126 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* ================= Archive ================= */}
+            {/* ================= 2. 학습 로드맵 섹션 ================= */}
+            <section className="roadmap-section" id="roadmap">
+                <div className="container fade-up">
+                    <div className="roadmap-header">
+                        <span className="start-eyebrow">Curriculum Roadmap</span>
+                        <h2 className="section-title">AI 단계별 학습 로드맵</h2>
+                        <p className="start-subtitle">
+                            기초 이해부터 실무 도구 제작, 세컨드 브레인 구축까지 단계별 추천 학습 흐름입니다.
+                        </p>
+                    </div>
+
+                    <div className="roadmap-grid">
+                        {/* Step 1 */}
+                        <a href="/data/ai_first_step.html" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">1</span>
+                                <h3 className="roadmap-step-title">AI 이해</h3>
+                                <p className="roadmap-step-desc">생성형 AI 기본 개념과 두려움 극복, 직관적 이해</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff easy">입문</span>
+                                <span className="badge-time">15분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 2 */}
+                        <a href="/data/ai_education_guide.html" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">2</span>
+                                <h3 className="roadmap-step-title">AI와 대화하기</h3>
+                                <p className="roadmap-step-desc">ACTF 4원칙과 대화형 프롬프트 소통법</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff easy">입문</span>
+                                <span className="badge-time">20분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 3 */}
+                        <a href="/data/gen_ai_basics.html" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">3</span>
+                                <h3 className="roadmap-step-title">문서/이미지 만들기</h3>
+                                <p className="roadmap-step-desc">실무 행정 문서, 기획안, 이미지 생성 활용</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff easy">입문</span>
+                                <span className="badge-time">20분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 4 */}
+                        <a href="/data/easypastor.html" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">4</span>
+                                <h3 className="roadmap-step-title">나만의 AI 만들기</h3>
+                                <p className="roadmap-step-desc">NotebookLM 기반 목회 신학 비서 구축</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff medium">중급</span>
+                                <span className="badge-time">25분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 5 */}
+                        <a href="/data/vibe_coding_workshop.html" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">5</span>
+                                <h3 className="roadmap-step-title">바이브코딩</h3>
+                                <p className="roadmap-step-desc">자연어 코딩으로 사역용 웹앱 3개 직접 제작</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff medium">중급</span>
+                                <span className="badge-time">40분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 6 */}
+                        <a href="/data/vibe_coding_workshop.html#s6" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">6</span>
+                                <h3 className="roadmap-step-title">데이터 연결</h3>
+                                <p className="roadmap-step-desc">구글 시트 연동 실시간 교인관리 대시보드</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff medium">중급</span>
+                                <span className="badge-time">25분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 7 */}
+                        <a href="/data/github.html" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">7</span>
+                                <h3 className="roadmap-step-title">홈페이지·앱 제작</h3>
+                                <p className="roadmap-step-desc">안티그래비티 & 깃허브 기반 무료 배포</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff hard">고급</span>
+                                <span className="badge-time">35분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 8 */}
+                        <a href="/data/ai_education_guide.html#s3-2" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">8</span>
+                                <h3 className="roadmap-step-title">세컨드 브레인</h3>
+                                <p className="roadmap-step-desc">LLM Wiki 및 지식체계 자동화 구축</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff hard">고급</span>
+                                <span className="badge-time">30분</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* ================= Archive & Filters ================= */}
             <section className="section" id="programs">
                 <div className="container fade-up">
                     <h2 className="section-title">자료실 & 아카이브</h2>
@@ -71,176 +473,77 @@ export default function HomePage() {
                         한국AI연구소에서 제공하는 최신 AI 교육 자료, 실습 워크북 및 웹사이트 링크를 확인하세요.
                     </p>
 
-                    <div className="archive-group">
-                        <h3 className="archive-group-title">💻 AI 교육 (Education)</h3>
-                        <div className="archive-grid">
-                            <a href="data/ai_first_step.html" target="_blank" className="archive-card important">
-                                <div>
-                                    <span className="badge edu">AI 첫걸음</span>
-                                    <h3>AI, 두려움을 넘어 일상으로<br />(어서와 AI는 처음이지)</h3>
-                                    <p>42개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">💻 반응형 슬라이드</span>
-                                    <span className="download-link">열람하기 ↗️</span>
-                                </div>
-                            </a>
-
-                            <a href="data/ai_education_guide.html" target="_blank" className="archive-card important">
-                                <div>
-                                    <span className="badge edu">가이드</span>
-                                    <h3>목회자와 사역자를 위한<br />AI 교육 가이드</h3>
-                                    <p>AI를 대하는 마인드셋과 소통 기술, 실무 적용 핵심 포인트를 안내합니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">📄 인포그래픽</span>
-                                    <span className="download-link">열람하기 ↗️</span>
-                                </div>
-                            </a>
-
-                            <a href="data/vibe_coding_workshop.html" target="_blank" className="archive-card important">
-                                <div>
-                                    <span className="badge edu">워크숍 마스터</span>
-                                    <h3>목회자 바이브코딩 워크숍<br />(코드를 몰라도 도구를 만든다)</h3>
-                                    <p>사역용 앱 3개와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">🛠️ 마스터 강의안</span>
-                                    <span className="download-link">열람하기 ↗️</span>
-                                </div>
-                            </a>
-
-                            <a href="data/gen_ai_basics.html" className="archive-card important">
-                                <div>
-                                    <span className="badge edu">교육자료</span>
-                                    <h3>생성형 AI 기초 과정<br />(Generative AI Basics)</h3>
-                                    <p>ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">📄 PDF 자료</span>
-                                    <span className="download-link">열람하기 ➡️</span>
-                                </div>
-                            </a>
-
-                            <a href="data/ai_workshop.html" className="archive-card">
-                                <div>
-                                    <span className="badge edu">워크숍</span>
-                                    <h3>2026 AI 실무 워크북<br />(AI Workshop)</h3>
-                                    <p>업무 효율화의 완성을 위한 가이드북입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">🔗 열람 가능</span>
-                                    <span className="download-link">확인하기 ↗️</span>
-                                </div>
-                            </a>
-                        </div>
+                    {/* 3. 대상별 필터 버튼 */}
+                    <div className="filter-container">
+                        <button
+                            type="button"
+                            className={`filter-btn ${audienceFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => setAudienceFilter('all')}
+                        >
+                            전체보기 ({ARCHIVE_ITEMS.length})
+                        </button>
+                        <button
+                            type="button"
+                            className={`filter-btn ${audienceFilter === 'pastor' ? 'active' : ''}`}
+                            onClick={() => setAudienceFilter('pastor')}
+                        >
+                            목회자용 ({ARCHIVE_ITEMS.filter(i => i.audience === 'pastor').length})
+                        </button>
+                        <button
+                            type="button"
+                            className={`filter-btn ${audienceFilter === 'welfare' ? 'active' : ''}`}
+                            onClick={() => setAudienceFilter('welfare')}
+                        >
+                            사회복지사용 ({ARCHIVE_ITEMS.filter(i => i.audience === 'welfare').length})
+                        </button>
+                        <button
+                            type="button"
+                            className={`filter-btn ${audienceFilter === 'general' ? 'active' : ''}`}
+                            onClick={() => setAudienceFilter('general')}
+                        >
+                            일반 ({ARCHIVE_ITEMS.filter(i => i.audience === 'general').length})
+                        </button>
                     </div>
 
-                    <div className="archive-group">
-                        <h3 className="archive-group-title">📒 AI 실무 자료 (Data) & 안내</h3>
-                        <div className="archive-grid">
-                            <a href="data/landing_page_guide.html" className="archive-card">
+                    <div className="archive-grid">
+                        {filteredItems.map(item => (
+                            <a
+                                key={item.id}
+                                href={item.href}
+                                target={item.target || '_blank'}
+                                className={`archive-card ${item.isImportant ? 'important' : ''}`}
+                                data-audience={item.audience}
+                            >
                                 <div>
-                                    <span className="badge info">목회자용</span>
-                                    <h3>랜딩페이지란 무엇인가?<br />(Landing Page Guide)</h3>
-                                    <p>목회자를 위한 랜딩페이지 제작 가이드입니다.</p>
+                                    <div className="card-meta-row">
+                                        <span className={`badge ${item.badgeClass}`}>{item.category}</span>
+                                        <span className={`badge-diff ${item.diffClass}`}>{item.difficulty}</span>
+                                        <span className="badge-time">⏱️ {item.time}</span>
+                                    </div>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.description}</p>
                                 </div>
                                 <div className="card-footer">
-                                    <span className="file-type">🔗 열람 가능</span>
-                                    <span className="download-link">확인하기 ↗️</span>
+                                    <span className="file-type">{item.fileType}</span>
+                                    <span className="download-link">{item.actionText}</span>
                                 </div>
                             </a>
-                            <a href="data/welfare_landing_guide.html" className="archive-card important">
-                                <div>
-                                    <span className="badge info">사회복지사용</span>
-                                    <h3>장애인 사회복지사를 위한<br />랜딩페이지 워크북</h3>
-                                    <p>90분 안에 끝내는 디지털 복지 소통의 첫걸음 (Canva · GitHub · Gemini)</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">📋 워크북</span>
-                                    <span className="download-link">열람하기 ↗️</span>
-                                </div>
-                            </a>
-                            <a href="https://raon-easypaster.github.io/KAA/data/github.html" target="_blank" className="archive-card important">
-                                <div>
-                                    <span className="badge info">Information</span>
-                                    <h3>깃허브 랜딩페이지 구축<br />(GitHub Pages)</h3>
-                                    <p>깃허브에 랜딩페이지 올리는 방법 안내입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">📄 인포그래픽</span>
-                                    <span className="download-link">열람하기 ↗️</span>
-                                </div>
-                            </a>
-
-                            <a href="https://raon-easypaster.github.io/KAA/data/rd_aistudio.html" target="_blank" className="archive-card">
-                                <div>
-                                    <span className="badge info">Information</span>
-                                    <h3>라온동행교회 AI 활용법</h3>
-                                    <p>라온동행교회 교인들을 위한 AI 사용 방법 안내입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">🔗 열람 가능</span>
-                                    <span className="download-link">확인하기 ↗️</span>
-                                </div>
-                            </a>
-
-                            <a href="data/aistudio.html" className="archive-card">
-                                <div>
-                                    <span className="badge info">Information</span>
-                                    <h3>AI스튜디오 활용법<br />(AI Studio)</h3>
-                                    <p>Google AI Studio 사용 방법 안내입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">🔗 열람 가능</span>
-                                    <span className="download-link">확인하기 ↗️</span>
-                                </div>
-                            </a>
-
-                            <a href="data/easypastor.html" className="archive-card">
-                                <div>
-                                    <span className="badge info">Information</span>
-                                    <h3>미래 목회를 위한 AI 신학 비서<br />(Easy Pastor)</h3>
-                                    <p>NotebookLM 및 Gemini 통합 가이드입니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">🔗 열람 가능</span>
-                                    <span className="download-link">확인하기 ↗️</span>
-                                </div>
-                            </a>
-
-                        </div>
+                        ))}
                     </div>
 
-                    <div className="archive-group">
-                        <h3 className="archive-group-title">🌐 공식 채널 (Links)</h3>
-                        <div className="archive-grid" style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div className="archive-card" style={{ maxWidth: '400px', width: '100%', cursor: 'default' }}>
-                                <div>
-                                    <span className="badge" style={{ backgroundColor: '#64748b', color: 'white' }}>준비중</span>
-                                    <h3 style={{ color: '#64748b' }}>공식 유튜브 채널<br />(YouTube)</h3>
-                                    <p>유익한 영상 콘텐츠로 곧 찾아뵙겠습니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type" style={{ color: '#94a3b8' }}>📺 Video</span>
-                                    <span className="download-link" style={{ color: '#94a3b8' }}>채널 준비중 ⏳</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="archive-group">
+                    {/* 소통 & Q&A */}
+                    <div className="archive-group" style={{ marginTop: '48px' }}>
                         <h3 className="archive-group-title">💬 소통 및 피드백 (Community & Q&A)</h3>
                         <div className="archive-grid" style={{ display: 'flex', justifyContent: 'center' }}>
-                            <a href="/qa" className="archive-card important" style={{ maxWidth: '400px', width: '100%' }}>
+                            <a href="/qa" className="archive-card important" style={{ maxWidth: '450px', width: '100%' }}>
                                 <div>
                                     <span className="badge info">Board</span>
                                     <h3>자주 묻는 질문 (Q&A)<br />게시판 바로가기</h3>
-                                    <p>궁금한 점을 남겨주시면 연구소에서 답변해 드립니다.</p>
+                                    <p>궁금한 점이나 새로운 교육 요청을 남겨주시면 연구소에서 성심껏 답변해 드립니다.</p>
                                 </div>
                                 <div className="card-footer">
                                     <span className="file-type">💬 자유 게시판</span>
-                                    <span className="download-link">질문 남기기 ↗️</span>
+                                    <span className="download-link">질문 및 의견 남기기 ↗️</span>
                                 </div>
                             </a>
                         </div>
@@ -249,7 +552,7 @@ export default function HomePage() {
             </section>
 
             {/* ================= Founders ================= */}
-            < section className="section founder-section" >
+            <section className="section founder-section">
                 <div className="container fade-up">
                     <span className="founder-title">Co-Representative</span>
                     <h2 className="founder-name">김태주 공동대표</h2>
@@ -260,8 +563,10 @@ export default function HomePage() {
                         </p>
                     </div>
                     <div className="founder-history">
-                        <h4>주요 경력</h4>
+                        <h4>주요 학력 및 경력</h4>
                         <ul>
+                            <li>성결대학교 신학과</li>
+                            <li>서울신학대학교 대학원</li>
                             <li>현) 한국AI연구소 공동대표</li>
                             <li>현) 열방위에서는교회 담임목사</li>
                             <li>다수의 IT 솔루션 기획 및 AI 비즈니스 컨설팅 수행</li>
@@ -269,7 +574,7 @@ export default function HomePage() {
                         </ul>
                     </div>
                 </div>
-            </section >
+            </section>
 
             <section className="section founder-section">
                 <div className="container fade-up">
@@ -283,7 +588,7 @@ export default function HomePage() {
                         </p>
                     </div>
                     <div className="founder-history">
-                        <h4>주요 경력</h4>
+                        <h4>주요 학력 및 경력</h4>
                         <ul>
                             <li>서울신학대학교 신학과</li>
                             <li>서울신학대학교 신학대학원</li>
@@ -311,7 +616,7 @@ export default function HomePage() {
                                 <span className="value">010-5606-0845</span>
                             </div>
                             <div className="map-btns">
-                                <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%BC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
+                                <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
                                     target="_blank" className="btn" style={{ backgroundColor: '#03C75A', color: '#fff', border: 'none' }}>네이버 지도</a>
                                 <a href="https://map.kakao.com/link/search/경기부천시소사구소사본동소삼로36번길6"
                                     target="_blank" className="btn" style={{ backgroundColor: '#FEE500', color: '#000', border: 'none' }}>카카오 맵</a>
@@ -320,7 +625,6 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
-
         </>
     );
 }

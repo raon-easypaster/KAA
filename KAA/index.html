@@ -1,340 +1,568 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한국AI연구소 아카이브</title>
-    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
-    <style>
-        :root {
-            /* 신뢰감과 미래지향적인 블루 톤 */
-            --primary-color: #154c79; 
-            --accent-color: #2b7bc6;  
-            --bg-color: #f0f4f8;      
-            
-            /* 강조 박스 색상 */
-            --highlight-bg: #eef7ff;  
-            --highlight-border: #5fa8eb; 
-        }
-        
-        body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto; /* 중앙 정렬 */
-        }
+    <meta name="description" content="미래를 여는 기술, 배움과 성장의 기록을 나눕니다. 한국AI연구소 공식 자료실 및 아카이브">
 
-        /* 헤더 스타일 */
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 40px 0;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(21, 76, 121, 0.08);
-            border-top: 5px solid var(--primary-color);
-        }
-        h1 { 
-            margin: 0; 
-            color: var(--primary-color); 
-            font-size: 1.8rem; 
-            letter-spacing: -0.5px; 
-            font-weight: 800;
-        }
-        p.subtitle { 
-            color: #5d758a;
-            margin-top: 12px; 
-            font-size: 1.05rem; 
-        }
-        
-        /* 섹션 스타일 */
-        .section-box { margin-bottom: 50px; }
-        .section-title {
-            border-bottom: 2px solid #ccdbe8;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        /* 카드 스타일 */
-        .card {
-            background: white;
-            border: 1px solid #e1e8ed;
-            border-radius: 16px;
-            padding: 25px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(21, 76, 121, 0.12);
-            border-color: var(--accent-color);
-        }
-
-        /* 최신/중요 자료 강조 */
-        .card.important {
-            background-color: var(--highlight-bg);
-            border: 2px solid var(--highlight-border);
-        }
-        
-        /* 배지 스타일 (AI 연구소용으로 수정) */
-        .badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        .badge.edu { background: #e3f2fd; color: #1565c0; }   /* 교육 */
-        .badge.info { background: #e0f2f1; color: #00695c; }  /* 안내 */
-        .badge.web { background: #f3e5f5; color: #7b1fa2; }   /* 홈페이지/링크 */
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            line-height: 1.45;
-            margin-bottom: 15px;
-            word-break: keep-all;
-            color: #2c3e50;
-        }
-
-        .card-desc {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        /* 하단 버튼 스타일 */
-        .card-footer {
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        .file-type {
-            font-size: 0.85rem;
-            color: #999;
-            font-weight: 600;
-        }
-        .download-icon {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; }
-            .container { padding: 0 10px; }
-        }
-    </style>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
 
-    <div class="container">
-        
-        <header>
-            <h1>🤖 한국AI연구소 자료실</h1>
-            <p class="subtitle">미래를 여는 기술, 배움과 성장의 기록을 나눕니다 🚀</p>
-        </header>
-
-        <div class="section-box">
-            <h2 class="section-title">💻 AI 교육 (Education)</h2>
-            <div class="grid">
-                
-                <a href="data/ai_first_step.html" target="_blank" class="card important">
-                    <div>
-                        <span class="badge edu">AI 첫걸음</span>
-                        <div class="card-title">AI, 두려움을 넘어 일상으로<br>(어서와 AI는 처음이지)</div>
-                        <div class="card-desc">42개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">💻 반응형 슬라이드</span>
-                        <span class="download-icon">열람하기 ↗️</span>
-                    </div>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="#" class="logo">
+                    🤖 한국AI연구소
                 </a>
-
-                <a href="data/ai_education_guide.html" target="_blank" class="card important">
-                    <div>
-                        <span class="badge edu">가이드</span>
-                        <div class="card-title">목회자와 사역자를 위한<br>AI 교육 가이드</div>
-                        <div class="card-desc">AI를 대하는 마인드셋과 소통 기술, 실무 적용 핵심 포인트를 안내합니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">📄 인포그래픽</span>
-                        <span class="download-icon">열람하기 ↗️</span>
-                    </div>
-                </a>
-
-                <a href="data/vibe_coding_workshop.html" target="_blank" class="card important">
-                    <div>
-                        <span class="badge edu">워크숍 마스터</span>
-                        <div class="card-title">목회자 바이브코딩 워크숍<br>(코드를 몰라도 도구를 만든다)</div>
-                        <div class="card-desc">사역용 앱 3개와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">🛠️ 마스터 강의안</span>
-                        <span class="download-icon">열람하기 ↗️</span>
-                    </div>
-                </a>
-
-                <a href="edu/gen_ai_basics.html" class="card important">
-                    <div>
-                        <span class="badge edu">교육자료</span>
-                        <div class="card-title">생성형 AI 기초 과정<br>(Generative AI Basics)</div>
-                        <div class="card-desc">ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">📄 PDF 자료</span>
-                        <span class="download-icon">열람하기 ➡️</span>
-                    </div>
-                </a>
-
-                <a href="edu/workshop_2026.html" class="card">
-                    <div>
-                        <span class="badge edu">워크숍</span>
-                        <div class="card-title">2026 AI 실무 워크북<br>(AI Workshop)</div>
-                        <div class="card-desc">업무 효율화를 위한 AI 툴 활용 실습 예제 및 가이드입니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">💾 자료 다운로드</span>
-                        <span class="download-icon">받기 📥</span>
-                    </div>
-                </a>
-
             </div>
-        </div>
+        </nav>
+    </header>
 
-        <div class="section-box">
-            <h2 class="section-title">📒 AI 자료 (data)</h2>
-            <div class="grid">
-                
-                <a href="data/github.html" class="card important">
-                    <div>
-                        <span class="badge edu">Information</span>
-                        <div class="card-title">깃허브 랜딩페이지<br>(Generative AI Basics)</div>
-                        <div class="card-desc">깃허브에 랜딩페이지 올리는 방법 안내입니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">📄 인포그래픽</span>
-                        <span class="download-icon">열람하기 ➡️</span>
-                    </div>
-                </a>
+    <main>
 
-                  <a href="data/rd_aistudio.html" class="card">
-                    <div>
-                        <span class="badge edu">Information</span>
-                        <div class="card-title">라온동행교회 AI 활용법<br>(AI practical)</div>
-                        <div class="card-desc">라온동행교회 교인들을 위한 AI 사용 방법 안내입니다.</div>
+        <!-- ================= Hero ================= -->
+        <section class="hero hero-main">
+            <div class="container">
+                <div class="hero-content fade-up">
+                    <span class="hero-eyebrow">Korea AI Research Institute Archive</span>
+                    <h1 class="hero-title">
+                        미래를 여는 기술,<br>
+                        배움과 성장의 기록을 나눕니다
+                    </h1>
+                    <p class="hero-subtitle">
+                        한국AI연구소 아카이브는 AI 교육, 연구, 그리고 커뮤니티 성장을 돕는 자료를 지속적으로 공유하고 아카이빙하는 프로젝트입니다.
+                    </p>
+                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        <a href="#start-guide" class="btn btn-primary">시작점 찾기 🚀</a>
+                        <a href="#programs" class="btn btn-secondary">전체 자료실 ⬇️</a>
                     </div>
-                    <div class="card-footer">
-                        <span class="file-type">💾 자료 다운로드</span>
-                        <span class="download-icon">받기 📥</span>
-                    </div>
-                </a>
-                
-                <a href="data/aistudio.html" class="card">
-                    <div>
-                        <span class="badge edu">Information</span>
-                        <div class="card-title">AI스튜디오 활용법<br>(AI Studio)</div>
-                        <div class="card-desc">Google AI Studio 사용 방법 안내입니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">💾 자료 다운로드</span>
-                        <span class="download-icon">받기 📥</span>
-                    </div>
-                </a>
-
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-box">
-            <h2 class="section-title">📢 연구소 안내 (Information)</h2>
-            <div class="grid">
-                
-                <a href="info/intro.html" class="card">
-                    <div>
-                        <span class="badge info">소개</span>
-                        <div class="card-title">연구소 소개 및 비전<br>(Vision & Mission)</div>
-                        <div class="card-desc">한국AI연구소가 걸어온 길과 앞으로의 로드맵을 소개합니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">📄 안내문</span>
-                        <span class="download-icon">확인하기 🔍</span>
-                    </div>
-                </a>
+        <!-- ================= 1. 시작점 선택 ================= -->
+        <section class="start-section" id="start-guide">
+            <div class="container fade-up">
+                <div class="start-header">
+                    <span class="start-eyebrow">Custom Path</span>
+                    <h2 class="start-title">나에게 맞는 시작점 찾기</h2>
+                    <p class="start-subtitle">
+                        현재 고민이나 사역 상황에 맞춰 가장 알맞은 가이드와 워크숍을 추천해 드립니다.
+                    </p>
+                </div>
 
-                <a href="info/location.html" class="card">
-                    <div>
-                        <span class="badge info">오시는 길</span>
-                        <div class="card-title">위치 및 주차 안내<br>(Location)</div>
-                        <div class="card-desc">연구소 방문을 위한 대중교통 및 주차 정보 안내입니다.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">🗺️ 지도 보기</span>
-                        <span class="download-icon">이동 ➡️</span>
-                    </div>
-                </a>
+                <div class="start-grid">
+                    <a href="data/ai_first_step.html" target="_blank" class="start-card">
+                        <div>
+                            <span class="start-card-icon">🚀</span>
+                            <h3 class="start-card-title">AI 처음이에요</h3>
+                            <p class="start-card-desc">기초 개념부터 두려움을 깨는 42개 슬라이드 완벽 가이드</p>
+                        </div>
+                        <div class="start-card-footer">
+                            <span class="start-time-badge">⏱️ 약 15분</span>
+                            <span class="start-card-arrow">시작하기 →</span>
+                        </div>
+                    </a>
 
+                    <a href="data/gen_ai_basics.html" target="_blank" class="start-card">
+                        <div>
+                            <span class="start-card-icon">💼</span>
+                            <h3 class="start-card-title">업무에 AI를 활용하고 싶어요</h3>
+                            <p class="start-card-desc">ChatGPT 기본 사용법과 실무 프롬프트 엔지니어링</p>
+                        </div>
+                        <div class="start-card-footer">
+                            <span class="start-time-badge">⏱️ 약 20분</span>
+                            <span class="start-card-arrow">시작하기 →</span>
+                        </div>
+                    </a>
+
+                    <a href="data/easypastor.html" target="_blank" class="start-card">
+                        <div>
+                            <span class="start-card-icon">🧠</span>
+                            <h3 class="start-card-title">나만의 AI를 만들고 싶어요</h3>
+                            <p class="start-card-desc">목회 데이터로 구축하는 AI 신학 비서 (NotebookLM & Gemini)</p>
+                        </div>
+                        <div class="start-card-footer">
+                            <span class="start-time-badge">⏱️ 약 25분</span>
+                            <span class="start-card-arrow">시작하기 →</span>
+                        </div>
+                    </a>
+
+                    <a href="data/vibe_coding_workshop.html" target="_blank" class="start-card">
+                        <div>
+                            <span class="start-card-icon">🛠️</span>
+                            <h3 class="start-card-title">바이브코딩으로 앱을 만들고 싶어요</h3>
+                            <p class="start-card-desc">코드 없이 말로 사역용 웹앱 3개와 교회 홈페이지 제작</p>
+                        </div>
+                        <div class="start-card-footer">
+                            <span class="start-time-badge">⏱️ 약 40분</span>
+                            <span class="start-card-arrow">시작하기 →</span>
+                        </div>
+                    </a>
+
+                    <a href="data/ai_education_guide.html" target="_blank" class="start-card">
+                        <div>
+                            <span class="start-card-icon">📖</span>
+                            <h3 class="start-card-title">강의를 진행하고 싶어요</h3>
+                            <p class="start-card-desc">목회자·사역자 AI 교육자를 위한 마인드셋 & 프롬프트 커리큘럼</p>
+                        </div>
+                        <div class="start-card-footer">
+                            <span class="start-time-badge">⏱️ 약 30분</span>
+                            <span class="start-card-arrow">시작하기 →</span>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-box">
-            <h2 class="section-title">🌐 공식 채널 (Links)</h2>
-            <div class="grid">
-                
-                <a href="https://www.koreaai.org" target="_blank" class="card important">
-                    <div>
-                        <span class="badge web">WEBSITE</span>
-                        <div class="card-title">한국AI연구소<br>공식 홈페이지</div>
-                        <div class="card-desc">최신 소식, 교육 신청 및 커뮤니티 활동을 확인하세요.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">🔗 External Link</span>
-                        <span class="download-icon">방문하기 ↗️</span>
-                    </div>
-                </a>
-
-                <a href="https://youtube.com" target="_blank" class="card">
-                    <div>
-                        <span class="badge web">MEDIA</span>
-                        <div class="card-title">공식 유튜브 채널<br>(YouTube)</div>
-                        <div class="card-desc">AI 트렌드 분석 및 온라인 강의 영상을 만나보세요.</div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="file-type">📺 Video</span>
-                        <span class="download-icon">시청하기 ▶️</span>
-                    </div>
-                </a>
-
+        <!-- ================= About ================= -->
+        <section class="section about-section" id="about">
+            <div class="container fade-up">
+                <h2 class="section-title">연구소 소개</h2>
+                <div class="about-declaration">
+                    <p>
+                        한국AI연구소는 급변하는 인공지능 시대에 맞춰 우리 삶과 산업 현장에 가장 실용적이고 윤리적인 AI 활용 방안을 연구합니다.
+                    </p>
+                    <p>
+                        복잡한 기술의 진입 장벽을 낮추고, 누구나 쉽게 생성형 AI를 업무와 일상에 접목할 수 있도록 교육 및 아카이빙 프로젝트를 전개하고 있습니다.
+                    </p>
+                </div>
+                <div class="quote-highlight">
+                    "AI는 기술을 넘어, 사람과 세상을 더 이롭게 연결하는 다리입니다."
+                </div>
             </div>
-        </div>
+        </section>
 
-    </div> </body>
+        <!-- ================= 2. 학습 로드맵 ================= -->
+        <section class="roadmap-section" id="roadmap">
+            <div class="container fade-up">
+                <div class="roadmap-header">
+                    <span class="start-eyebrow">Curriculum Roadmap</span>
+                    <h2 class="section-title">AI 단계별 학습 로드맵</h2>
+                    <p class="start-subtitle">
+                        기초 이해부터 실무 도구 제작, 세컨드 브레인 구축까지 단계별 추천 학습 흐름입니다.
+                    </p>
+                </div>
+
+                <div class="roadmap-grid">
+                    <a href="data/ai_first_step.html" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">1</span>
+                            <h3 class="roadmap-step-title">AI 이해</h3>
+                            <p class="roadmap-step-desc">생성형 AI 기본 개념과 두려움 극복, 직관적 이해</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff easy">입문</span>
+                            <span class="badge-time">15분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/ai_education_guide.html" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">2</span>
+                            <h3 class="roadmap-step-title">AI와 대화하기</h3>
+                            <p class="roadmap-step-desc">ACTF 4원칙과 대화형 프롬프트 소통법</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff easy">입문</span>
+                            <span class="badge-time">20분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/gen_ai_basics.html" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">3</span>
+                            <h3 class="roadmap-step-title">문서/이미지 만들기</h3>
+                            <p class="roadmap-step-desc">실무 행정 문서, 기획안, 이미지 생성 활용</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff easy">입문</span>
+                            <span class="badge-time">20분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/easypastor.html" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">4</span>
+                            <h3 class="roadmap-step-title">나만의 AI 만들기</h3>
+                            <p class="roadmap-step-desc">NotebookLM 기반 목회 신학 비서 구축</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff medium">중급</span>
+                            <span class="badge-time">25분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/vibe_coding_workshop.html" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">5</span>
+                            <h3 class="roadmap-step-title">바이브코딩</h3>
+                            <p class="roadmap-step-desc">자연어 코딩으로 사역용 웹앱 3개 직접 제작</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff medium">중급</span>
+                            <span class="badge-time">40분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/vibe_coding_workshop.html#s6" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">6</span>
+                            <h3 class="roadmap-step-title">데이터 연결</h3>
+                            <p class="roadmap-step-desc">구글 시트 연동 실시간 교인관리 대시보드</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff medium">중급</span>
+                            <span class="badge-time">25분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/github.html" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">7</span>
+                            <h3 class="roadmap-step-title">홈페이지·앱 제작</h3>
+                            <p class="roadmap-step-desc">안티그래비티 & 깃허브 기반 무료 배포</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff hard">고급</span>
+                            <span class="badge-time">35분</span>
+                        </div>
+                    </a>
+
+                    <a href="data/ai_education_guide.html#s3-2" target="_blank" class="roadmap-step-card">
+                        <div>
+                            <span class="roadmap-step-num">8</span>
+                            <h3 class="roadmap-step-title">세컨드 브레인</h3>
+                            <p class="roadmap-step-desc">LLM Wiki 및 지식체계 자동화 구축</p>
+                        </div>
+                        <div class="roadmap-badges">
+                            <span class="badge-diff hard">고급</span>
+                            <span class="badge-time">30분</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Archive ================= -->
+        <section class="section" id="programs">
+            <div class="container fade-up">
+                <h2 class="section-title">자료실 & 아카이브</h2>
+                <p class="section-intro">
+                    한국AI연구소에서 제공하는 최신 AI 교육 자료, 실습 워크북 및 웹사이트 링크를 확인하세요.
+                </p>
+
+                <!-- Filter Bar -->
+                <div class="filter-container">
+                    <button type="button" class="filter-btn active" data-filter="all" onclick="filterAudience('all')">전체보기 (11)</button>
+                    <button type="button" class="filter-btn" data-filter="pastor" onclick="filterAudience('pastor')">목회자용 (6)</button>
+                    <button type="button" class="filter-btn" data-filter="welfare" onclick="filterAudience('welfare')">사회복지사용 (1)</button>
+                    <button type="button" class="filter-btn" data-filter="general" onclick="filterAudience('general')">일반 (4)</button>
+                </div>
+
+                <div class="archive-grid">
+                    <!-- 1 -->
+                    <a href="data/ai_first_step.html" target="_blank" class="archive-card important" data-audience="pastor">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge edu">AI 첫걸음</span>
+                                <span class="badge-diff easy">입문</span>
+                                <span class="badge-time">⏱️ 약 15분</span>
+                            </div>
+                            <h3>AI, 두려움을 넘어 일상으로<br>(어서와 AI는 처음이지)</h3>
+                            <p>42개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">💻 반응형 슬라이드</span>
+                            <span class="download-link">열람하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 2 -->
+                    <a href="data/ai_education_guide.html" target="_blank" class="archive-card important" data-audience="pastor">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge edu">가이드</span>
+                                <span class="badge-diff easy">입문</span>
+                                <span class="badge-time">⏱️ 약 30분</span>
+                            </div>
+                            <h3>목회자와 사역자를 위한<br>AI 교육 가이드</h3>
+                            <p>AI를 대하는 마인드셋과 소통 기술, 실무 적용 핵심 포인트를 안내합니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">📄 인포그래픽</span>
+                            <span class="download-link">열람하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 3 -->
+                    <a href="data/vibe_coding_workshop.html" target="_blank" class="archive-card important" data-audience="pastor">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge edu">워크숍 마스터</span>
+                                <span class="badge-diff medium">중급</span>
+                                <span class="badge-time">⏱️ 약 40분</span>
+                            </div>
+                            <h3>목회자 바이브코딩 워크숍<br>(코드를 몰라도 도구를 만든다)</h3>
+                            <p>사역용 앱 3개와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">🛠️ 마스터 강의안</span>
+                            <span class="download-link">열람하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 4 -->
+                    <a href="data/gen_ai_basics.html" target="_blank" class="archive-card important" data-audience="general">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge edu">교육자료</span>
+                                <span class="badge-diff easy">입문</span>
+                                <span class="badge-time">⏱️ 약 20분</span>
+                            </div>
+                            <h3>생성형 AI 기초 과정<br>(Generative AI Basics)</h3>
+                            <p>ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">📄 실무 가이드</span>
+                            <span class="download-link">열람하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 5 -->
+                    <a href="data/ai_workshop.html" target="_blank" class="archive-card" data-audience="general">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge edu">워크숍</span>
+                                <span class="badge-diff medium">중급</span>
+                                <span class="badge-time">⏱️ 약 35분</span>
+                            </div>
+                            <h3>2026 AI 실무 워크북<br>(AI Workshop)</h3>
+                            <p>업무 효율화의 완성을 위한 가이드북입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">🔗 열람 가능</span>
+                            <span class="download-link">확인하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 6 -->
+                    <a href="data/landing_page_guide.html" target="_blank" class="archive-card" data-audience="pastor">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge info">목회자용</span>
+                                <span class="badge-diff easy">입문</span>
+                                <span class="badge-time">⏱️ 약 15분</span>
+                            </div>
+                            <h3>랜딩페이지란 무엇인가?<br>(Landing Page Guide)</h3>
+                            <p>목회자를 위한 랜딩페이지 제작 가이드입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">🔗 열람 가능</span>
+                            <span class="download-link">확인하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 7 -->
+                    <a href="data/welfare_landing_guide.html" target="_blank" class="archive-card important" data-audience="welfare">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge info">사회복지사용</span>
+                                <span class="badge-diff easy">입문</span>
+                                <span class="badge-time">⏱️ 약 25분</span>
+                            </div>
+                            <h3>장애인 사회복지사를 위한<br>랜딩페이지 워크북</h3>
+                            <p>90분 안에 끝내는 디지털 복지 소통의 첫걸음 (Canva · GitHub · Gemini)</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">📋 워크북</span>
+                            <span class="download-link">열람하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 8 -->
+                    <a href="data/github.html" target="_blank" class="archive-card important" data-audience="general">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge info">배포 실무</span>
+                                <span class="badge-diff medium">중급</span>
+                                <span class="badge-time">⏱️ 약 20분</span>
+                            </div>
+                            <h3>깃허브 랜딩페이지 구축<br>(GitHub Pages)</h3>
+                            <p>제미나이 생성 코드를 깃허브 웹사이트로 무료 배포하는 15단계 안내입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">📄 인포그래픽</span>
+                            <span class="download-link">열람하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 9 -->
+                    <a href="data/rd_aistudio.html" target="_blank" class="archive-card" data-audience="pastor">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge info">교회 적용</span>
+                                <span class="badge-diff easy">입문</span>
+                                <span class="badge-time">⏱️ 약 15분</span>
+                            </div>
+                            <h3>라온동행교회 AI 활용법</h3>
+                            <p>라온동행교회 교인들을 위한 AI 사용 방법 안내입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">🔗 열람 가능</span>
+                            <span class="download-link">확인하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 10 -->
+                    <a href="data/aistudio.html" target="_blank" class="archive-card" data-audience="general">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge info">도구 활용</span>
+                                <span class="badge-diff medium">중급</span>
+                                <span class="badge-time">⏱️ 약 25분</span>
+                            </div>
+                            <h3>AI스튜디오 활용법<br>(AI Studio)</h3>
+                            <p>Google AI Studio 사용 방법 안내입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">🔗 열람 가능</span>
+                            <span class="download-link">확인하기 ↗️</span>
+                        </div>
+                    </a>
+
+                    <!-- 11 -->
+                    <a href="data/easypastor.html" target="_blank" class="archive-card" data-audience="pastor">
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="badge info">신학 비서</span>
+                                <span class="badge-diff hard">고급</span>
+                                <span class="badge-time">⏱️ 약 30분</span>
+                            </div>
+                            <h3>미래 목회를 위한 AI 신학 비서<br>(Easy Pastor)</h3>
+                            <p>NotebookLM 및 Gemini 통합 나만의 신학 비서 구축 가이드입니다.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="file-type">🔗 열람 가능</span>
+                            <span class="download-link">확인하기 ↗️</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="archive-group" style="margin-top: 48px;">
+                    <h3 class="archive-group-title">💬 소통 및 피드백 (Community & Q&A)</h3>
+                    <div class="archive-grid" style="display: flex; justify-content: center;">
+                        <a href="https://kaa-hub.vercel.app/qa" target="_blank" class="archive-card important" style="max-width: 450px; width: 100%;">
+                            <div>
+                                <span class="badge info">Board</span>
+                                <h3>자주 묻는 질문 (Q&A)<br>게시판 바로가기</h3>
+                                <p>궁금한 점이나 새로운 교육 요청을 남겨주시면 연구소에서 성심껏 답변해 드립니다.</p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="file-type">💬 자유 게시판</span>
+                                <span class="download-link">질문 및 의견 남기기 ↗️</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Founders ================= -->
+        <section class="section founder-section">
+            <div class="container fade-up">
+                <span class="founder-title">Co-Representative</span>
+                <h2 class="founder-name">김태주 공동대표</h2>
+                <div class="founder-bio">
+                    <p>
+                        "혁신적인 디지털 기술이 시대를 이끌어가는 가운데, 누구도 소외받지 않고 새로운 미래를 준비할 수 있도록<br>
+                        따뜻한 기술과 통찰력을 제공하는 한국AI연구소가 되겠습니다."
+                    </p>
+                </div>
+                <div class="founder-history">
+                    <h4>주요 학력 및 경력</h4>
+                    <ul>
+                        <li>성결대학교 신학과</li>
+                        <li>서울신학대학교 대학원</li>
+                        <li>현) 한국AI연구소 공동대표</li>
+                        <li>현) 열방위에서는교회 담임목사</li>
+                        <li>다수의 IT 솔루션 기획 및 AI 비즈니스 컨설팅 수행</li>
+                        <li>세컨드 브레인을 위한 옵시디언 강의 전문</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section founder-section">
+            <div class="container fade-up">
+                <span class="founder-title">Co-Representative</span>
+                <h2 class="founder-name">이광복 공동대표</h2>
+                <div class="founder-bio">
+                    <p>
+                        "기술은 결국 사람을 향해야 하며, 그 변화의 시작은 끊임없는 배움과 열정에서 시작된다고 믿습니다.<br>
+                        한국AI연구소는 여러분의 잠재력이 기술이라는 날개를 달아 높이 비상할 수 있도록 가장 가까운 곳에서 조력하겠습니다.<br>
+                        지속 가능한 성장을 꿈꾸는 모든 파트너와 함께, 혁신 그 이상의 가치를 실현하는 길을 걷겠습니다."
+                    </p>
+                </div>
+                <div class="founder-history">
+                    <h4>주요 학력 및 경력</h4>
+                    <ul>
+                        <li>서울신학대학교 신학과</li>
+                        <li>서울신학대학교 신학대학원</li>
+                        <li>현) 한국AI연구소 공동대표</li>
+                        <li>현) 로스터리 카페 라온트리 대표</li>
+                        <li>현) 라온동행교회 담임목사</li>
+                        <li>직업별 AI 맞춤 컨설팅 및 강의 전문</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Contact ================= -->
+        <section class="section" id="contact">
+            <div class="container fade-up">
+                <h2 class="section-title">오시는 길 & 연락처</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <span class="label">주소</span>
+                            <span class="value">경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 3층</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">전화</span>
+                            <span class="value">010-5606-0845</span>
+                        </div>
+                        <div class="map-btns">
+                            <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%BC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
+                                target="_blank" class="btn" style="background-color: #03C75A; color: #fff; border: none;">네이버 지도</a>
+                            <a href="https://map.kakao.com/link/search/경기부천시소사구소사본동소삼로36번길6"
+                                target="_blank" class="btn" style="background-color: #FEE500; color: #000; border: none;">카카오 맵</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="footer-declaration">
+                한국AI연구소<br>
+                미래를 향한 실용적 통찰을 나눕니다.
+            </p>
+            <p class="footer-copy">© 2026 Korea AI Research Institute. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+
 </html>

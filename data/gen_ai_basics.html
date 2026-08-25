@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생성형 AI 기초 과정 (Generative AI Basics) | 한국AI연구소</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#154c79',
+                        accent: '#2b7bc6',
+                        dark: '#0c2b44',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0c2b44 0%, #154c79 50%, #1e3a8a 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+        }
+
+        .prompt-box {
+            background: #f1f5f9;
+            border-left: 4px solid #2b7bc6;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #2b7bc6;
+            color: #ffffff;
+            border-color: #2b7bc6;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 leading-relaxed">
+
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 py-3.5 px-4 shadow-sm">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-slate-800 hover:text-blue-600 transition">
+                <span class="text-xl">🤖</span>
+                <span class="text-base font-extrabold text-blue-900">한국AI연구소 아카이브</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="#prompts" class="text-xs sm:text-sm font-semibold text-slate-600 hover:text-blue-600 py-1.5 px-3 rounded-lg hover:bg-slate-100 transition">실무 프롬프트</a>
+                <a href="#safety" class="text-xs sm:text-sm font-semibold text-slate-600 hover:text-blue-600 py-1.5 px-3 rounded-lg hover:bg-slate-100 transition">보안 수칙</a>
+                <a href="/" class="text-xs sm:text-sm font-bold bg-blue-600 text-white py-1.5 px-3.5 rounded-full hover:bg-blue-700 transition">← 자료실 홈</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16 sm:py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-blue-200 text-xs sm:text-sm font-semibold mb-6 border border-white/20">
+                <i class="fa-solid fa-graduation-cap"></i> 2026 생성형 AI 기초 과정
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                생성형 AI 기초 과정<br>
+                <span class="text-blue-300">ChatGPT & Gemini 실무 활용 마스터</span>
+            </h1>
+            <p class="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed mb-8">
+                단순한 질문을 넘어, AI를 나의 전담 비서이자 실무 조력자로 활용하는 핵심 프롬프트 원칙과 데이터 보안 수칙을 배웁니다.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-xs sm:text-sm text-slate-300">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-amber-400"></i> 소요시간: 약 20분</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-blue-400"></i> 난이도: 입문</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-user-check text-emerald-400"></i> 대상: AI를 업무에 쓰고 싶은 누구나</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-4xl mx-auto py-12 px-4 space-y-12">
+
+        <!-- Module 1: AI 패러다임 전환 -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl card-shadow border border-slate-100">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 font-bold flex items-center justify-center font-mono">01</span>
+                <h2 class="text-2xl font-bold text-slate-800">질문자에서 '지휘자'로의 패러다임 전환</h2>
+            </div>
+            <p class="text-slate-600 mb-6">
+                생성형 AI는 단순히 인터넷 지식을 검색하는 도구가 아닙니다. 문맥(Context)을 이해하고, 주어진 조건에 맞춰 보고서·기획서·설교문·메일 초안을 새롭게 창조해 내는 <strong>'지능형 조력자'</strong>입니다.
+            </p>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-xmark text-rose-500"></i> 기존의 검색형 질문 (초보)
+                    </h3>
+                    <p class="text-sm text-slate-600">"소그룹 나눔 질문 어떻게 만들어?"</p>
+                    <p class="text-xs text-rose-600 mt-2 font-semibold">→ 뻔하고 인터넷에 흔히 있는 일반적인 답변만 출력됨</p>
+                </div>
+                <div class="p-4 rounded-xl bg-blue-50 border border-blue-200">
+                    <h3 class="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-500"></i> 실무형 목표 지시 (프로)
+                    </h3>
+                    <p class="text-sm text-slate-700 font-medium">"너는 20년 차 목회자야. 3040 청장년 소그룹을 위한 로마서 8장 나눔 질문 3개를 일상 적용 위주로 표 형식으로 작성해줘."</p>
+                    <p class="text-xs text-emerald-700 mt-2 font-semibold">→ 역할, 맥락, 조건이 반영된 즉시 사용 가능한 결과물 생성</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 2: ACTF 4원칙 -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl card-shadow border border-slate-100" id="prompts">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 font-bold flex items-center justify-center font-mono">02</span>
+                <h2 class="text-2xl font-bold text-slate-800">프롬프트 작성의 황금 공식: ACTF 원칙</h2>
+            </div>
+            <p class="text-slate-600 mb-6">
+                최고의 답변을 이끌어내기 위해 반드시 포함해야 할 4가지 필수 요소입니다.
+            </p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="p-4 rounded-xl bg-slate-50 border-t-4 border-blue-600 shadow-sm">
+                    <div class="text-xs font-bold text-blue-600 uppercase mb-1">A - Act As (역할)</div>
+                    <h4 class="font-bold text-slate-800 mb-2">역할 부여</h4>
+                    <p class="text-xs text-slate-600">AI에게 전문성 있는 페르소나를 지정합니다. (예: 10년차 행정기획관, 신학 교수)</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border-t-4 border-indigo-600 shadow-sm">
+                    <div class="text-xs font-bold text-indigo-600 uppercase mb-1">C - Context (배경)</div>
+                    <h4 class="font-bold text-slate-800 mb-2">상황 및 배경</h4>
+                    <p class="text-xs text-slate-600">누구를 위한 작업인지, 어떤 상황인지 맥락을 구체적으로 제공합니다.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border-t-4 border-emerald-600 shadow-sm">
+                    <div class="text-xs font-bold text-emerald-600 uppercase mb-1">T - Task (임무)</div>
+                    <h4 class="font-bold text-slate-800 mb-2">구체적 할 일</h4>
+                    <p class="text-xs text-slate-600">수행해야 할 작업의 명확한 목표와 핵심 기준을 지시합니다.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border-t-4 border-amber-600 shadow-sm">
+                    <div class="text-xs font-bold text-amber-600 uppercase mb-1">F - Format (형식)</div>
+                    <h4 class="font-bold text-slate-800 mb-2">출력 포맷</h4>
+                    <p class="text-xs text-slate-600">표, 개요 불릿 포인트, 보고서 형식 등 원하는 출력 구조를 지정합니다.</p>
+                </div>
+            </div>
+
+            <!-- Practical Copyable Prompts -->
+            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-copy text-blue-600"></i> 실전 업무용 복사 프롬프트 템플릿
+            </h3>
+
+            <div class="space-y-4">
+                <div class="prompt-box p-4">
+                    <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 1: 회의록 요약 및 액션 플랜 추출</span>
+                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 전문 기획관이야. (Act as)
+아래의 회의 녹취록을 읽고 이번 주 사역 회의 결과를 정리해줘. (Context)
+1. 핵심 결정 사항 3가지
+2. 담당자별 액션 아이템 및 마감 기한
+3. 차주 안건을 추출해줘. (Task)
+결과는 담당자가 한눈에 보기 편하도록 표(Table) 형식과 마크다운 글머리 기호로 정리해줘. (Format)</pre>
+                </div>
+
+                <div class="prompt-box p-4">
+                    <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 2: 목회/교육 행사 기획안 작성</span>
+                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 15년 차 교회 교육 총괄 디렉터야. (Act as)
+올해 여름 청년부 수련회를 준비 중이며, 주제는 '회복과 동행'이야. (Context)
+2박 3일 일정의 타임테이블, 주요 프로그램 아이디어 4개, 준비물 체크리스트를 작성해줘. (Task)
+각 프로그램별 예상 소요시간과 목표를 포함한 개요표로 구성해줘. (Format)</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Security & Privacy -->
+        <section class="bg-white p-6 sm:p-8 rounded-2xl card-shadow border border-slate-100" id="safety">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 font-bold flex items-center justify-center font-mono">03</span>
+                <h2 class="text-2xl font-bold text-slate-800">안전한 AI 활용을 위한 데이터 보안 수칙</h2>
+            </div>
+            <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 mb-6">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-xl mt-0.5"></i>
+                    <div>
+                        <h4 class="font-bold text-amber-900 mb-1">필수 확인 사항</h4>
+                        <p class="text-sm text-amber-800 leading-relaxed">
+                            서비스와 개인정보 설정에 따라 입력 내용이 모델 개선에 사용될 수 있으므로, 반드시 해당 서비스의 데이터 사용 설정을 확인하십시오.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                    <i class="fa-solid fa-id-card-clip text-2xl text-blue-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">민감 개인정보 입력 금지</h4>
+                    <p class="text-xs text-slate-600">주민번호, 전화번호, 실명, 재정 장부 등 민감 정보는 가명 처리 후 입력</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                    <i class="fa-solid fa-sliders text-2xl text-indigo-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">데이터 공유 옵션 OFF</h4>
+                    <p class="text-xs text-slate-600">ChatGPT, Claude, Gemini 설정에서 '모델 학습 활용' 비활성화</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                    <i class="fa-solid fa-magnifying-glass-chart text-2xl text-emerald-600 mb-2"></i>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">환각(Hallucination) 검증</h4>
+                    <p class="text-xs text-slate-600">성경 구절 장/절, 역사적 수치, 통계 자료는 반드시 직접 재확인</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Steps Banner -->
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 rounded-2xl text-center">
+            <h3 class="text-2xl font-bold mb-2">기초를 마쳤다면, 다음 단계로 나아가세요!</h3>
+            <p class="text-blue-200 text-sm mb-6 max-w-lg mx-auto">
+                나만의 맞춤형 신학 비서 구축 또는 코딩 없이 사역용 웹앱을 만드는 바이브코딩 워크숍을 확인하세요.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/data/easypastor.html" class="bg-white text-blue-900 font-bold px-5 py-2.5 rounded-xl hover:bg-blue-50 transition text-sm">
+                    나만의 AI 신학비서 (Easy Pastor) ↗
+                </a>
+                <a href="/data/vibe_coding_workshop.html" class="bg-blue-600 text-white font-bold px-5 py-2.5 rounded-xl hover:bg-blue-500 transition text-sm">
+                    바이브코딩 워크숍 바로가기 ↗
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white py-8 px-4 text-center text-xs text-slate-500">
+        <p>© 2026 Korea AI Research Institute. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function copyPrompt(btn) {
+            const pre = btn.parentElement.querySelector('pre');
+            const text = pre.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = '복사 완료! ✓';
+                btn.style.backgroundColor = '#16a34a';
+                btn.style.color = '#ffffff';
+                btn.style.borderColor = '#16a34a';
+                setTimeout(() => {
+                    btn.innerText = orig;
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 1800);
+            });
+        }
+    </script>
+</body>
+
+</html>
