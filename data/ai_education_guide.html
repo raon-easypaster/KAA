@@ -183,14 +183,69 @@
 
             <div class="grid grid-cols-1 gap-5">
                 
-                <!-- 2-1 -->
-                <div class="point-card space-y-2">
-                    <h3 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
-                        <i class="fa-solid fa-pen-ruler text-indigo-600"></i> 1. 기본적인 프롬프트 작성 원칙을 숙지하세요
-                    </h3>
-                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
-                        AI에게 역할을 부여하고(예: "너는 10년 차 기획자야"), 배경 상황을 설명하며, 원하는 출력 형식(표, 개요 등)을 명확히 지정할수록 결과물의 질이 달라집니다.
-                    </p>
+                <!-- 2-1: 좋은 질문의 4가지 원칙 (ACTF) -->
+                <div class="point-card space-y-4 border-l-4 border-l-indigo-600 bg-white">
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-extrabold text-indigo-950 flex items-center gap-2">
+                            <i class="fa-solid fa-pen-ruler text-indigo-600"></i> 1. 좋은 질문의 4가지 원칙 (ACTF)
+                        </h3>
+                        <p class="text-slate-600 text-sm sm:text-base mt-1">
+                            역할, 배경, 임무, 형식을 구체적으로 지정할수록 AI 결과물의 완성도와 사역 적합성이 획기적으로 높아집니다.
+                        </p>
+                    </div>
+
+                    <!-- 4 ACTF Grid Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
+                        
+                        <!-- A: Act as -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 hover:border-amber-400 transition">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base font-bold">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm sm:text-base">Act as (역할)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                AI에게 구체적인 페르소나를 부여하세요.<br>
+                                <span class="text-amber-800 font-semibold block mt-1">예: "20년 차 목회자로서..."</span>
+                            </p>
+                        </div>
+
+                        <!-- C: Context -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 hover:border-amber-400 transition">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base font-bold">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm sm:text-base">Context (배경)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                상황을 상세히 설명하세요.<br>
+                                <span class="text-amber-800 font-semibold block mt-1">예: "우리 교회는 3040 세대가 주축이며..."</span>
+                            </p>
+                        </div>
+
+                        <!-- T: Task -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 hover:border-amber-400 transition">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base font-bold">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm sm:text-base">Task (임무)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                해야 할 일을 명확히 지시하세요.<br>
+                                <span class="text-amber-800 font-semibold block mt-1">예: "4주 분량의 성경공부 교안을 작성해줘."</span>
+                            </p>
+                        </div>
+
+                        <!-- F: Format -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 hover:border-amber-400 transition">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base font-bold">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm sm:text-base">Format (형식)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                원하는 결과물의 형태를 정하세요.<br>
+                                <span class="text-amber-800 font-semibold block mt-1">예: "표(Table) 형식으로 정리해줘."</span>
+                            </p>
+                        </div>
+
+                    </div>
                 </div>
 
                 <!-- 2-2: 질문에서 목표로의 전환 -->
