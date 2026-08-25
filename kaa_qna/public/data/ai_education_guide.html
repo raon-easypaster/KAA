@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>목회자와 사역자를 위한 AI 교육 가이드: 캡처와 커스터마이징</title>
+    <title>목회자와 사역자를 위한 AI 교육 가이드</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -17,11 +17,8 @@
                         sans: ['Pretendard', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#0f172a',    // Slate 900
-                        accent: '#2563eb',     // Blue 600
-                        capture: '#0284c7',    // Sky 600
-                        custom: '#7c3aed',     // Purple 600
-                        highlight: '#f59e0b',  // Amber 500
+                        brand: '#1e3a8a',
+                        highlight: '#f59e0b',
                     }
                 }
             }
@@ -32,10 +29,10 @@
             font-family: 'Pretendard', sans-serif;
             background-color: #f8fafc;
             color: #0f172a;
-            line-height: 1.7;
+            line-height: 1.75;
         }
 
-        .chapter-badge {
+        .step-badge {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -47,343 +44,305 @@
             flex-shrink: 0;
         }
 
-        .prompt-card {
-            background-color: #0f172a;
-            color: #f1f5f9;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            position: relative;
-            border: 1px solid #1e293b;
+        .point-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            transition: all 0.2s ease;
         }
 
-        .gradient-border-capture {
-            border-left: 6px solid #0284c7;
+        .point-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.08);
         }
 
-        .gradient-border-custom {
-            border-left: 6px solid #7c3aed;
-        }
-
-        .key-quote {
-            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(124,58,237,0.05) 100%);
-            border-left: 4px solid #3b82f6;
+        .quote-box {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-200">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-200">
 
-    <!-- Top Sticky Bar -->
-    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3.5 flex justify-between items-center">
-            <a href="/" class="flex items-center space-x-2 font-black text-slate-900 text-lg sm:text-xl tracking-tight">
+    <!-- Top Navigation Header -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2 font-black text-slate-900 text-lg hover:opacity-80 transition">
                 <span>🤖</span>
                 <span>한국AI연구소</span>
             </a>
             <div class="flex items-center space-x-3 text-sm">
-                <a href="/" class="text-slate-600 hover:text-slate-900 font-medium">← 아카이브 홈</a>
-                <a href="/qa" class="bg-slate-900 text-white px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-800 transition">Q&A 질문방</a>
+                <a href="/" class="text-slate-600 hover:text-blue-700 font-medium">← 아카이브 홈</a>
+                <a href="/qa" class="bg-blue-50 text-blue-700 px-3.5 py-1.5 rounded-lg border border-blue-200 font-semibold hover:bg-blue-100 transition text-xs sm:text-sm">Q&A 게시판</a>
             </div>
         </div>
     </header>
 
-    <!-- Hero Header -->
-    <section class="bg-slate-950 text-white py-16 sm:py-24 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.2),transparent_50%)]"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.2),transparent_50%)]"></div>
-        
-        <div class="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-            <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/30 px-4 py-1.5 rounded-full text-blue-300 text-xs sm:text-sm font-bold tracking-wide">
-                <i class="fa-solid fa-lightbulb text-amber-400"></i> 목회자 & 사역자를 위한 AI 실무 핵심 가이드
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-12">
+
+        <!-- Hero Header -->
+        <header class="text-center space-y-6 pt-4">
+            <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full text-blue-700 text-sm font-bold tracking-wide">
+                <span>💡</span> 목회자와 사역자를 위한 AI 교육 가이드
             </div>
             
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                AI 활용의 시작은 <span class="text-sky-400">‘캡처’</span>이며,<br>
-                완성은 <span class="text-purple-400">‘커스터마이징’</span>이다
+            <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                목회자와 사역자를 위한<br class="hidden sm:block">
+                <span class="text-blue-600">AI 교육 핵심 포인트</span>
             </h1>
-            
-            <p class="text-slate-300 text-base sm:text-xl max-w-3xl mx-auto leading-relaxed font-light">
-                남들과 똑같은 일반 질문을 던지면 AI도 뻔한 대답만 내놓습니다.<br class="hidden sm:block">
-                목회자의 고유한 일상과 묵상을 <strong class="text-white font-semibold">캡처</strong>하고, 나만의 목회 철학으로 <strong class="text-white font-semibold">커스터마이징</strong>해야 진정한 사역의 동역자가 됩니다.
-            </p>
 
-            <div class="flex flex-wrap justify-center gap-3.5 pt-4">
-                <a href="#core-capture" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-sky-600/30 transition flex items-center gap-2 text-sm sm:text-base">
-                    <i class="fa-solid fa-camera"></i> 1. 왜 캡처가 중요한가?
-                </a>
-                <a href="#core-custom" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-purple-600/30 transition flex items-center gap-2 text-sm sm:text-base">
-                    <i class="fa-solid fa-sliders"></i> 2. 나만의 AI 커스터마이징
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Two Core Pillars Grid -->
-    <section class="max-w-5xl mx-auto px-4 -mt-8 relative z-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Pillar 1: Capture -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl border border-slate-200/80 gradient-border-capture space-y-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl font-black">
-                        <i class="fa-solid fa-inbox"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Pillar 01</span>
-                        <h2 class="text-xl font-black text-slate-900">캡처(Capture)가 중요하다</h2>
-                    </div>
-                </div>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    AI에게 줄 <strong>인풋(Input)</strong>이 없으면 좋은 아웃풋도 없습니다. 설교 아이디어, 성경 묵상, 책의 한 구절, 성도와의 상담 통찰을 매일 캡처하여 나만의 지식 창고에 담아야 합니다.
+            <!-- Main Motto Quote Box -->
+            <div class="quote-box text-white p-8 rounded-3xl shadow-xl space-y-3 text-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-serif">✝</div>
+                <p class="text-2xl sm:text-3xl font-extrabold text-amber-300 tracking-tight">
+                    "AI는 부지런한 손, 목회자는 뜨거운 심장"
                 </p>
-                <div class="bg-sky-50 text-sky-950 p-4 rounded-xl text-xs font-medium space-y-1">
-                    <div>💡 <strong>핵심 공식:</strong> Garbage In, Garbage Out</div>
-                    <div>좋은 캡처 데이터 ➜ AI의 깊이 있는 설교·사역 통찰로 전환</div>
-                </div>
-            </div>
-
-            <!-- Pillar 2: Customization -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl border border-slate-200/80 gradient-border-custom space-y-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl font-black">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Pillar 02</span>
-                        <h2 class="text-xl font-black text-slate-900">커스터마이징(Customizing)이다</h2>
-                    </div>
-                </div>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    남들이 다 쓰는 범용 ChatGPT를 그대로 쓰지 마세요. 나의 목회 스타일, 우리 교회의 비전, 개혁주의·복음주의 신학 노선을 사전 학습시켜 <strong>나만을 위한 맞춤형 AI 비서</strong>로 길들여야 합니다.
-                </p>
-                <div class="bg-purple-50 text-purple-950 p-4 rounded-xl text-xs font-medium space-y-1">
-                    <div>🎯 <strong>핵심 목표:</strong> 나만의 목회 비서 구축</div>
-                    <div>Gems, GPTs, NotebookLM, AI Studio로 내 서재와 톤앤매너 이식</div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Main Body Container -->
-    <main class="max-w-5xl mx-auto px-4 py-16 space-y-16">
-
-        <!-- Section 1: Deep Dive on Capture -->
-        <section id="core-capture" class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 space-y-8">
-            <div class="flex items-start gap-4">
-                <span class="chapter-badge bg-sky-100 text-sky-700">1</span>
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900">왜 캡처(Capture)가 사역의 성패를 가르는가?</h2>
-                    <p class="text-slate-500 text-sm sm:text-base mt-1">세컨드 브레인(Second Brain)과 AI 사역의 출발점</p>
-                </div>
-            </div>
-
-            <!-- Key Insight Quote -->
-            <div class="key-quote p-6 rounded-2xl space-y-2">
-                <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-quote-left text-blue-500"></i> "뇌는 아이디어를 보관하는 곳이 아니라, 아이디어를 만들어내는 공장입니다."
-                </h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    목회자의 머릿속에 모든 설교 메모와 성도 심방 내용을 담아두려 하면 쉽게 번아웃이 옵니다. 영감이 스칠 때 즉시 <strong>‘외주화(캡처)’</strong>하여 기록해 두고, AI가 그것을 연결하고 확장하도록 만들어야 합니다.
+                <p class="text-slate-200 text-base sm:text-lg font-light leading-relaxed">
+                    AI는 일을 덜어주는 도구일 뿐, 사역의 중심은 언제나 목회자의 영성입니다.
                 </p>
             </div>
+        </header>
 
-            <!-- 4 Types of Ministry Capture -->
-            <div class="space-y-4">
-                <h3 class="font-bold text-slate-900 text-lg">📌 목회자가 매일 캡처해야 할 4가지 보물</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="border border-slate-200 p-5 rounded-xl bg-slate-50/70 hover:bg-sky-50/50 transition">
-                        <div class="font-bold text-slate-900 mb-1 flex items-center gap-2">
-                            <i class="fa-solid fa-book-bible text-sky-600"></i> 1. 말씀 묵상 & 떠오른 영감
-                        </div>
-                        <p class="text-xs text-slate-600">QT 중 스친 단상, 운전 중 문득 떠오른 비유, 새벽기도 때 마음에 맺힌 구절</p>
-                    </div>
-                    <div class="border border-slate-200 p-5 rounded-xl bg-slate-50/70 hover:bg-sky-50/50 transition">
-                        <div class="font-bold text-slate-900 mb-1 flex items-center gap-2">
-                            <i class="fa-solid fa-newspaper text-sky-600"></i> 2. 책 구절 & 사회 트렌드 기사
-                        </div>
-                        <p class="text-xs text-slate-600">독서 중 밑줄 친 문장, 성도들이 겪는 경제/사회적 현실에 관한 뉴스 스크랩</p>
-                    </div>
-                    <div class="border border-slate-200 p-5 rounded-xl bg-slate-50/70 hover:bg-sky-50/50 transition">
-                        <div class="font-bold text-slate-900 mb-1 flex items-center gap-2">
-                            <i class="fa-solid fa-comments text-sky-600"></i> 3. 성도들의 실제 질문과 아픔
-                        </div>
-                        <p class="text-xs text-slate-600">심방에서 만난 현대인의 고통, 청년들이 던지는 신앙적 회의와 고민 (익명화 필수)</p>
-                    </div>
-                    <div class="border border-slate-200 p-5 rounded-xl bg-slate-50/70 hover:bg-sky-50/50 transition">
-                        <div class="font-bold text-slate-900 mb-1 flex items-center gap-2">
-                            <i class="fa-solid fa-folder-open text-sky-600"></i> 4. 과거 설교문 & 교회 주보 아카이브
-                        </div>
-                        <p class="text-xs text-slate-600">지난 몇 년간 전한 설교 원고 PDF, 사역 계획서, 수련회 피드백 자료</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Capture Practical Tool Workflow -->
-            <div class="bg-slate-900 text-white p-6 rounded-2xl space-y-4">
-                <div class="font-bold text-sky-400 text-sm uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-bolt"></i> 추천 캡처 워크플로우 (3초 캡처법)
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm text-slate-300">
-                    <div class="bg-slate-800/80 p-4 rounded-xl">
-                        <strong class="text-white block mb-1">1. 스마트폰 음성/메모</strong>
-                        운전 중이나 길을 걷다 떠오른 영감은 스마트폰 음성 메모 또는 카톡 '나와의 채팅'에 바로 녹음·입력
-                    </div>
-                    <div class="bg-slate-800/80 p-4 rounded-xl">
-                        <strong class="text-white block mb-1">2. 옵시디언 / 노션 저장</strong>
-                        일주일에 한 번 모인 메모들을 '세컨드 브레인(옵시디언)' 또는 폴더별로 일괄 수집
-                    </div>
-                    <div class="bg-slate-800/80 p-4 rounded-xl">
-                        <strong class="text-white block mb-1">3. AI에 문맥(Context) 주입</strong>
-                        설교 작성 시 수집된 캡처 자료를 NotebookLM이나 Claude에 그대로 첨부하여 분석 요청
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Deep Dive on Customization -->
-        <section id="core-custom" class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 space-y-8">
-            <div class="flex items-start gap-4">
-                <span class="chapter-badge bg-purple-100 text-purple-700">2</span>
+        <!-- 1단계: 마인드셋 (Mindset) -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-3 border-b-2 border-blue-600 pb-3">
+                <span class="step-badge bg-blue-600 text-white">1</span>
                 <div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900">AI는 쓰는 것이 아니라 ‘커스터마이징’이다</h2>
-                    <p class="text-slate-500 text-sm sm:text-base mt-1">일반 AI를 나만의 전속 신학 연구 비서로 개조하는 기술</p>
+                    <h2 class="text-2xl font-black text-slate-900">1단계: AI를 대하는 새로운 마인드셋 (Mindset)</h2>
                 </div>
             </div>
 
-            <!-- Customization Concept -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="border border-rose-200 bg-rose-50/50 p-6 rounded-2xl space-y-2">
-                    <h3 class="font-bold text-rose-800 text-base flex items-center gap-2">
-                        <i class="fa-solid fa-xmark text-rose-500"></i> 일반적인 잘못된 사용법
-                    </h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        "주일 설교 예화 3개 써줘."<br>
-                        ➜ 결과: 인터넷에 떠도는 흔하고 진부하며 교리적 맥락 없는 뻔한 답변 출력.
-                    </p>
-                </div>
-                <div class="border border-purple-200 bg-purple-50/50 p-6 rounded-2xl space-y-2">
-                    <h3 class="font-bold text-purple-800 text-base flex items-center gap-2">
-                        <i class="fa-solid fa-check text-purple-600"></i> 커스터마이징된 사용법
-                    </h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        "너는 [내 교단/신학 노선]을 깊이 이해하는 목회 연구 비서야. [내가 캡처한 이번 주 묵상 노트]를 바탕으로, [3040 성도들의 고민]에 닿는 실생활 예화를 제안해줘."<br>
-                        ➜ 결과: 목회자의 심장과 성도의 삶이 담긴 맞춤형 원고 탄생.
-                    </p>
-                </div>
-            </div>
-
-            <!-- 3 Steps to Customize Your AI -->
-            <div class="space-y-4">
-                <h3 class="font-bold text-slate-900 text-lg">🛠️ 목회자 맞춤형 AI 커스터마이징 3단계</h3>
-                <div class="space-y-4">
-                    
-                    <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50 space-y-3">
-                        <div class="flex items-center gap-2 font-bold text-slate-900">
-                            <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs inline-flex items-center justify-center">1</span>
-                            페르소나 & 신학적 정체성 부여 (System Prompt)
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600">
-                            AI에게 복음주의 신학자이자 따뜻한 목회 동역자의 인격을 부여합니다. 말투와 신학적 관점을 고정시킵니다.
-                        </p>
-                        <div class="prompt-card text-xs sm:text-sm">
-                            <div class="text-purple-400 font-bold mb-1">// 💡 커스터마이징 프롬프트 예시</div>
-                            "너는 20년 경력의 개혁주의 복음주의 설교 코치이자 목회 신학 연구원이야.<br>
-                            모든 답변은 성경 본문의 문맥(Context)을 최우선으로 존중하며, 건전한 신학과 은혜 중심의 언어로 작성해줘.<br>
-                            설교문이나 칼럼을 작성할 때는 권위적이거나 건조한 어투 대신, 성도들을 향한 따뜻한 목자의 심정이 느껴지는 문체(해요체/하십시오체)를 유지해줘."
-                        </div>
-                    </div>
-
-                    <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50 space-y-3">
-                        <div class="flex items-center gap-2 font-bold text-slate-900">
-                            <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs inline-flex items-center justify-center">2</span>
-                            나만의 서재 자료(Grounding Data) 연결
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600">
-                            <strong>NotebookLM</strong>이나 <strong>Google AI Studio</strong>에 내가 평소 아끼는 주석, 신학 논문, 이전 설교집 PDF를 업로드하여 AI가 오직 내 서재 자료만을 기반으로 연구하도록 세팅합니다. (환각 방지 100%)
-                        </p>
-                    </div>
-
-                    <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50 space-y-3">
-                        <div class="flex items-center gap-2 font-bold text-slate-900">
-                            <span class="w-6 h-6 rounded-full bg-purple-600 text-white text-xs inline-flex items-center justify-center">3</span>
-                            사역별 전용 AI 봇(Gems / Custom GPTs) 만들기
-                        </div>
-                        <p class="text-xs sm:text-sm text-slate-600">
-                            '설교 퇴고 전용 봇', '소그룹 질문지 제작 봇', '주보 디자인 카피 봇'처럼 반복되는 사역 업무별로 전용 비서를 하나씩 만들어 둡니다.
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Practical Ministry Toolkit -->
-        <section class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 space-y-8">
-            <div class="flex items-start gap-4">
-                <span class="chapter-badge bg-amber-100 text-amber-700">3</span>
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900">목회 실무 적용 핵심 치트시트</h2>
-                    <p class="text-slate-500 text-sm sm:text-base mt-1">즉시 복사해서 쓸 수 있는 상황별 프롬프트</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 gap-5">
                 
-                <!-- Toolkit Card 1 -->
-                <div class="border border-slate-200 p-6 rounded-2xl space-y-3 bg-slate-50/60">
-                    <div class="flex items-center gap-2 font-bold text-slate-900">
-                        <i class="fa-solid fa-cross text-blue-600"></i> 설교 본문 원어 주해 & 핵심 질문
-                    </div>
-                    <div class="prompt-card text-xs">
-                        "[본문: 로마서 8:26-30]<br>
-                        1. 본문에 등장하는 헬라어 주요 단어 원문과 문법적 뉘앙스를 정리해줘.<br>
-                        2. 당시 성도들이 겪던 고난의 배경과 연결하여 본문의 위로를 설명해줘.<br>
-                        3. 성도들이 설교 후 품고 갈 '결단 질문' 2가지를 만들어줘."
+                <!-- 1-1 -->
+                <div class="point-card space-y-3">
+                    <h3 class="text-lg font-extrabold text-blue-900 flex items-center gap-2">
+                        <i class="fa-solid fa-bicycle text-blue-600"></i> 1. AI는 '공부'가 아니라 '경험'입니다 (자전거 타기)
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        이론을 외우는 것이 아니라, 자전거를 처음 배울 때처럼 넘어지면서 감을 익히는 과정입니다. 완벽하게 이해한 뒤 시작하려 하지 마십시오. 일단 로그인하고 무엇이든 타이핑하며 익숙해지는 것이 첫걸음입니다.
+                    </p>
+                </div>
+
+                <!-- 1-2 -->
+                <div class="point-card space-y-3 border-l-4 border-l-amber-500">
+                    <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-face-smile text-amber-500"></i> 2. AI는 '눈치'가 없고, 인간은 '염치'가 없어야 합니다
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 text-sm">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 block mb-1">🤖 AI의 무눈치</strong>
+                            <p class="text-slate-600">AI는 알아서 척척 해주지 않습니다. 정확하고 구체적으로 명령한 대로만 결과를 내놓습니다.</p>
+                        </div>
+                        <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-200/80">
+                            <strong class="text-amber-900 block mb-1">🙋 인간의 몰염치</strong>
+                            <p class="text-slate-700">AI에게 미안해할 필요가 없습니다. 원하는 결과가 나올 때까지 계속 지시하고 수정하고 요구하는 뻔뻔함이 필요합니다.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Toolkit Card 2 -->
-                <div class="border border-slate-200 p-6 rounded-2xl space-y-3 bg-slate-50/60">
-                    <div class="flex items-center gap-2 font-bold text-slate-900">
-                        <i class="fa-solid fa-users-line text-purple-600"></i> 소그룹 구역/순 나눔 질문지
-                    </div>
-                    <div class="prompt-card text-xs">
-                        "[설교 요약문 입력]<br>
-                        위 설교 내용을 바탕으로 30분 소그룹 나눔 질문지를 만들어줘.<br>
-                        - 마음 열기(아이스브레이킹): 1개<br>
-                        - 말씀 발견(본문 내용 확인): 1개<br>
-                        - 삶의 실천(이번 주 행동 결단): 1개"
-                    </div>
+                <!-- 1-3 -->
+                <div class="point-card space-y-3">
+                    <h3 class="text-lg font-extrabold text-blue-900 flex items-center gap-2">
+                        <i class="fa-solid fa-user-tie text-blue-600"></i> 3. 단순한 '도구'를 넘어 '똑똑한 비서'로 대하십시오
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        AI를 단순 계산기나 검색 엔진처럼 쓰지 마십시오. 나와 대화하며 아이디어를 발전시키고 초안을 작성해 주는 훌륭한 파트너이자 비서로 활용해야 합니다.
+                    </p>
                 </div>
 
             </div>
         </section>
 
-        <!-- Bottom CTA -->
-        <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl border border-slate-800">
-            <h2 class="text-2xl sm:text-4xl font-black">스마트한 AI로 더 깊은 영성의 사역을 펼치세요</h2>
-            <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base font-light">
-                한국AI연구소는 목회자와 사역자들의 사역 현장에 가장 실용적이고 윤리적인 AI 맞춤 가이드를 지속적으로 제공합니다.
+        <!-- 2단계: 소통 기술 (Communication & Prompting) -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-3 border-b-2 border-indigo-600 pb-3">
+                <span class="step-badge bg-indigo-600 text-white">2</span>
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900">2단계: AI와 소통하는 기술 (Communication & Prompting)</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5">
+                
+                <!-- 2-1 -->
+                <div class="point-card space-y-2">
+                    <h3 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-ruler text-indigo-600"></i> 1. 기본적인 프롬프트 작성 원칙을 숙지하세요
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        AI에게 역할을 부여하고(예: "너는 10년 차 기획자야"), 배경 상황을 설명하며, 원하는 출력 형식(표, 개요 등)을 명확히 지정할수록 결과물의 질이 달라집니다.
+                    </p>
+                </div>
+
+                <!-- 2-2 -->
+                <div class="point-card space-y-2 bg-indigo-50/30">
+                    <h3 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
+                        <i class="fa-solid fa-arrows-rotate text-indigo-600"></i> 2. 질문하는 방법을 AI에게 역으로 질문하세요 (메타 프롬프팅)
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        <span class="bg-indigo-100 text-indigo-900 font-semibold px-2 py-0.5 rounded">"내가 ○○에 대한 좋은 답변을 얻고 싶은데, 너에게 어떤 정보와 질문을 주면 될까?"</span>라고 물어보세요. AI가 스스로 가장 답변하기 좋은 질문 양식을 만들어 줍니다.
+                    </p>
+                </div>
+
+                <!-- 2-3 -->
+                <div class="point-card space-y-2">
+                    <h3 class="text-lg font-extrabold text-indigo-900 flex items-center gap-2">
+                        <i class="fa-solid fa-table-tennis-paddle-ball text-indigo-600"></i> 3. 탁구 치듯 대화하세요 (핑퐁 대화법)
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        한 번의 질문으로 완벽한 답을 얻으려 하지 마십시오. AI가 내놓은 60점짜리 초안을 두고 "이 부분을 더 부드럽게 고쳐줘", "이 예시를 추가해 줘"라며 지속적인 티키타카로 100점짜리 결과물을 완성해 갑니다.
+                    </p>
+                </div>
+
+                <!-- 2-4 -->
+                <div class="point-card space-y-2 border-l-4 border-l-sky-500">
+                    <h3 class="text-lg font-extrabold text-sky-900 flex items-center gap-2">
+                        <i class="fa-solid fa-camera text-sky-600"></i> 4. 화면 캡처로 시각적 질문하기
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        말로 길게 설명하기 어려운 오류 화면이나 복잡한 문서는 <strong>캡처 이미지</strong>로 보여주세요. AI가 이미지를 분석하여 훨씬 정확하고 빠르게 상황을 파악하고 해결책을 제시합니다.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3단계: 실무 적용 (Application) -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-3 border-b-2 border-purple-600 pb-3">
+                <span class="step-badge bg-purple-600 text-white">3</span>
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900">3단계: 실무 적용 (Application)</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5">
+                
+                <!-- 3-1 -->
+                <div class="point-card space-y-2 border-l-4 border-l-purple-500 bg-purple-50/20">
+                    <h3 class="text-lg font-extrabold text-purple-900 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-purple-600"></i> 1. 나만의 AI로 커스터마이징 하세요
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        범용적인 사용을 넘어, 나의 목회 스타일, 설교 톤앤매너, 행정 업무 방식에 맞춰 AI를 훈련시키고 최적화하는 것이 핵심입니다. <span class="text-purple-700 font-medium">(예: 과거 내 설교문 10편을 입력하여 내 문체를 학습시키기)</span>
+                    </p>
+                </div>
+
+                <!-- 3-2 -->
+                <div class="point-card space-y-2">
+                    <h3 class="text-lg font-extrabold text-purple-900 flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-hand text-purple-600"></i> 2. 일 잘하는 AI에게 위임하세요
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        반복적이고 소모적인 행정, 기획 등의 업무는 과감히 AI에게 맡기십시오. 목회자는 사람만이 할 수 있는 일에 집중해야 합니다.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4단계: 목회자의 책임 (Responsibility) -->
+        <section class="space-y-6">
+            <div class="flex items-center gap-3 border-b-2 border-rose-600 pb-3">
+                <span class="step-badge bg-rose-600 text-white">4</span>
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900">4단계: 목회자의 책임 (Responsibility)</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5">
+                
+                <!-- 4-1 -->
+                <div class="point-card space-y-2 bg-rose-50/30 border-rose-200">
+                    <h3 class="text-lg font-extrabold text-rose-900 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> 1. 할루시네이션(환각 현상)은 반드시 검증해야 합니다
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        AI는 때때로 그럴듯한 거짓말을 합니다. 얻은 정보는 목회자 스스로 사실 관계를 확인해야 하며, 챗GPT·클로드(Claude)·제미나이(Gemini) 등 다른 AI와 교차 검증하는 습관을 가져야 합니다. <strong class="text-rose-800 font-semibold">특히 성경 구절, 인용, 신학 정보는 그대로 신뢰하지 마십시오.</strong>
+                    </p>
+                </div>
+
+                <!-- 4-2 -->
+                <div class="point-card space-y-2 bg-amber-50/30 border-amber-200">
+                    <h3 class="text-lg font-extrabold text-amber-950 flex items-center gap-2">
+                        <i class="fa-solid fa-heart text-amber-600"></i> 2. 업무는 AI가, '영성'은 목회자가 감당합니다
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                        AI는 자료 조사, 설교 초안 구성, 행정 문서 작성 등 '효율성'의 영역을 책임집니다. 그러나 성도를 향한 공감, 기도의 눈물, 영적 통찰은 결코 대체할 수 없습니다. AI로 확보한 시간과 에너지를 목회자 본연의 <strong class="text-amber-900 font-semibold">'영성'</strong>과 <strong class="text-amber-900 font-semibold">'관계'</strong>에 쏟아야 합니다.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Final Encouragement Banner -->
+        <section class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-8 sm:p-10 rounded-3xl text-center space-y-4 shadow-xl">
+            <h3 class="text-xl sm:text-2xl font-black text-amber-300">
+                "자, 이제 두려움을 내려놓고 새로운 AI 비서에게 첫인사를 건네보세요!"
+            </h3>
+            <p class="text-slate-300 text-sm sm:text-base">
+                작은 질문 하나부터 시작해 보세요. 사역의 새로운 지평이 열립니다.
             </p>
-            <div class="flex flex-wrap justify-center gap-4 pt-2">
-                <a href="/" class="bg-white text-slate-900 hover:bg-slate-100 font-bold px-8 py-3.5 rounded-xl shadow transition">
-                    자료실 메인으로
-                </a>
-                <a href="https://padlet.com/galeb76/ai-ojb7gl4pw8rczcm1/wish/j40PQDyJzqnDZvXB" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-xl transition border border-blue-400/30">
-                    목회자 세미나 패들릿 바로가기 ↗️
-                </a>
+        </section>
+
+        <!-- Interactive Memo Section -->
+        <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center gap-2 text-slate-900 font-extrabold text-lg">
+                <span>📝</span> 나의 첫 AI 활용 아이디어 (메모)
+            </div>
+            <p class="text-xs text-slate-500">지금 바로 적용해보고 싶은 사역이나 프롬프트 아이디어를 적어보세요. (브라우저에 자동 저장됩니다)</p>
+            <textarea id="memoInput" rows="4" class="w-full p-4 border border-slate-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-800 text-sm leading-relaxed" placeholder="예: 이번 주일 본문(롬 8장)으로 청년부 소그룹 나눔 질문 3개 만들어보기..."></textarea>
+            <div class="flex justify-between items-center text-xs text-slate-400">
+                <span id="saveStatus">작성 시 로컬에 자동 보관됩니다.</span>
+                <button onclick="clearMemo()" class="text-slate-500 hover:text-rose-600 underline">메모 비우기</button>
             </div>
         </section>
+
+        <!-- Back to Home Button -->
+        <div class="text-center pt-4">
+            <a href="/" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-3.5 rounded-xl transition shadow">
+                <i class="fa-solid fa-arrow-left"></i> 한국AI연구소 자료실 메인으로
+            </a>
+        </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-center space-y-3">
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 text-center space-y-2">
         <p class="text-white font-bold text-base">🤖 한국AI연구소 (Korea AI Research Institute)</p>
         <p class="text-xs text-slate-500">미래를 여는 기술, 배움과 성장의 기록을 나눕니다.</p>
         <p class="text-xs text-slate-600">© 2026 Korea AI Research Institute. All rights reserved.</p>
     </footer>
+
+    <script>
+        const memoInput = document.getElementById('memoInput');
+        const saveStatus = document.getElementById('saveStatus');
+
+        // Load saved memo
+        if (localStorage.getItem('pastor_ai_memo')) {
+            memoInput.value = localStorage.getItem('pastor_ai_memo');
+        }
+
+        // Auto save on input
+        memoInput.addEventListener('input', () => {
+            localStorage.setItem('pastor_ai_memo', memoInput.value);
+            saveStatus.textContent = '저장되었습니다 ✓';
+            setTimeout(() => {
+                saveStatus.textContent = '작성 시 로컬에 자동 보관됩니다.';
+            }, 2000);
+        });
+
+        function clearMemo() {
+            if (confirm('메모를 초기화하시겠습니까?')) {
+                memoInput.value = '';
+                localStorage.removeItem('pastor_ai_memo');
+                saveStatus.textContent = '메모가 비워졌습니다.';
+            }
+        }
+    </script>
 
 </body>
 
