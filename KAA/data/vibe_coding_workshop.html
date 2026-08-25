@@ -317,15 +317,100 @@
   footer{border-top:1px solid var(--line); padding:40px 0 70px}
   .fin{display:flex; flex-wrap:wrap; gap:8px 28px; font-size:15px; color:var(--fg-2); font-weight:600}
 
+  /* Top Nav & TOC styles */
+  .top-nav{
+    position:sticky; top:0; z-index:100;
+    background:var(--bg); border-bottom:1px solid var(--line); padding:12px 0; font-size:14.5px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  }
+  .top-nav-inner{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .nav-home-link{
+    font-weight:800; display:flex; align-items:center; gap:6px; border-bottom:none!important; color:var(--fg);
+    font-size:15px;
+  }
+  .nav-links{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  }
+  .nav-btn{
+    font-size:13px; font-weight:700; padding:5px 12px; border-radius:100px;
+    border:1px solid var(--line); color:var(--fg-2); border-bottom:none!important;
+    transition:all .15s ease; background:var(--bg); text-decoration:none;
+  }
+  .nav-btn:hover{
+    border-color:var(--fg); color:var(--fg); background:var(--soft);
+  }
+  .nav-btn.primary{
+    background:var(--fg); color:var(--bg); border-color:var(--fg);
+  }
+  .nav-btn.primary:hover{
+    opacity:.9;
+  }
+  
+  /* TOC Dashboard */
+  .toc-dashboard{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin:28px 0 10px;
+  }
+  .toc-col{
+    background:var(--bg); border:1.5px solid var(--line); border-radius:16px; padding:24px 20px;
+  }
+  .toc-col.highlight{
+    border-color:var(--c1); box-shadow:0 6px 20px rgba(31,78,140,0.06);
+  }
+  .toc-col.deep{
+    border-color:var(--c5);
+  }
+  .toc-col-h{
+    font-size:12.5px; font-weight:800; letter-spacing:.1em; color:var(--fg-3);
+    text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .toc-list{
+    list-style:none; padding:0; margin:0;
+  }
+  .toc-list li{
+    margin-bottom:6px;
+  }
+  .toc-link{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border-radius:8px;
+    font-size:14px; font-weight:600; color:var(--fg); border-bottom:none!important;
+    transition:all .15s ease; text-decoration:none;
+  }
+  .toc-link:hover{
+    background:var(--soft); color:var(--c1); transform:translateX(3px);
+  }
+  .toc-tag{
+    font-size:11px; font-weight:800; padding:2px 6px; border-radius:4px;
+    background:var(--soft); color:var(--fg-3); flex-shrink:0; font-variant-numeric:tabular-nums;
+  }
+  .toc-link:hover .toc-tag{
+    background:var(--c1); color:#fff;
+  }
+
+  /* Floating Dock */
+  .float-dock{
+    position:fixed; bottom:24px; right:24px; z-index:90;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .dock-btn{
+    width:44px; height:44px; border-radius:50%; background:var(--bg); color:var(--fg);
+    border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(0,0,0,0.12); cursor:pointer; font-size:17px;
+    transition:all .18s ease; border-bottom:none!important; text-decoration:none;
+  }
+  .dock-btn:hover{
+    border-color:var(--fg); transform:scale(1.08);
+  }
+
   /* 테마 전환 */
-  .theme{position:fixed; top:18px; right:18px; z-index:50;
-    width:44px; height:44px; border-radius:50%; cursor:pointer;
+  .theme{position:relative; z-index:50;
+    width:38px; height:38px; border-radius:50%; cursor:pointer;
     background:var(--bg); color:var(--fg); border:1.5px solid var(--line);
     display:flex; align-items:center; justify-content:center;
     transition:border-color .18s, transform .18s;
     -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
   .theme:hover{border-color:var(--fg); transform:scale(1.06)}
-  .theme svg{width:19px; height:19px; fill:none; stroke:currentColor;
+  .theme svg{width:18px; height:18px; fill:none; stroke:currentColor;
     stroke-width:1.8; stroke-linecap:round}
   .theme .moon{display:none}
   :root[data-theme="dark"] .theme .sun{display:none}
@@ -337,18 +422,19 @@
 
   @media (max-width:640px){
     body{font-size:16px}
-    .theme{top:12px; right:12px; width:40px; height:40px}
     section{padding:72px 0}
-    header{padding:76px 0 60px}
+    header{padding:50px 0 40px}
     .divider{padding:60px 0}
     .s{grid-template-columns:1fr; gap:6px}
     .meta div{padding-right:0}
+    .toc-dashboard{grid-template-columns:1fr}
+    .top-nav-inner{justify-content:center; gap:8px}
   }
 
   @media print{
     :root{--bg:#fff;--fg:#000;--fg-2:#222;--fg-3:#555;--line:#bbb;--line-2:#ddd;--soft:#f6f6f6;
       --code:#f4f4f4;--code-fg:#000}
-    .theme,.pr button{display:none}
+    .theme,.pr button,.top-nav,.float-dock{display:none}
     body{font-size:10.5pt; line-height:1.55}
     section{padding:26px 0; break-inside:avoid}
     header{padding:0 0 22px}
@@ -365,15 +451,36 @@
 
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 
-<button class="theme" id="themeBtn" type="button" aria-label="화면 테마 바꾸기">
-  <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="4.2"></circle>
-    <path d="M12 2.4v2.4M12 19.2v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.4 12h2.4M19.2 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"></path>
-  </svg>
-  <svg class="moon" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"></path>
-  </svg>
-</button>
+<!-- Top Sticky Navigation Bar -->
+<nav class="top-nav" aria-label="빠른 내비게이션">
+  <div class="wrap top-nav-inner">
+    <a href="/" class="nav-home-link">
+      <span>🤖</span> <strong>한국AI연구소</strong>
+    </a>
+    <div class="nav-links">
+      <a href="#toc" class="nav-btn primary">📑 목차 전체보기</a>
+      <a href="#s3" class="nav-btn">실습① 소그룹</a>
+      <a href="#s4" class="nav-btn">실습② 성경동화</a>
+      <a href="#s6" class="nav-btn">실습③ 교인관리</a>
+      <a href="#s10" class="nav-btn">실습④ 홈페이지</a>
+      <button class="theme" id="themeBtn" type="button" aria-label="화면 테마 바꾸기">
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2.4v2.4M12 19.2v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.4 12h2.4M19.2 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"></path>
+        </svg>
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Floating Quick Jump Dock -->
+<div class="float-dock" aria-label="빠른 이동 버튼">
+  <a href="#toc" class="dock-btn" title="목차로 이동" aria-label="목차">📑</a>
+  <a href="#main" class="dock-btn" title="맨 위로" aria-label="맨 위로">▲</a>
+</div>
 
 <header>
   <div class="wrap">
@@ -402,6 +509,66 @@
 </header>
 
 <main id="main">
+
+<!-- Section: Table of Contents Dashboard -->
+<section class="alt" id="toc">
+  <div class="wrap">
+    <p class="eyebrow">TABLE OF CONTENTS</p>
+    <h2>강의안 목차 &amp; 빠른 바로가기</h2>
+    <p class="lead">원하시는 과정이나 실습 항목을 클릭하시면 해당 강의안 섹션으로 즉시 이동합니다.</p>
+
+    <div class="toc-dashboard">
+      
+      <!-- Col 1: Basic Track -->
+      <div class="toc-col highlight">
+        <div class="toc-col-h">
+          <span>기본 과정 (4시간 5분)</span>
+          <span class="toc-tag">브라우저만</span>
+        </div>
+        <ul class="toc-list">
+          <li><a href="#s0" class="toc-link"><span>00. 개요 및 3대 원칙</span><span class="toc-tag">Overview</span></a></li>
+          <li><a href="#s1" class="toc-link"><span>01. 전체 진행 순서</span><span class="toc-tag">405분</span></a></li>
+          <li><a href="#s2" class="toc-link"><span>Part 1. 바이브코딩이란</span><span class="toc-tag">30분</span></a></li>
+          <li><a href="#s3" class="toc-link"><span><strong>실습 01. 소그룹 질문지</strong></span><span class="toc-tag">50분</span></a></li>
+          <li><a href="#s4" class="toc-link"><span><strong>실습 02. 성경동화 생성기</strong></span><span class="toc-tag">50분</span></a></li>
+          <li><a href="#s5" class="toc-link"><span>Part 2. 화면과 데이터</span><span class="toc-tag">15분</span></a></li>
+          <li><a href="#s6" class="toc-link"><span><strong>실습 03. 교인관리 대시보드</strong></span><span class="toc-tag">55분</span></a></li>
+          <li><a href="#s7" class="toc-link"><span>기본과정 마무리 &amp; 쇼케이스</span><span class="toc-tag">10분</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Col 2: Advanced Track -->
+      <div class="toc-col deep">
+        <div class="toc-col-h">
+          <span>심화 과정 (2시간 40분)</span>
+          <span class="toc-tag">안티그래비티</span>
+        </div>
+        <ul class="toc-list">
+          <li><a href="#s8" class="toc-link"><span>Part 3. 설계도(PRD) 전환</span><span class="toc-tag">20분</span></a></li>
+          <li><a href="#s9" class="toc-link"><span><strong>실습 04-1. PRD 도우미</strong></span><span class="toc-tag">35분</span></a></li>
+          <li><a href="#s10" class="toc-link"><span><strong>실습 04-2. 교회 홈페이지</strong></span><span class="toc-tag">70분</span></a></li>
+          <li><a href="#s11" class="toc-link"><span>Part 4. 로컬·배포·GitHub</span><span class="toc-tag">15분</span></a></li>
+          <li><a href="#s12" class="toc-link"><span>심화 쇼케이스 &amp; Q&amp;A</span><span class="toc-tag">10분</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Appendices -->
+      <div class="toc-col">
+        <div class="toc-col-h">
+          <span>운영 매뉴얼 &amp; 부록</span>
+          <span class="toc-tag">Appendix</span>
+        </div>
+        <ul class="toc-list">
+          <li><a href="#s13" class="toc-link"><span>부록 1. 강사 운영 매뉴얼</span><span class="toc-tag">Manual</span></a></li>
+          <li><a href="#s14" class="toc-link"><span>부록 2. 준비물 체크리스트</span><span class="toc-tag">Check</span></a></li>
+          <li><a href="#s15" class="toc-link"><span>부록 3. 참고자료 및 링크</span><span class="toc-tag">Ref</span></a></li>
+          <li><a href="/" class="toc-link"><span>← 자료실 아카이브 홈</span><span class="toc-tag">Home</span></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <section class="alt">
   <div class="wrap">
