@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI, 두려움을 넘어 일상으로 | 목회자와 사역자를 위한 실전 AI 가이드</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Pretendard Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#1E3A8A',
+              dark: '#0F172A',
+              blue: '#2563EB',
+              amber: '#D97706',
+              gold: '#F59E0B',
+              bgLight: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      scroll-behavior: smooth;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .slide-aspect {
+      aspect-ratio: 16 / 9;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- ========================================================================= -->
+  <!-- 1. 상단 글로벌 네비게이션 헤더 & 햄버거 버튼 & 퀵 바로가기 -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-lg border-b border-slate-800 backdrop-blur-md bg-opacity-95">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- 좌측: 햄버거 메뉴 버튼 & 로고 타이틀 -->
+        <div class="flex items-center space-x-3">
+          <button id="drawerToggleBtn" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 hover:text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500 transition">
+            <i class="fa-solid fa-bars text-xl"></i>
+            <span class="sr-only">목차 메뉴 열기</span>
+          </button>
+          
+          <div class="flex flex-col cursor-pointer" onclick="scrollToTop()">
+            <div class="flex items-center space-x-2">
+              <span class="px-2 py-0.5 text-xs font-bold bg-amber-500 text-slate-950 rounded">사역 AI 가이드</span>
+              <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+                <span>AI, 두려움을 넘어 일상으로</span>
+              </h1>
+            </div>
+            <p class="text-xs text-slate-400 hidden sm:block">목회자와 사역자를 위한 맞춤형 AI 실전 활용서</p>
+          </div>
+        </div>
+
+        <!-- 우측 툴바: 뷰 모드 전환 / 글자 크기 조절 / 슬라이드 인덱스 -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <!-- 홈으로 바로가기 -->
+          <a href="/" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-house"></i>
+            <span class="hidden sm:inline">자료실 홈</span>
+          </a>
+
+          <!-- 뷰 모드 탭 (문서 모드 vs 슬라이드 모드) -->
+          <div class="bg-slate-800 p-1 rounded-lg flex items-center text-xs sm:text-sm font-medium">
+            <button id="modeDocBtn" onclick="switchViewMode('doc')" class="px-3 py-1.5 rounded-md bg-blue-600 text-white flex items-center gap-1.5 transition font-bold">
+              <i class="fa-solid fa-book-open"></i>
+              <span class="hidden sm:inline">문서 모드</span>
+            </button>
+            <button id="modeSlideBtn" onclick="switchViewMode('slide')" class="px-3 py-1.5 rounded-md text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-desktop"></i>
+              <span class="hidden sm:inline">슬라이드 모드</span>
+            </button>
+          </div>
+
+          <!-- 글꼴 확대/축소 버튼 -->
+          <div class="hidden md:flex items-center bg-slate-800 rounded-lg p-1 text-xs">
+            <button onclick="adjustFontSize(-1)" class="px-2.5 py-1 text-slate-300 hover:text-white" title="글씨 축소">A-</button>
+            <button onclick="resetFontSize()" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold" title="기본 크기">기본</button>
+            <button onclick="adjustFontSize(1)" class="px-2.5 py-1 text-slate-300 hover:text-white font-bold" title="글씨 확대">A+</button>
+          </div>
+
+          <!-- Google 슬라이드 바로가기 -->
+          <a href="https://docs.google.com/presentation/d/1ETZXJQbe__UaHWJB3nsay8PQogtmzwcfXmnK8otADpo/edit" target="_blank" class="px-3 py-1.5 text-xs font-semibold bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span class="hidden md:inline">구글 슬라이드 원본</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 상단 퀵 바로가기 태그 바 (가로 스크롤) -->
+      <div class="flex items-center space-x-2 py-2 overflow-x-auto no-scrollbar border-t border-slate-800 text-xs">
+        <span class="text-slate-400 font-semibold flex-shrink-0 flex items-center gap-1">
+          <i class="fa-solid fa-bolt text-amber-400"></i> 바로가기:
+        </span>
+        <button onclick="jumpToPart(1)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 1. 마인드셋</button>
+        <button onclick="jumpToPart(2)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 2. AI 진화 4단계</button>
+        <button onclick="jumpToPart(3)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 3. 신뢰도 & 환각</button>
+        <button onclick="jumpToPart(4)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 4. 선교사 IT (API)</button>
+        <button onclick="jumpToPart(5)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 5. 질문의 기술</button>
+        <button onclick="jumpToPart(6)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 6. 실전 프롬프트</button>
+        <button onclick="jumpToPart(7)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 7. 세컨드 브레인</button>
+        <button onclick="jumpToPart(8)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 8. 맞춤 앱 & 랜딩</button>
+        <button onclick="jumpToPart(9)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 9. 바이브 코딩</button>
+        <button onclick="jumpToSlide(42)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 font-bold transition">🌟 최종 결론</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. 슬라이드 아웃 사이드바 (목차 & 검색 드로어) -->
+  <!-- ========================================================================= -->
+  <div id="drawerBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity" onclick="closeDrawer()"></div>
+  <aside id="drawer" class="fixed top-0 left-0 bottom-0 w-80 sm:w-96 bg-slate-900 text-white z-50 shadow-2xl flex flex-col -translate-x-full transition-transform duration-300 ease-in-out border-r border-slate-800">
+    <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-list-check text-amber-400"></i>
+        <h2 class="font-bold text-base text-white">전체 목차 바로가기</h2>
+      </div>
+      <button onclick="closeDrawer()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <div class="p-3 border-b border-slate-800 bg-slate-900">
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+        <input type="text" id="tocSearchInput" oninput="filterToc()" placeholder="비유, 프롬프트, 키워드 검색..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500">
+      </div>
+    </div>
+
+    <div id="tocList" class="flex-1 overflow-y-auto p-3 space-y-1 text-sm">
+      <!-- JavaScript로 목차 항목 동적 렌더링 -->
+    </div>
+
+    <div class="p-3 border-t border-slate-800 bg-slate-950 text-center text-xs text-slate-400">
+      💡 "AI는 부지런한 손, 목회자는 뜨거운 심장"
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 3. 메인 콘텐츠 영역 (문서 모드 & 슬라이드 모드) -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- [뷰 모드 A] 슬라이드 프레젠테이션 뷰어 (16:9 와이드) -->
+    <div id="slideViewContainer" class="hidden">
+      <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200 slide-aspect max-w-5xl mx-auto flex flex-col relative group">
+        <div id="slideRenderArea" class="flex-1 p-6 md:p-10 flex flex-col justify-between overflow-hidden">
+          <!-- 슬라이드 동적 내용 -->
+        </div>
+
+        <div class="bg-slate-900 text-white px-6 py-3 flex items-center justify-between border-t border-slate-800">
+          <div class="flex items-center space-x-2 text-sm">
+            <span id="slideCounter" class="font-bold text-amber-400">1 / 42</span>
+            <span class="text-slate-500">|</span>
+            <span id="slidePartLabel" class="text-xs text-slate-300 truncate max-w-[200px] sm:max-w-md"></span>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <button onclick="prevSlide()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition" title="이전 슬라이드 (←)">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button onclick="nextSlide()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition" title="다음 슬라이드 (→ / Space)">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button onclick="toggleFullscreen()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 transition" title="전체화면">
+              <i class="fa-solid fa-expand"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-table-cells text-blue-600"></i>
+            <span>슬라이드 전체 둘러보기 (클릭 시 즉시 이동)</span>
+          </h3>
+          <span class="text-xs text-slate-500">총 42개 슬라이드</span>
+        </div>
+        <div id="slideThumbnailGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-100 rounded-xl border border-slate-200">
+          <!-- 썸네일 동적 렌더링 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- [뷰 모드 B] 웹 문서 모드 (반응형 카드 스크롤 가이드북) -->
+    <div id="docViewContainer" class="space-y-12">
+      <!-- 인트로 히어로 배너 -->
+      <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 opacity-20 bg-cover bg-center pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80');"></div>
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full text-xs font-bold">
+            <i class="fa-solid fa-sparkles"></i> 2026 목회자와 사역자를 위한 AI 실전 교육
+          </div>
+          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+            AI, 두려움을 넘어 <span class="text-amber-400">일상과 사역으로</span>
+          </h2>
+          <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
+            "AI는 부지런한 손, 목회자는 뜨거운 심장"<br class="hidden sm:block">
+            사역의 고단한 행정 손빨래를 AI에 맡기고, 영성과 사랑의 본질에 집중하십시오.
+          </p>
+          <div class="pt-2 flex flex-wrap items-center gap-3 text-sm">
+            <button onclick="switchViewMode('slide')" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg flex items-center gap-2 transition">
+              <i class="fa-solid fa-play"></i> 슬라이드 발표 모드 시작
+            </button>
+            <button onclick="openDrawer()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-xl border border-slate-700 flex items-center gap-2 transition">
+              <i class="fa-solid fa-list"></i> 전체 42개 목차 열기
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="docSectionsContainer" class="space-y-16">
+        <!-- 42개 슬라이드 카드 동적 렌더링 -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 4. 토스트 알림 -->
+  <!-- ========================================================================= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-amber-400 px-5 py-3 rounded-xl shadow-2xl border border-amber-500/30 flex items-center space-x-2 text-sm font-semibold transition-all transform translate-y-20 opacity-0 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-green-400"></i>
+    <span id="toastMsg">클립보드에 복사되었습니다!</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. 푸터 -->
+  <!-- ========================================================================= -->
+  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-20 py-8 text-center text-sm">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-medium text-slate-300">💡 AI, 두려움을 넘어 일상으로 — 목회자와 사역자를 위한 AI 실전 가이드</p>
+      <p class="text-xs text-slate-500">Google Slides 자동화 스크립트 연동 완료 | 언제 어디서나 대형 폰트와 직관적인 비유로 학습하세요.</p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- 6. 스크립트 로직 (42개 마스터 데이터 및 뷰어 제어) -->
+  <!-- ========================================================================= -->
+  <script>
+    const masterSlides = [
+      {
+        id: 1,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "cover",
+        title: "AI, 두려움을 넘어 일상으로",
+        subtitle: "사역의 효율을 높이고 본질에 집중하는 아주 쉬운 AI 첫걸음",
+        badge: "💡 \"AI는 부지런한 손, 목회자는 뜨거운 심장\"\n\n목회자와 사역자를 위한 맞춤형 실전 AI 가이드",
+        imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
+      },
+      {
+        id: 2,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "compare",
+        title: "우리는 왜 AI를 두려워하는가?",
+        subtitle: "새로운 기술이 등장할 때마다 인류는 항상 같은 두려움을 겪었습니다.",
+        bad: {
+          title: "😨 막연한 두려움과 오해",
+          desc: "• \"AI가 목회자의 영적 설교와 사역을 대체할까?\"\n• \"복잡한 컴퓨터 공학을 모르면 도태될까?\"\n• 과거 계산기, 컴퓨터, 인터넷 도입 때도 똑같은 공포가 있었습니다."
+        },
+        good: {
+          title: "💡 역사가 증명한 진실",
+          desc: "• 기술은 인간을 없애는 것이 아니라 '짐'을 덜어줍니다.\n• 계산기가 수학자를 없애지 않고 더 큰 연구를 돕듯,\n• AI는 사역의 잡무를 덜어주어 목회자를 더 목회자답게 만듭니다."
+        }
+      },
+      {
+        id: 3,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "split_image",
+        title: "AI는 사역의 '세탁기'입니다",
+        subtitle: "손빨래의 고단함에서 벗어나 가족과 사랑을 나눌 시간을 얻듯이",
+        contentTitle: "🧺 세탁기 혁명이 준 교훈",
+        content: "• 옛날에는 온종일 차가운 개울가에서 손빨래를 했습니다.\n\n• 세탁기가 나왔을 때 \"정성이 사라진다\"는 비판도 있었지만, 세탁기는 주부에게 '삶의 여유와 사랑의 시간'을 선물했습니다.\n\n• AI는 목회 행정과 자료 정리라는 '손빨래'를 대신해 주는 사역의 세탁기입니다!",
+        imageUrl: "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=800&q=80"
+      },
+      {
+        id: 4,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "split_image",
+        title: "자전거를 책으로 배우는 사람은 없습니다",
+        subtitle: "복잡한 이론을 공부하려 하지 말고, 오늘 직접 페달을 밟아보세요.",
+        contentTitle: "🚴 실천이 최고의 공부입니다",
+        content: "• 원리를 몰라도 탈 수 있습니다:\n스마트폰 터치만 할 줄 알면 AI 사용 준비 완료!\n\n• 넘어지면서 균형을 잡습니다:\n엉뚱한 답변이 나와도 괜찮습니다. 질문을 던지는 경험 자체가 실력입니다.\n\n• 지금 바로 페달을 밟으십시오:\n책 10권 읽는 것보다 챗GPT에 3번 질문하는 것이 훨씬 빠릅니다.",
+        imageUrl: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80"
+      },
+      {
+        id: 5,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "compare",
+        title: "AI의 무눈치 vs 인간의 몰염치",
+        subtitle: "미안해하지 말고 원하는 결과가 나올 때까지 당당하게 요구하세요.",
+        bad: {
+          title: "🤖 AI의 무눈치 (눈치가 전혀 없음)",
+          desc: "• AI는 사람처럼 알아서 배려하지 못합니다.\n• 두루뭉술하게 지시하면 뻔하고 엉뚱한 답만 냅니다.\n• 구체적인 배경과 목표를 콕 집어줘야 제대로 일합니다."
+        },
+        good: {
+          title: "🙋 인간의 몰염치 (염치없이 뻔뻔하게)",
+          desc: "• AI에게 결코 미안해할 필요가 없습니다!\n• 지치지 않는 무료 인턴 비서에게 10번이든 20번이든 당당하게 수정을 요구하세요.\n• 완벽한 100점짜리가 나올 때까지 계속 지시하십시오."
+        }
+      },
+      {
+        id: 6,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "cards2",
+        title: "단순 계산기를 넘어 '사역 전담 비서'로의 전환",
+        subtitle: "생성형 AI와 AI 에이전트의 차이를 알면 사역의 차원이 달라집니다.",
+        cards: [
+          {
+            title: "생성형 AI (조언자 & 토론 파트너)",
+            desc: "• 내가 물어보는 질문에 명쾌하게 답변\n• 설교 아이디어 브레인스토밍 및 본문 분석\n• 설교문 초안 및 나눔 질문 작성 파트너"
+          },
+          {
+            title: "AI 에이전트 (사역 전담 수석 비서)",
+            desc: "• 목표만 주면 스스로 계획을 세워 주도적 실행\n• 주보 데이터를 읽고 심방 문자 자동 생성 및 발송\n• 복잡한 다단계 사역 행정을 알아서 처리"
+          }
+        ]
+      },
+      {
+        id: 7,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "slogan",
+        title: "기계는 부지런한 손, 목회자는 뜨거운 심장",
+        subtitle: "AI는 일을 덜어주는 도구일 뿐, 사역의 중심은 언제나 목회자의 영성입니다.",
+        slogan: "AI의 몫 (부지런한 손): 방대한 자료 조사, 설교 초안, 행정 문서, 다국어 번역\n\n목회자의 몫 (뜨거운 심장): 눈물의 기도, 성도를 향한 깊은 공감, 영적 통찰과 관계",
+        sub: "AI로 아낀 소중한 시간과 에너지를 '말씀 묵상과 한 영혼을 돌보는 목회의 본질'에 온전히 쏟으십시오."
+      },
+      {
+        id: 8,
+        part: "PART 2. AI 진화 4단계",
+        type: "cover",
+        title: "인공지능(AI)의 진화 4단계와 에이전트",
+        subtitle: "'햄버거 비유'로 한눈에 쉽게 이해하는 AI의 본질과 미래",
+        badge: "1단계 인지 AI ➔ 2단계 생성형 AI ➔ 3단계 AI 에이전트 ➔ 4단계 피지컬 AI",
+        imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+      },
+      {
+        id: 9,
+        part: "PART 2. AI 진화 4단계",
+        type: "cards2",
+        title: "1단계 인지 AI & 2단계 생성형 AI",
+        subtitle: "데이터를 식별하는 기술에서 새로운 콘텐츠를 창작하는 기술로의 도약",
+        cards: [
+          {
+            title: "1단계: 인지 AI (\"이건 햄버거야\")",
+            desc: "• 핵심: 사진이나 글을 보고 대상이 무엇인지 식별\n• 사역 사례: 스마트폰 안면인식 출석, 교적 관리, 빛바랜 성경 필사본 글자 인식(OCR)"
+          },
+          {
+            title: "2단계: 생성형 AI (\"햄버거 그려줘\")",
+            desc: "• 핵심: 학습된 데이터를 조합하여 새로운 글·그림 창조\n• 사역 사례: 설교 감동 예화 창작, 주보 일러스트 포스터 제작, 나눔 질문 생성"
+          }
+        ]
+      },
+      {
+        id: 10,
+        part: "PART 2. AI 진화 4단계",
+        type: "cards2",
+        title: "3단계 AI 에이전트 & 4단계 피지컬 AI",
+        subtitle: "스스로 계획하고 일하는 비서에서 현실 세계를 움직이는 로봇으로의 진화",
+        cards: [
+          {
+            title: "3단계: AI 에이전트 (\"주문하고 결제해줘\")",
+            desc: "• 핵심: 목표를 이해하고 스스로 도구를 조작해 완수\n• 사역 사례: 등록 교우 분석 후 심방 알림 발송, 주간 사역 일정 자동 조율 및 캘린더 등록"
+          },
+          {
+            title: "4단계: 피지컬 AI (\"직접 요리해서 가져다줘\")",
+            desc: "• 핵심: AI 두뇌가 로봇 하드웨어와 결합하여 물리적 행동\n• 사역 사례: 거동 불편 어르신 성도 이동 보조, 교회 시설 무인 자율 방역 및 청소"
+          }
+        ]
+      },
+      {
+        id: 11,
+        part: "PART 2. AI 진화 4단계",
+        type: "split_image",
+        title: "AI 에이전트의 핵심: 오케스트레이션",
+        subtitle: "복잡한 사역 목표를 위해 여러 도구를 하나로 조율(Orchestration)합니다.",
+        contentTitle: "🎼 지휘자로서의 목회자",
+        content: "• 다중 도구의 완벽한 하모니:\n언어 모델(두뇌) ➔ 웹 검색(정보 수집) ➔ 구글 시트(데이터 정리) ➔ 카카오톡(전송)을 하나로 연결합니다.\n\n• 미래 사역의 핵심 역량:\nAI에게 정답을 묻는 사람보다, AI 도구들을 적재적소에 지휘하는 '사역 기획력'을 가진 목회자가 시대를 이끕니다.",
+        imageUrl: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&q=80"
+      },
+      {
+        id: 12,
+        part: "PART 2. AI 진화 4단계",
+        type: "table",
+        title: "햄버거로 정리하는 AI 4단계와 사역 현장 적용",
+        subtitle: "단계별 핵심 역할과 목회 현장 적용점 비교 요약",
+        table: {
+          headers: ["단계 및 구분", "핵심 역할", "햄버거 비유", "목회 및 사역 현장 적용"],
+          rows: [
+            ["1. 인지 AI", "식별하고 구별함", "\"이건 햄버거야\"", "안면인식 교적 관리, 성경 필사 스캔"],
+            ["2. 생성형 AI", "창작하고 대화함", "\"햄버거 그려줘\"", "설교 예화, 주보 디자인, 성경 퀴즈"],
+            ["3. AI 에이전트", "계획하고 대신 실행", "\"주문하고 결제해줘\"", "심방 문자 자동 발송, 사역 일정 자동화"],
+            ["4. 피지컬 AI", "현실에서 직접 움직임", "\"요리해서 가져다줘\"", "거동 불편 성도 케어, 시설 자율 관리"]
+          ]
+        }
+      },
+      {
+        id: 13,
+        part: "PART 3. AI 지식 구조 & 신뢰도",
+        type: "cover",
+        title: "지식 차단일과 올바른 AI 활용법",
+        subtitle: "거짓말(환각)을 피하고 100% 신뢰할 수 있는 사역 파트너 만들기",
+        badge: "Knowledge Cutoff & Fact Checking\n\nAI의 한계를 명확히 알고 똑똑하게 활용하기",
+        imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80"
+      },
+      {
+        id: 14,
+        part: "PART 3. AI 지식 구조 & 신뢰도",
+        type: "compare",
+        title: "검색 엔진 vs 생성형 AI의 본질적 차이",
+        subtitle: "AI의 지식 차단일(Knowledge Cutoff)을 알아야 실수가 없습니다.",
+        bad: {
+          title: "🔍 검색 엔진 (실시간 관찰자)",
+          desc: "• 전 세계 웹페이지를 실시간으로 탐색하여 출처 제공\n• 100% 최신성 보장, 명확한 링크 확인 가능\n• 팩트체크, 통계, 최신 뉴스 확인에 적합"
+        },
+        good: {
+          title: "🧠 생성형 AI (과거 데이터 학습자)",
+          desc: "• 학습된 과거 지식을 바탕으로 문장을 확률적으로 생성\n• 문맥 파악, 복잡한 신학 텍스트 요약에 탁월\n• 최신 사실 질문 시 '그럴듯한 거짓말' 가능성 주의"
+        }
+      },
+      {
+        id: 15,
+        part: "PART 3. AI 지식 구조 & 신뢰도",
+        type: "cards3",
+        title: "환각(Hallucination) 현상과 작업별 신뢰도",
+        subtitle: "AI는 모르는 것도 \"모른다\" 하지 않고 그럴듯한 단어를 조합합니다.",
+        cards: [
+          {
+            title: "🔴 주의 (신뢰도 낮음)",
+            desc: "• 최신 시사 뉴스, 정확한 통계 수치\n• 특정 인물의 상세 생애/연도\n👉 검색 엔진으로 직접 교차 검증 필수"
+          },
+          {
+            title: "🟡 보통 (신뢰도 중간)",
+            desc: "• 일반 교리 설명 및 신학 개념 풀이\n• 역사적 배경 설명\n👉 전통 주석서와 대조 확인 권장"
+          },
+          {
+            title: "🟢 탁월 (신뢰도 매우 높음)",
+            desc: "• 내가 작성한 설교 원고 요약\n• 문체 다듬기 및 예화 아이디어 발상\n👉 안심하고 적극적으로 활용"
+          }
+        ]
+      },
+      {
+        id: 16,
+        part: "PART 3. AI 지식 구조 & 신뢰도",
+        type: "cards4",
+        title: "오류 없는 사역을 위한 하이브리드 워크플로우",
+        subtitle: "검색 엔진의 정확성과 AI의 문장력을 결합한 4단계 표준 순서",
+        cards: [
+          {
+            title: "1. 정보 검색",
+            desc: "구글/네이버 검색으로 최신 데이터와 정확한 성경 구절 수집"
+          },
+          {
+            title: "2. 자료 주입",
+            desc: "수집한 검증된 텍스트 원문을 AI 프롬프트에 직접 복사 입력"
+          },
+          {
+            title: "3. AI 가공",
+            desc: "AI에게 요약, 청년 눈높이 문체 변경, 소그룹 나눔 질문 도출 요청"
+          },
+          {
+            title: "4. 목회자 검증",
+            desc: "목회자가 최종 신학적 적합성을 검토하고 영적 온기를 보완"
+          }
+        ]
+      },
+      {
+        id: 17,
+        part: "PART 3. AI 지식 구조 & 신뢰도",
+        type: "table",
+        title: "주요 AI 모델별 특징 및 추천 사역 용도",
+        subtitle: "내 사역 목적에 가장 알맞은 AI 도구를 스마트하게 선택하십시오.",
+        table: {
+          headers: ["AI 모델명", "핵심 강점", "추천 사역 용도"],
+          rows: [
+            ["ChatGPT (OpenAI)", "뛰어난 논리력, 방대한 데이터 분석", "연간 목회 계획서, 설교 논리 구조 검토"],
+            ["Claude (Anthropic)", "자연스럽고 따뜻한 문체, 긴 글 처리", "목회 서신, 칼럼, 성경공부 교안 작성"],
+            ["Gemini (Google)", "구글 워크스페이스(문서/드라이브) 연동", "교회 행정 문서 연동, 영상 요약 및 번역"],
+            ["NotebookLM (Google)", "내가 올린 파일(주석/설교) 내에서만 답변", "신학적 오류 없는 안전한 설교 준비"]
+          ]
+        }
+      },
+      {
+        id: 18,
+        part: "PART 4. 선교사를 위한 IT 기술 (API)",
+        type: "cover",
+        title: "선교사와 목회자를 위한 API 쉽게 이해하기",
+        subtitle: "어려운 기술 용어, '식당의 웨이터' 비유로 3분 만에 마스터하기",
+        badge: "Application Programming Interface\n\n거대한 AI 시스템과 내 사역을 이어주는 다리",
+        imageUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80"
+      },
+      {
+        id: 19,
+        part: "PART 4. 선교사를 위한 IT 기술 (API)",
+        type: "split_image",
+        title: "내가 주방에 직접 들어가지 않아도 되는 이유",
+        subtitle: "API(Application Programming Interface)는 프로그램 간의 '중간 다리'입니다.",
+        contentTitle: "🍽️ 식당 웨이터 비유로 이해하는 API",
+        content: "• 손님 (나 / 내 사역 앱):\n메뉴판을 보고 웨이터에게 주문합니다.\n\n• 웨이터 (API):\n주문을 받아 주방에 전달하고, 완성된 요리를 손님에게 안전하게 배달합니다.\n\n• 주방 (거대한 AI 서버):\n복잡한 요리(AI 연산)를 직접 처리하여 결과만 웨이터에게 넘깁니다.",
+        imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+      },
+      {
+        id: 20,
+        part: "PART 4. 선교사를 위한 IT 기술 (API)",
+        type: "table",
+        title: "선교지 환경에 따른 기술 선택: 온라인 vs 오프라인",
+        subtitle: "웨이터(API)가 아무리 친절해도 인터넷 문이 닫히면 주문할 수 없습니다.",
+        table: {
+          headers: ["비교 항목", "API 사용 (온라인 연결)", "API 미사용 (오프라인 독립형)"],
+          rows: [
+            ["인터넷 환경", "필수 (와이파이 / 데이터 필요)", "불필요 (오프라인 작동 가능)"],
+            ["기능 수준", "최첨단 AI 지능 및 거대 데이터", "스마트폰 자체 저장 성능 수준"],
+            ["보안 수준", "외부 서버와 통신", "100% 자체 보관 (외부 유출 차단)"],
+            ["선교 현장 예시", "실시간 다국어 AI 번역 설교 앱", "오지 정글용 다운로드 성경/찬송가 앱"]
+          ]
+        }
+      },
+      {
+        id: 21,
+        part: "PART 4. 선교사를 위한 IT 기술 (API)",
+        type: "cards3",
+        title: "선교 사역을 확장하는 3가지 대표 API",
+        subtitle: "선교지 소식 전달과 사역 편의를 획기적으로 높여줍니다.",
+        cards: [
+          {
+            title: "1. DeepL / Google 번역 API",
+            desc: "선교지 사역 소식을 현지어로 작성 시 다국어로 자동 번역하여 국내외 후원자에게 즉시 발송"
+          },
+          {
+            title: "2. ChatGPT API",
+            desc: "현지 선교 센터 웹사이트에 방문자를 위한 24시간 다국어 성경 질문 자동 응답 챗봇 탑재"
+          },
+          {
+            title: "3. Google Maps API",
+            desc: "단기선교 팀 이동 경로 안내 및 현지 선교 거점 지도 표시 맞춤형 모바일 안내 앱 제작"
+          }
+        ]
+      },
+      {
+        id: 22,
+        part: "PART 5. 소통의 기술 (프롬프트)",
+        type: "cover",
+        title: "AI와 깊이 소통하는 질문의 기술",
+        subtitle: "좋은 질문의 4가지 원칙(ACTF)부터 목표 제시(Goal-Driven), 핑퐁 대화법까지",
+        badge: "ACTF 공식 & Goal-Driven Prompting\n\n질문이 바뀌면 사역의 결과물이 바뀝니다",
+        imageUrl: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80"
+      },
+      {
+        id: 23,
+        part: "PART 5. 소통의 기술 (프롬프트)",
+        type: "cards4",
+        title: "마법의 4단계 질문 공식: A-C-T-F",
+        subtitle: "\"알아서 해줘\" 대신 이 4가지만 순서대로 적어주면 명답이 나옵니다.",
+        cards: [
+          {
+            title: "A (Act as)",
+            desc: "역할 부여\n\n\"20년 차 목회 행정 및 사역 기획 전문가로서...\""
+          },
+          {
+            title: "C (Context)",
+            desc: "배경 설명\n\n\"우리 교회는 3040 맞벌이 가정이 주축이며...\""
+          },
+          {
+            title: "T (Task)",
+            desc: "임무 지시\n\n\"4주 분량의 가정예배 나눔 교안을 작성해줘.\""
+          },
+          {
+            title: "F (Format)",
+            desc: "형식 지정\n\n\"월별 표(Table) 형태로 3줄 핵심 요약을 포함해줘.\""
+          }
+        ]
+      },
+      {
+        id: 24,
+        part: "PART 5. 소통의 기술 (프롬프트)",
+        type: "compare",
+        title: "정답을 묻지 말고, '최종 목표'를 제시하십시오",
+        subtitle: "AI에게 목적지를 알려주면 최적의 사역 경로를 스스로 설계합니다.",
+        bad: {
+          title: "❌ 단순 질문 방식",
+          desc: "\"부활절 설교 본문과 예화 추천해줘.\"\n\n👉 결과: 인터넷에 흔히 떠도는 뻔하고 감동 없는 설교문 출력"
+        },
+        good: {
+          title: "⭕ 목표 제시 방식 (Goal-Driven)",
+          desc: "\"이번 부활절에 낙심한 청년들이 다시 소망을 품도록 돕는 것이 나의 최종 목표야. 이를 달성할 3단계 설교 기획안과 토론 프레임을 제안해줘.\"\n\n👉 결과: 가슴을 울리는 맞춤형 기획안 도출!"
+        }
+      },
+      {
+        id: 25,
+        part: "PART 5. 소통의 기술 (프롬프트)",
+        type: "cards3",
+        title: "탁구 치듯 대화하는 '핑퐁 대화법' (티키타카)",
+        subtitle: "60점짜리 초안을 100점짜리 완성본으로 만드는 3단계 대화법",
+        cards: [
+          {
+            title: "1. 가벼운 첫 질문",
+            desc: "완벽을 바라지 말고 부담 없이 큰 틀의 초안(60점)을 신속하게 뽑아냅니다."
+          },
+          {
+            title: "2. 구체적인 피드백",
+            desc: "\"문체가 너무 딱딱해, 초신자 눈높이로 바꿔줘\", \"직장인 실제 예시 2개만 추가해줘\""
+          },
+          {
+            title: "3. 점수 매겨 수정",
+            desc: "\"지금은 70점이야. 청년들의 공감대를 보강해서 100점으로 업그레이드해줘\""
+          }
+        ]
+      },
+      {
+        id: 26,
+        part: "PART 5. 소통의 기술 (프롬프트)",
+        type: "cards4",
+        title: "질문 품질을 200% 끌어올리는 4가지 꿀팁",
+        subtitle: "프롬프트 작성이 막힐 때 즉시 활용하는 역발상 테크닉",
+        cards: [
+          {
+            title: "1. 대화체 질문",
+            desc: "전문 용어 대신 옆 동료에게 말하듯 편안한 일상어로 질문"
+          },
+          {
+            title: "2. 역질문 (메타)",
+            desc: "\"최고의 답을 주려면 내가 어떤 정보를 먼저 줘야 할까?\""
+          },
+          {
+            title: "3. 지시문 대행",
+            desc: "\"이 작업을 위한 완벽한 지시문을 ACTF 공식으로 네가 써줘.\""
+          },
+          {
+            title: "4. 화면 캡처 질문",
+            desc: "말로 설명하기 어려운 오류 화면은 캡처 이미지로 즉시 질문"
+          }
+        ]
+      },
+      {
+        id: 27,
+        part: "PART 6. 목회 실전 프롬프트",
+        type: "cover",
+        title: "목회자를 위한 실전 프롬프트 라이브러리",
+        subtitle: "연간 목회 계획부터 성경공부, 소모임 운영까지 즉시 복사해 쓰는 실전 예시",
+        badge: "MINISTRY & AI WORKBOOK\n\n교회 현장에서 바로 검증된 프롬프트 3선",
+        imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80"
+      },
+      {
+        id: 28,
+        part: "PART 6. 목회 실전 프롬프트",
+        type: "prompt",
+        title: "[실전 1] 연간 목회 계획서 작성 프롬프트",
+        subtitle: "교회의 비전을 12개월의 구체적인 실행 계획으로 도출합니다.",
+        promptText: "[역할] 당신은 교회 행정과 사역 기획에 탁월한 20년 차 담임목사입니다.\n[배경] 장년 출석 300명 규모 교회이며, 2025년 표어는 '말씀으로 깊어지는 제자도'입니다.\n[임무] 이 표어를 중심으로 1월부터 12월까지의 연간 목회 계획 초안을 작성해주세요.\n[형식] 월별 표(Table)로 작성하되 [주요 절기/행사], [설교 핵심 주제], [제자훈련 중점], [예산 등급] 열을 포함하세요.",
+        tip: "📌 활용 팁: 교회 규모와 표어를 구체적으로 적을수록 실무에 바로 쓰는 계획서가 나옵니다."
+      },
+      {
+        id: 29,
+        part: "PART 6. 목회 실전 프롬프트",
+        type: "prompt",
+        title: "[실전 2] 4주 완성 소그룹 성경공부 교안",
+        subtitle: "깊이 있는 말씀 묵상과 삶의 나눔을 이끄는 교안 작성",
+        promptText: "[역할] 성경 신학을 전공한 탁월한 기독교 교육 전문가입니다.\n[대상] 바쁜 일상을 살아가는 30대 직장인 청년부 소그룹.\n[임무] 에베소서 4장 1-16절을 본문으로 4주 소그룹 나눔 교안을 작성해주세요.\n[형식] 매주차마다 1. 아이스브레이킹(1개) 2. 본문 관찰 질문(2개) 3. 삶의 적용 질문(2개) 4. 한 줄 기도문을 포함하세요.",
+        tip: "📌 활용 팁: 대상(청년, 장년, 새신자)을 명시하면 적용 질문의 깊이가 완전히 달라집니다."
+      },
+      {
+        id: 30,
+        part: "PART 6. 목회 실전 프롬프트",
+        type: "prompt",
+        title: "[실전 3] 새신자 정착 및 소모임 갈등 해결",
+        subtitle: "관계의 어려움을 풀고 따뜻한 공동체를 세우는 로드맵",
+        promptText: "[역할] 경험 많고 따뜻한 소그룹(구역) 코치입니다.\n[상황] 기존 교우들의 친분이 너무 두터워 새로 등록한 부부가 소외감을 느끼고 있습니다.\n[임무] 3개월(12주) 동안의 '새가족 자연스러운 통합 운영 계획서'를 작성해주세요.\n[요구사항] 1. 주차별 관계 형성 목표 2. 부담 없는 교제 활동 아이디어 3. 구역장이 주의할 점 1가지",
+        tip: "📌 활용 팁: 현재 겪고 있는 소그룹의 실제 고민(침묵, 소외 등)을 솔직히 적어주세요."
+      },
+      {
+        id: 31,
+        part: "PART 7. 신학 비서 & 세컨드 브레인",
+        type: "cover",
+        title: "나만의 신학 비서와 세컨드 브레인",
+        subtitle: "NotebookLM과 LLM Wiki로 완성하는 '나만의 살아있는 지식체계'",
+        badge: "LLM Wiki & Second Brain for Ministry\n\n내 설교와 묵상 노트가 평생의 자산이 되는 법",
+        imageUrl: "https://images.unsplash.com/photo-1507842229453-769a91032df5?w=800&q=80"
+      },
+      {
+        id: 32,
+        part: "PART 7. 신학 비서 & 세컨드 브레인",
+        type: "cards2",
+        title: "사역 자료를 유기적으로 연결하는 '세컨드 브레인'",
+        subtitle: "수년간 축적된 설교문과 묵상 노트를 살아있는 지식망으로 구축합니다.",
+        cards: [
+          {
+            title: "1. 유기적 지식망 (LLM Wiki)",
+            desc: "• 설교문(HWP/PDF)과 메모를 성경 66권 장/절별, 신학 주제별로 AI가 상호 연결\n• '나만의 맞춤형 성경 주석 백과사전' 형성"
+          },
+          {
+            title: "2. 세컨드 브레인 실시간 인출",
+            desc: "• \"5년 전 '고난' 설교 예화와 지난주 묵상 노트를 교차 분석해줘\"\n• 과거와 현재를 잇는 깊은 영적 통찰 즉시 도출"
+          }
+        ]
+      },
+      {
+        id: 33,
+        part: "PART 7. 신학 비서 & 세컨드 브레인",
+        type: "cards2",
+        title: "신학적 오류 없는 안전한 AI: Source Grounding",
+        subtitle: "인터넷 바다가 아닌, 목회자가 직접 올린 PDF/주석 안에서만 답변합니다.",
+        cards: [
+          {
+            title: "🛡️ NotebookLM의 안전성 (환각 0%)",
+            desc: "• 내가 신뢰하는 주석과 논문 내에서만 답하므로 이단 사상 및 거짓말을 원천 차단합니다.\n• 100% 출처 기반 답변 보장"
+          },
+          {
+            title: "🚀 초간단 3단계 시작법",
+            desc: "• Step 1 [생성]: 구글 로그인 후 새 노트북 생성\n• Step 2 [업로드]: 신뢰하는 주석/설교 PDF 업로드\n• Step 3 [질문]: \"이 문서들의 핵심 주제와 적용 예화 뽑아줘\""
+          }
+        ]
+      },
+      {
+        id: 34,
+        part: "PART 7. 신학 비서 & 세컨드 브레인",
+        type: "cards2",
+        title: "NotebookLM의 2대 필살기 기능",
+        subtitle: "눈으로 확인하는 출처 인용과 귀로 듣는 오디오 팟캐스트",
+        cards: [
+          {
+            title: "🔍 1초 원문 대조 (Citation)",
+            desc: "• 답변 옆 회색 숫자([1], [2])를 클릭하면 해당 PDF 쪽수로 즉시 이동\n• 100% 확실하고 안전하게 원문 팩트체크"
+          },
+          {
+            title: "🎙️ 오디오 팟캐스트 (Audio Overview)",
+            desc: "• 방대한 신학 서적을 10분 요약 라디오 대화 음원으로 변환!\n• 심방 가는 차 안에서 들으며 영감을 얻으세요."
+          }
+        ]
+      },
+      {
+        id: 35,
+        part: "PART 7. 신학 비서 & 세컨드 브레인",
+        type: "cards4",
+        title: "NotebookLM 실전 프롬프트 레시피 4선",
+        subtitle: "목적에 맞는 명령어로 내 자료의 가치를 200% 이끌어내세요.",
+        cards: [
+          {
+            title: "[쉬운 요약]",
+            desc: "\"초신자가 쉽게 이해할 수 있도록 이 신학 개념을 일상 언어로 3줄 요약해 줘.\""
+          },
+          {
+            title: "[설교 비평]",
+            desc: "\"이 설교문의 논리 흐름에서 취약한 부분을 지적하고 보완할 성경 구절을 추천해 줘.\""
+          },
+          {
+            title: "[나눔 질문]",
+            desc: "\"이 본문의 핵심 메시지를 바탕으로 청년부가 나눌 아이스브레이킹 질문 2개를 만들어 줘.\""
+          },
+          {
+            title: "[합심 기도]",
+            desc: "\"이 설교의 결론에 맞춰 성도들과 다 함께 통성으로 기도할 기도 제목 3가지를 뽑아줘.\""
+          }
+        ]
+      },
+      {
+        id: 36,
+        part: "PART 8. 맞춤 앱 & 랜딩페이지",
+        type: "cover",
+        title: "나만의 사역 전용 AI 앱 & 모바일 랜딩페이지",
+        subtitle: "코딩 없이 5분 만에 만드는 전용 비서와 디지털 선교지 구축",
+        badge: "Custom AI Apps (Gems / GPTs) & Landing Page\n\n반복되는 사역을 원클릭으로 자동화하기",
+        imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80"
+      },
+      {
+        id: 37,
+        part: "PART 8. 맞춤 앱 & 랜딩페이지",
+        type: "cards3",
+        title: "매번 긴 프롬프트 칠 필요 없는 '나만의 사역 AI 앱'",
+        subtitle: "나의 사역 데이터와 지침을 미리 저장해 둔 전용 AI 비서 (Gems / GPTs)",
+        cards: [
+          {
+            title: "1. 설교 문체 복제 앱",
+            desc: "내 과거 설교문 10편을 학습시켜 본문만 넣으면 내 어투와 스타일로 초안 자동 작성"
+          },
+          {
+            title: "2. 소그룹 교재 생성기",
+            desc: "우리 교회 질문 규칙을 세팅하여 설교 요약만 넣으면 3단계 나눔 질문지 즉시 출력"
+          },
+          {
+            title: "3. 목회 행정 자동화 앱",
+            desc: "새가족 환영문, 심방 위로톡을 우리 교회 표준 템플릿에 맞춰 단숨에 생성"
+          }
+        ]
+      },
+      {
+        id: 38,
+        part: "PART 8. 맞춤 앱 & 랜딩페이지",
+        type: "cards4",
+        title: "방문자의 결단을 이끄는 랜딩페이지 4단계 구조",
+        subtitle: "방대한 홈페이지 대신 '단 하나의 명확한 행동(참여/신청)'을 유도합니다.",
+        cards: [
+          {
+            title: "1. Hero (첫인상)",
+            desc: "3초 만에 사로잡는 강렬한 헤드라인과 즉시 신청 버튼"
+          },
+          {
+            title: "2. 문제 제기",
+            desc: "\"카톡 공지가 흩어져 잊어버리시나요?\" 성도들의 갈증에 공감"
+          },
+          {
+            title: "3. 대안 제시",
+            desc: "교회가 준비한 은혜로운 해결책과 집회 일정 안내"
+          },
+          {
+            title: "4. 신뢰 & 결단",
+            desc: "지난 참여자들의 생생한 후기와 최종 구글폼 접수"
+          }
+        ]
+      },
+      {
+        id: 39,
+        part: "PART 8. 맞춤 앱 & 랜딩페이지",
+        type: "cards4",
+        title: "랜딩페이지 제작부터 평생 무료 배포까지",
+        subtitle: "코딩을 몰라도 무료 도구와 AI로 1~2시간 만에 오픈합니다.",
+        cards: [
+          {
+            title: "1. 디자인 (Canva)",
+            desc: "무료 템플릿 선택 후 교회 사진과 안내 문구 배치"
+          },
+          {
+            title: "2. 코드 생성 (AI)",
+            desc: "\"부흥회 홍보용 모바일 반응형 HTML 만들어줘\""
+          },
+          {
+            title: "3. 무료 배포 (GitHub)",
+            desc: "index.html 파일을 올려 평생 무료 웹 주소 발행"
+          },
+          {
+            title: "4. 도메인 연결",
+            desc: "교회 이름이 들어간 신뢰도 높은 맞춤 주소 연결"
+          }
+        ]
+      },
+      {
+        id: 40,
+        part: "PART 9. 바이브 코딩 & 사역의 본질",
+        type: "cover",
+        title: "바이브 코딩과 사역의 본질",
+        subtitle: "말로 만드는 맞춤형 프로그램과 결코 변하지 않는 사역의 중심",
+        badge: "Vibe Coding & Eternal Ministry\n\n도구를 다스리는 지혜로운 사역자의 길",
+        imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
+      },
+      {
+        id: 41,
+        part: "PART 9. 바이브 코딩 & 사역의 본질",
+        type: "cards2",
+        title: "사역 맞춤형 앱과 현명한 AI 예산 관리",
+        subtitle: "내 손으로 사역 도구를 만들고 매달 나가는 AI 월세를 줄이세요.",
+        cards: [
+          {
+            title: "🛠️ 바이브 코딩 사역 맞춤 앱 3종",
+            desc: "• 사역 회의록 정리기: 음성을 올리면 안건과 할 일 자동 요약\n• 심방 예약 시스템: 성도 신청 ➔ 목회자 승인 캘린더 연동\n• 단기선교 모바일 안내장: 현지 날씨, 일정표 안내 웹앱"
+          },
+          {
+            title: "💰 AI 월세 폭탄 줄이기 전략",
+            desc: "• 주력 유료 1개만 선택: 구글 환경 ➔ Gemini / 자연스러운 글 ➔ Claude\n• 보조 도구는 무료 활용: ChatGPT 무료 버전 + NotebookLM (완전 무료) 병행"
+          }
+        ]
+      },
+      {
+        id: 42,
+        part: "전체 강의 최종 결론",
+        type: "slogan",
+        title: "기술은 부지런한 손, 목회자는 뜨거운 심장",
+        subtitle: "AI는 일을 덜어주는 도구일 뿐, 사역의 중심은 언제나 목회자의 영성입니다.",
+        slogan: "첨단 기술을 지혜로운 도구로 활용하여 시간과 에너지를 아끼십시오.\n\n그리고 그 아낀 소중한 시간으로\n한 영혼을 더 뜨겁게 사랑하고 위로하는 목회의 본질에 헌신하십시오!",
+        sub: "두려움을 넘어 은혜의 도구로 승리하시기를 기도합니다."
+      }
+    ];
+
+    let currentSlideIndex = 0;
+    let currentMode = 'doc';
+    let fontSizeDelta = 0;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTocList(masterSlides);
+      renderDocView();
+      renderSlideThumbnails();
+      renderCurrentSlide();
+
+      window.addEventListener('keydown', (e) => {
+        if (currentMode === 'slide') {
+          if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            nextSlide();
+          } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            prevSlide();
+          }
+        }
+        if (e.key === 'Escape') {
+          closeDrawer();
+        }
+      });
+    });
+
+    function renderTocList(slides) {
+      const container = document.getElementById('tocList');
+      if (!slides.length) {
+        container.innerHTML = '<div class="text-center py-6 text-slate-500 text-xs">일치하는 항목이 없습니다.</div>';
+        return;
+      }
+
+      let currentPart = '';
+      let html = '';
+
+      slides.forEach((s) => {
+        if (s.part !== currentPart) {
+          currentPart = s.part;
+          html += `<div class="pt-3 pb-1 px-2 text-xs font-bold text-amber-400 uppercase tracking-wider">${currentPart}</div>`;
+        }
+
+        html += `
+          <button onclick="onTocItemClick(${s.id})" class="w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 flex items-start space-x-2 transition group">
+            <span class="font-mono text-xs text-slate-500 group-hover:text-amber-400 mt-0.5">${String(s.id).padStart(2, '0')}</span>
+            <span class="flex-1 font-medium text-xs sm:text-sm line-clamp-1">${s.title}</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function filterToc() {
+      const query = document.getElementById('tocSearchInput').value.toLowerCase().trim();
+      if (!query) {
+        renderTocList(masterSlides);
+        return;
+      }
+
+      const filtered = masterSlides.filter(s => 
+        s.title.toLowerCase().includes(query) ||
+        s.subtitle.toLowerCase().includes(query) ||
+        s.part.toLowerCase().includes(query) ||
+        (s.content && s.content.toLowerCase().includes(query)) ||
+        (s.slogan && s.slogan.toLowerCase().includes(query))
+      );
+
+      renderTocList(filtered);
+    }
+
+    function onTocItemClick(id) {
+      closeDrawer();
+      if (currentMode === 'slide') {
+        jumpToSlide(id);
+      } else {
+        const el = document.getElementById(`doc-slide-${id}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-4', 'ring-amber-400');
+          setTimeout(() => el.classList.remove('ring-4', 'ring-amber-400'), 1500);
+        }
+      }
+    }
+
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('drawerBackdrop');
+    const drawerBtn = document.getElementById('drawerToggleBtn');
+
+    drawerBtn.addEventListener('click', toggleDrawer);
+
+    function openDrawer() {
+      drawer.classList.remove('-translate-x-full');
+      backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      setTimeout(() => document.getElementById('tocSearchInput').focus(), 100);
+    }
+
+    function closeDrawer() {
+      drawer.classList.add('-translate-x-full');
+      backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function toggleDrawer() {
+      if (drawer.classList.contains('-translate-x-full')) {
+        openDrawer();
+      } else {
+        closeDrawer();
+      }
+    }
+
+    function switchViewMode(mode) {
+      currentMode = mode;
+      const docView = document.getElementById('docViewContainer');
+      const slideView = document.getElementById('slideViewContainer');
+      const docBtn = document.getElementById('modeDocBtn');
+      const slideBtn = document.getElementById('modeSlideBtn');
+
+      if (mode === 'slide') {
+        docView.classList.add('hidden');
+        slideView.classList.remove('hidden');
+        slideBtn.className = 'px-3 py-1.5 rounded-md bg-blue-600 text-white flex items-center gap-1.5 transition font-bold shadow';
+        docBtn.className = 'px-3 py-1.5 rounded-md text-slate-300 hover:text-white flex items-center gap-1.5 transition';
+        renderCurrentSlide();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        slideView.classList.add('hidden');
+        docView.classList.remove('hidden');
+        docBtn.className = 'px-3 py-1.5 rounded-md bg-blue-600 text-white flex items-center gap-1.5 transition font-bold shadow';
+        slideBtn.className = 'px-3 py-1.5 rounded-md text-slate-300 hover:text-white flex items-center gap-1.5 transition';
+      }
+    }
+
+    function jumpToPart(partNum) {
+      const target = masterSlides.find(s => s.part.includes(`PART ${partNum}`));
+      if (target) {
+        if (currentMode === 'slide') {
+          jumpToSlide(target.id);
+        } else {
+          onTocItemClick(target.id);
+        }
+      }
+    }
+
+    function jumpToSlide(id) {
+      currentSlideIndex = masterSlides.findIndex(s => s.id === id);
+      if (currentSlideIndex === -1) currentSlideIndex = 0;
+      renderCurrentSlide();
+      if (currentMode !== 'slide') {
+        switchViewMode('slide');
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderDocView() {
+      const container = document.getElementById('docSectionsContainer');
+      let html = '';
+      let currentPart = '';
+
+      masterSlides.forEach((slide) => {
+        if (slide.part !== currentPart) {
+          currentPart = slide.part;
+          html += `
+            <div class="pt-8 pb-3 border-b-2 border-slate-300 flex items-center justify-between">
+              <h3 class="text-xl md:text-2xl font-black text-slate-900 flex items-center gap-2">
+                <span class="w-3 h-6 bg-blue-600 rounded-full inline-block"></span>
+                ${currentPart}
+              </h3>
+              <span class="text-xs font-semibold text-slate-500 bg-slate-200 px-2.5 py-1 rounded-full">Part Section</span>
+            </div>
+          `;
+        }
+
+        html += `
+          <div id="doc-slide-${slide.id}" class="bg-white rounded-2xl p-6 md:p-8 shadow-md border border-slate-200 hover:shadow-xl transition relative group">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 text-xs font-extrabold bg-blue-100 text-blue-800 rounded-md">#${slide.id}</span>
+                <span class="text-xs font-bold text-slate-500">${slide.part}</span>
+              </div>
+              <button onclick="jumpToSlide(${slide.id})" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                <i class="fa-solid fa-expand"></i> 슬라이드로 보기
+              </button>
+            </div>
+
+            <h4 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2 leading-tight">${slide.title}</h4>
+            <p class="text-base md:text-lg text-slate-600 mb-6 font-medium">${slide.subtitle}</p>
+
+            ${renderDocCardContent(slide)}
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderDocCardContent(slide) {
+      if (slide.type === 'cover') {
+        return `
+          <div class="bg-slate-900 text-white rounded-xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center gap-6">
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" alt="${slide.title}" class="w-full md:w-1/3 h-48 object-cover rounded-lg shadow-md">` : ''}
+            <div class="flex-1 space-y-3">
+              <div class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded text-xs font-bold">핵심 주제</div>
+              <div class="text-lg md:text-xl font-bold text-amber-300 leading-relaxed">${slide.badge ? slide.badge.replace(/\n/g, '<br>') : ''}</div>
+            </div>
+          </div>
+        `;
+      } else if (slide.type === 'split_image') {
+        return `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+              <h5 class="text-xl font-bold text-blue-900 mb-3">${slide.contentTitle}</h5>
+              <div class="text-base md:text-lg text-slate-800 space-y-2 leading-relaxed whitespace-pre-line">${slide.content}</div>
+            </div>
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" alt="${slide.title}" class="w-full h-64 object-cover rounded-xl shadow-md border border-slate-200">` : ''}
+          </div>
+        `;
+      } else if (slide.type === 'compare') {
+        return `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-red-50/80 border border-red-200 rounded-xl p-6">
+              <h5 class="text-lg font-bold text-red-900 mb-3">${slide.bad.title}</h5>
+              <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
+            </div>
+            <div class="bg-green-50/80 border border-green-200 rounded-xl p-6">
+              <h5 class="text-lg font-bold text-green-900 mb-3">${slide.good.title}</h5>
+              <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
+            </div>
+          </div>
+        `;
+      } else if (slide.cards) {
+        const gridCols = slide.cards.length === 2 ? 'md:grid-cols-2' : (slide.cards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4');
+        return `
+          <div class="grid grid-cols-1 ${gridCols} gap-4">
+            ${slide.cards.map(c => `
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-400 transition">
+                <h5 class="text-lg font-bold text-blue-950 mb-2">${c.title}</h5>
+                <div class="text-base text-slate-700 whitespace-pre-line leading-relaxed">${c.desc}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (slide.type === 'table') {
+        return `
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-left text-sm md:text-base">
+              <thead class="bg-blue-900 text-white">
+                <tr>
+                  ${slide.table.headers.map(h => `<th class="p-3.5 font-bold">${h}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                ${slide.table.rows.map((row, idx) => `
+                  <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
+                    ${row.map(cell => `<td class="p-3.5 text-slate-800 font-medium">${cell}</td>`).join('')}
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } else if (slide.type === 'prompt') {
+        return `
+          <div class="space-y-3">
+            <div class="bg-slate-900 rounded-xl p-5 border border-amber-500/40 relative">
+              <div class="flex items-center justify-between text-xs text-amber-400 font-bold mb-2">
+                <span><i class="fa-solid fa-terminal mr-1"></i> 복사용 프롬프트</span>
+                <button onclick="copyToClipboard(\`${slide.promptText.replace(/`/g, '\\`')}\`)" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded text-xs font-bold transition flex items-center gap-1">
+                  <i class="fa-regular fa-copy"></i> 복사하기
+                </button>
+              </div>
+              <div class="text-base md:text-lg text-slate-100 font-mono whitespace-pre-line leading-relaxed">${slide.promptText}</div>
+            </div>
+            <div class="bg-blue-50 border border-blue-200 text-blue-900 rounded-lg p-3 text-sm font-semibold">
+              ${slide.tip}
+            </div>
+          </div>
+        `;
+      } else if (slide.type === 'slogan') {
+        return `
+          <div class="bg-gradient-to-r from-blue-900 via-blue-950 to-slate-900 text-amber-300 rounded-2xl p-8 text-center shadow-lg border border-blue-700">
+            <div class="text-2xl md:text-3xl font-extrabold whitespace-pre-line leading-relaxed mb-4">"${slide.slogan}"</div>
+            <p class="text-base md:text-lg text-blue-100 font-medium">${slide.sub}</p>
+          </div>
+        `;
+      }
+      return '';
+    }
+
+    function renderCurrentSlide() {
+      const slide = masterSlides[currentSlideIndex];
+      const area = document.getElementById('slideRenderArea');
+      document.getElementById('slideCounter').innerText = `${slide.id} / ${masterSlides.length}`;
+      document.getElementById('slidePartLabel').innerText = `${slide.part} - ${slide.title}`;
+
+      let contentHtml = '';
+
+      if (slide.type === 'cover') {
+        contentHtml = `
+          <div class="bg-slate-900 text-white rounded-xl p-8 md:p-12 flex-1 flex flex-col justify-between relative overflow-hidden border border-slate-800">
+            <div class="relative z-10 space-y-3">
+              <span class="inline-block px-4 py-1.5 bg-blue-900 text-blue-200 rounded-lg text-sm font-bold border border-blue-600">${slide.part}</span>
+              <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">${slide.title}</h2>
+              <p class="text-lg sm:text-2xl text-blue-300 font-medium">${slide.subtitle}</p>
+            </div>
+            <div class="relative z-10 bg-slate-950/80 border border-amber-500/40 rounded-xl p-6 text-xl sm:text-2xl font-bold text-amber-300 whitespace-pre-line leading-relaxed">
+              ${slide.badge || ''}
+            </div>
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="absolute right-0 bottom-0 top-0 w-1/3 object-cover opacity-25 pointer-events-none">` : ''}
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="flex-1 flex flex-col justify-between">
+            <div class="mb-4">
+              <div class="inline-block px-3 py-1 bg-blue-50 text-blue-900 border border-blue-200 rounded-md text-xs font-extrabold mb-1">${slide.part}</div>
+              <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">${slide.title}</h2>
+              <p class="text-sm sm:text-lg text-slate-600 font-medium mt-1">${slide.subtitle}</p>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-center">
+              ${renderSlideBody(slide)}
+            </div>
+          </div>
+        `;
+      }
+
+      area.innerHTML = contentHtml;
+      highlightActiveThumbnail();
+    }
+
+    function renderSlideBody(slide) {
+      if (slide.type === 'split_image') {
+        return `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div class="bg-slate-50 border border-slate-300 rounded-2xl p-6">
+              <h4 class="text-2xl font-extrabold text-blue-950 mb-3">${slide.contentTitle}</h4>
+              <div class="text-lg sm:text-xl text-slate-800 whitespace-pre-line leading-relaxed">${slide.content}</div>
+            </div>
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="w-full h-72 object-cover rounded-2xl shadow-md border border-slate-200">` : ''}
+          </div>
+        `;
+      } else if (slide.type === 'compare') {
+        return `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-red-50/90 border-2 border-red-200 rounded-2xl p-6">
+              <h4 class="text-xl sm:text-2xl font-extrabold text-red-900 mb-3">${slide.bad.title}</h4>
+              <div class="text-lg sm:text-xl text-slate-800 whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
+            </div>
+            <div class="bg-green-50/90 border-2 border-green-200 rounded-2xl p-6">
+              <h4 class="text-xl sm:text-2xl font-extrabold text-green-900 mb-3">${slide.good.title}</h4>
+              <div class="text-lg sm:text-xl text-slate-800 whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
+            </div>
+          </div>
+        `;
+      } else if (slide.cards) {
+        const gridCols = slide.cards.length === 2 ? 'md:grid-cols-2' : (slide.cards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-4');
+        return `
+          <div class="grid grid-cols-1 ${gridCols} gap-4">
+            ${slide.cards.map(c => `
+              <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 hover:border-blue-500 transition">
+                <h4 class="text-xl sm:text-2xl font-extrabold text-blue-950 mb-3">${c.title}</h4>
+                <div class="text-base sm:text-lg text-slate-800 whitespace-pre-line leading-relaxed">${c.desc}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (slide.type === 'table') {
+        return `
+          <div class="overflow-x-auto rounded-2xl border-2 border-slate-200">
+            <table class="w-full text-left text-base sm:text-lg">
+              <thead class="bg-blue-900 text-white">
+                <tr>
+                  ${slide.table.headers.map(h => `<th class="p-4 font-bold">${h}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                ${slide.table.rows.map((row, idx) => `
+                  <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
+                    ${row.map(cell => `<td class="p-4 text-slate-800 font-medium">${cell}</td>`).join('')}
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } else if (slide.type === 'prompt') {
+        return `
+          <div class="space-y-4">
+            <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 relative">
+              <div class="flex items-center justify-between text-sm text-amber-400 font-bold mb-2">
+                <span><i class="fa-solid fa-terminal mr-2"></i> 프롬프트 입력문</span>
+                <button onclick="copyToClipboard(\`${slide.promptText.replace(/`/g, '\\`')}\`)" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <div class="text-lg sm:text-xl text-white font-mono whitespace-pre-line leading-relaxed">${slide.promptText}</div>
+            </div>
+            <div class="bg-blue-50 border border-blue-300 text-blue-950 rounded-xl p-4 text-base font-bold">
+              ${slide.tip}
+            </div>
+          </div>
+        `;
+      } else if (slide.type === 'slogan') {
+        return `
+          <div class="bg-blue-900 text-amber-300 rounded-2xl p-8 sm:p-12 text-center shadow-xl border-2 border-blue-600">
+            <div class="text-2xl sm:text-4xl font-extrabold whitespace-pre-line leading-relaxed mb-6">"${slide.slogan}"</div>
+            <p class="text-lg sm:text-2xl text-blue-100 font-medium">${slide.sub}</p>
+          </div>
+        `;
+      }
+      return '';
+    }
+
+    function prevSlide() {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        renderCurrentSlide();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlideIndex < masterSlides.length - 1) {
+        currentSlideIndex++;
+        renderCurrentSlide();
+      }
+    }
+
+    function renderSlideThumbnails() {
+      const container = document.getElementById('slideThumbnailGrid');
+      container.innerHTML = masterSlides.map((s, idx) => `
+        <button id="thumb-${idx}" onclick="jumpToSlide(${s.id})" class="p-2 text-left rounded-lg bg-white border border-slate-300 hover:border-blue-500 transition text-xs flex flex-col justify-between h-14">
+          <span class="font-bold text-slate-700 truncate">#${s.id} ${s.title}</span>
+          <span class="text-[10px] text-slate-400 truncate">${s.part.split('.')[0]}</span>
+        </button>
+      `).join('');
+    }
+
+    function highlightActiveThumbnail() {
+      masterSlides.forEach((_, idx) => {
+        const btn = document.getElementById(`thumb-${idx}`);
+        if (btn) {
+          if (idx === currentSlideIndex) {
+            btn.className = 'p-2 text-left rounded-lg bg-blue-600 text-white font-bold border-2 border-blue-800 text-xs flex flex-col justify-between h-14 shadow';
+          } else {
+            btn.className = 'p-2 text-left rounded-lg bg-white text-slate-700 border border-slate-300 hover:border-blue-400 text-xs flex flex-col justify-between h-14';
+          }
+        }
+      });
+    }
+
+    function toggleFullscreen() {
+      const container = document.getElementById('slideViewContainer');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => {
+          alert(`전체화면 오류: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('클립보드에 프롬프트가 복사되었습니다!');
+      }).catch(() => {
+        showToast('복사에 실패했습니다.');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2500);
+    }
+
+    function adjustFontSize(delta) {
+      fontSizeDelta += delta;
+      if (fontSizeDelta > 4) fontSizeDelta = 4;
+      if (fontSizeDelta < -2) fontSizeDelta = -2;
+      document.body.style.fontSize = `${16 + fontSizeDelta * 2}px`;
+      showToast(`글씨 크기: ${fontSizeDelta > 0 ? '+' + fontSizeDelta : fontSizeDelta}`);
+    }
+
+    function resetFontSize() {
+      fontSizeDelta = 0;
+      document.body.style.fontSize = '16px';
+      showToast('글씨 크기가 기본으로 초기화되었습니다.');
+    }
+  </script>
+</body>
+</html>

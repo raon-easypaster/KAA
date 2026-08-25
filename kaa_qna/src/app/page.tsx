@@ -74,15 +74,15 @@ export default function HomePage() {
                     <div className="archive-group">
                         <h3 className="archive-group-title">💻 AI 교육 (Education)</h3>
                         <div className="archive-grid">
-                            <a href="https://docs.google.com/presentation/d/1ETZXJQbe__UaHWJB3nsay8PQogtmzwcfXmnK8otADpo/edit?slide=id.g3c56f139b4b_0_854#slide=id.g3c56f139b4b_0_854" target="_blank" className="archive-card important">
+                            <a href="data/ai_first_step.html" target="_blank" className="archive-card important">
                                 <div>
                                     <span className="badge edu">AI 첫걸음</span>
-                                    <h3>어서와 AI는 처음이지</h3>
-                                    <p>처음 AI를 접하시는 분들을 위한 가이드 영상입니다.</p>
+                                    <h3>AI, 두려움을 넘어 일상으로<br />(어서와 AI는 처음이지)</h3>
+                                    <p>42개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)</p>
                                 </div>
                                 <div className="card-footer">
-                                    <span className="file-type">📺 Video</span>
-                                    <span className="download-link">시청하기 ▶️</span>
+                                    <span className="file-type">💻 반응형 슬라이드</span>
+                                    <span className="download-link">열람하기 ↗️</span>
                                 </div>
                             </a>
 
