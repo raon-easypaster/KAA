@@ -98,6 +98,18 @@ export default function HomePage() {
                                 </div>
                             </a>
 
+                            <a href="data/vibe_coding_workshop.html" target="_blank" className="archive-card important">
+                                <div>
+                                    <span className="badge edu">워크숍 마스터</span>
+                                    <h3>목회자 바이브코딩 워크숍<br />(코드를 몰라도 도구를 만든다)</h3>
+                                    <p>사역용 앱 3개와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.</p>
+                                </div>
+                                <div className="card-footer">
+                                    <span className="file-type">🛠️ 마스터 강의안</span>
+                                    <span className="download-link">열람하기 ↗️</span>
+                                </div>
+                            </a>
+
                             <a href="data/gen_ai_basics.html" className="archive-card important">
                                 <div>
                                     <span className="badge edu">교육자료</span>
