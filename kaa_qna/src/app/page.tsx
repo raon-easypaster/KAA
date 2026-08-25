@@ -86,14 +86,14 @@ export default function HomePage() {
                                 </div>
                             </a>
 
-                            <a href="https://padlet.com/galeb76/ai-ojb7gl4pw8rczcm1/wish/j40PQDyJzqnDZvXB" target="_blank" className="archive-card important">
+                            <a href="data/ai_education_guide.html" target="_blank" className="archive-card important">
                                 <div>
                                     <span className="badge edu">가이드</span>
                                     <h3>목회자와 사역자를 위한<br />AI 교육 가이드</h3>
                                     <p>AI를 대하는 마인드셋과 소통 기술, 실무 적용 핵심 포인트를 안내합니다.</p>
                                 </div>
                                 <div className="card-footer">
-                                    <span className="file-type">🔗 외부 링크</span>
+                                    <span className="file-type">📄 인포그래픽</span>
                                     <span className="download-link">열람하기 ↗️</span>
                                 </div>
                             </a>
