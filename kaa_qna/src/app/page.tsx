@@ -667,7 +667,7 @@ export default function HomePage() {
                             <li>성결대학교 신학과</li>
                             <li>서울신학대학교 대학원</li>
                             <li>현) 한국AI연구소 공동대표</li>
-                            <li>현) 열방위에서는교회 담임목사</li>
+                            <li>현) 온교회 담임목사</li>
                             <li>다수의 IT 솔루션 기획 및 AI 비즈니스 컨설팅 수행</li>
                             <li>세컨드 브레인을 위한 옵시디언 강의 전문</li>
                         </ul>
