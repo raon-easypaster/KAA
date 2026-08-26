@@ -748,23 +748,17 @@ footer {
 
 .start-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
 }
 
-@media (max-width: 1080px) {
-    .start-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 960px) {
     .start-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 560px) {
     .start-grid {
         grid-template-columns: 1fr;
     }
@@ -1001,4 +995,121 @@ footer {
     gap: 6px;
     margin-bottom: 12px;
     flex-wrap: wrap;
+}
+
+/* ======================================================
+   4. 신규 추천 가이드 섹션 (Featured Section)
+   ====================================================== */
+.featured-section {
+    padding: 65px 0 50px;
+    background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 100%);
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.section-header-compact {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 860px) {
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.featured-card {
+    background: white;
+    border: 2px solid var(--gray-300);
+    border-radius: 18px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.featured-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(21, 76, 121, 0.12);
+    border-color: var(--accent);
+}
+
+.featured-card.primary-featured {
+    border-color: #225d52;
+    background: linear-gradient(135deg, rgba(230, 240, 235, 0.35) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.featured-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.badge-featured {
+    background: #123b35;
+    color: #f8e3aa;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+}
+
+.badge-featured.secondary {
+    background: var(--primary);
+    color: white;
+}
+
+.featured-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1.35;
+    margin-bottom: 12px;
+}
+
+.featured-desc {
+    font-size: 0.95rem;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.featured-highlights {
+    background: var(--bg-warm);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.feat-item {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.featured-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--gray-300);
+    padding-top: 18px;
+    margin-top: auto;
+    flex-wrap: wrap;
+    gap: 12px;
 }

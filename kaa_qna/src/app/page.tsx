@@ -289,7 +289,23 @@ export default function HomePage() {
                             </div>
                         </a>
 
-                        {/* Option 2 */}
+                        {/* Option 2: 3일 집중 교육 */}
+                        <a href="/data/kaa-ai-guide.html" target="_blank" className="start-card" style={{ borderColor: '#225d52', background: 'linear-gradient(135deg, rgba(230, 240, 235, 0.4) 0%, #ffffff 100%)' }}>
+                            <div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                    <span className="start-card-icon" style={{ margin: 0 }}>📋</span>
+                                    <span style={{ background: '#123b35', color: '#f8e3aa', fontSize: '0.7rem', fontWeight: 800, padding: '2px 8px', borderRadius: '12px' }}>NEW 신규</span>
+                                </div>
+                                <h3 className="start-card-title">3일 집중 AI 교육 사전 안내</h3>
+                                <p className="start-card-desc">3일 집중 실전 AI 마스터 과정 사전 준비 & 체크리스트</p>
+                            </div>
+                            <div className="start-card-footer">
+                                <span className="start-time-badge">⏱️ 약 15분</span>
+                                <span className="start-card-arrow" style={{ color: '#123b35' }}>안내서 보기 →</span>
+                            </div>
+                        </a>
+
+                        {/* Option 3 */}
                         <a href="/data/gen_ai_basics.html" target="_blank" className="start-card">
                             <div>
                                 <span className="start-card-icon">💼</span>
@@ -302,7 +318,7 @@ export default function HomePage() {
                             </div>
                         </a>
 
-                        {/* Option 3 */}
+                        {/* Option 4 */}
                         <a href="/data/easypastor.html" target="_blank" className="start-card">
                             <div>
                                 <span className="start-card-icon">🧠</span>
@@ -315,7 +331,7 @@ export default function HomePage() {
                             </div>
                         </a>
 
-                        {/* Option 4 */}
+                        {/* Option 5 */}
                         <a href="/data/vibe_coding_workshop.html" target="_blank" className="start-card">
                             <div>
                                 <span className="start-card-icon">🛠️</span>
@@ -328,7 +344,7 @@ export default function HomePage() {
                             </div>
                         </a>
 
-                        {/* Option 5 */}
+                        {/* Option 6 */}
                         <a href="/data/ai_education_guide.html" target="_blank" className="start-card">
                             <div>
                                 <span className="start-card-icon">📖</span>
@@ -477,6 +493,73 @@ export default function HomePage() {
                                 <span className="badge-time">30분</span>
                             </div>
                         </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* ================= 🌟 신규 추천 가이드 섹션 ================= */}
+            <section className="featured-section" id="featured">
+                <div className="container fade-up">
+                    <div className="section-header-compact">
+                        <span className="start-eyebrow">NEW RELEASE & HIGHLIGHT</span>
+                        <h2 className="section-title">신규 추천 가이드</h2>
+                        <p className="start-subtitle">
+                            한국AI연구소에서 새롭게 공개한 3일 집중 실전 가이드 및 핵심 워크숍 안내서입니다.
+                        </p>
+                    </div>
+
+                    <div className="featured-grid">
+                        {/* Featured Card 1: 3일 집중 교육 사전 안내 */}
+                        <div className="featured-card primary-featured">
+                            <div>
+                                <div className="featured-badge-row">
+                                    <span className="badge-featured">🔥 NEW RELEASE</span>
+                                    <span className="badge-diff easy">입문</span>
+                                    <span className="badge-time">⏱️ 약 15분</span>
+                                </div>
+                                <h3 className="featured-title">한국인을 위한 3일 집중 AI 교육 사전 안내</h3>
+                                <p className="featured-desc">
+                                    이광복·김태주 공동대표가 직접 전하는 3일 집중 AI 실전 마스터 사전 안내서입니다. AI 4대 기본 원칙, 3일간의 여정, 그리고 수업 첫날 필수 준비물 체크리스트를 확인하세요.
+                                </p>
+                                <div className="featured-highlights">
+                                    <div className="feat-item"><span>✅</span> 4대 기본 원칙 (소통/작업/커스터마이징/연결)</div>
+                                    <div className="feat-item"><span>✅</span> 3일 집중 커리큘럼 (기초 → 바이브코딩 → 세컨드 브레인)</div>
+                                    <div className="feat-item"><span>✅</span> 사전 준비물 &amp; Google/AI 계정 점검 체크리스트</div>
+                                </div>
+                            </div>
+                            <div className="featured-footer">
+                                <span className="file-type">📋 사전 안내서 · 체크리스트</span>
+                                <a href="/data/kaa-ai-guide.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem' }}>
+                                    가이드 열람하기 ↗️
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Featured Card 2: 바이브코딩 마스터 워크숍 */}
+                        <div className="featured-card">
+                            <div>
+                                <div className="featured-badge-row">
+                                    <span className="badge-featured secondary">🛠️ MASTER WORKSHOP</span>
+                                    <span className="badge-diff medium">중급</span>
+                                    <span className="badge-time">⏱️ 약 40분</span>
+                                </div>
+                                <h3 className="featured-title">목회자 바이브코딩 워크숍 강의안</h3>
+                                <p className="featured-desc">
+                                    코드를 몰라도 자연어로 사역용 웹앱 3개(소그룹 나눔 질문기, 성경동화 생성기, 교인관리 대시보드)와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.
+                                </p>
+                                <div className="featured-highlights">
+                                    <div className="feat-item"><span>💡</span> 브라우저만으로 완성하는 사역 앱 3종 실습</div>
+                                    <div className="feat-item"><span>⚡</span> 구글 시트 연동 실시간 교인관리 대시보드</div>
+                                    <div className="feat-item"><span>🚀</span> 안티그래비티 기반 교회 홈페이지 무료 배포</div>
+                                </div>
+                            </div>
+                            <div className="featured-footer">
+                                <span className="file-type">🛠️ 마스터 강의안 (260826)</span>
+                                <a href="/data/vibe_coding_workshop.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem' }}>
+                                    워크숍 보기 ↗️
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
