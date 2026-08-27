@@ -179,22 +179,22 @@
             <div class="space-y-4">
                 <div class="prompt-box p-4">
                     <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
-                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 1: 회의록 요약 및 액션 플랜 추출</span>
-                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 전문 기획관이야. (Act as)
-아래의 회의 녹취록을 읽고 이번 주 사역 회의 결과를 정리해줘. (Context)
+                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 1: 회의록 요약 및 액션 아이템 추출 (비즈니스 실무)</span>
+                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 전문 기획관이자 프로젝트 관리자(PM)야. (Act as)
+아래의 회의 녹취록을 읽고 이번 주 프로젝트 회의 결과를 정리해줘. (Context)
 1. 핵심 결정 사항 3가지
-2. 담당자별 액션 아이템 및 마감 기한
-3. 차주 안건을 추출해줘. (Task)
-결과는 담당자가 한눈에 보기 편하도록 표(Table) 형식과 마크다운 글머리 기호로 정리해줘. (Format)</pre>
+2. 담당자별 액션 아이템(Action Items) 및 마감 기한
+3. 차주 주요 안건을 추출해줘. (Task)
+결과는 팀원이 한눈에 보기 편하도록 표(Table) 형식과 글머리 기호로 정리해줘. (Format)</pre>
                 </div>
 
                 <div class="prompt-box p-4">
                     <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
-                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 2: 목회/교육 행사 기획안 작성</span>
-                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 15년 차 교회 교육 총괄 디렉터야. (Act as)
-올해 여름 청년부 수련회를 준비 중이며, 주제는 '회복과 동행'이야. (Context)
-2박 3일 일정의 타임테이블, 주요 프로그램 아이디어 4개, 준비물 체크리스트를 작성해줘. (Task)
-각 프로그램별 예상 소요시간과 목표를 포함한 개요표로 구성해줘. (Format)</pre>
+                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 2: 사내 워크숍 및 프로젝트 기획안 작성 (기획 실무)</span>
+                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 15년 차 시니어 교육 및 프로젝트 총괄 디렉터야. (Act as)
+이번 분기 전사 팀 역량 강화를 위한 1일 집중 워크숍을 준비 중이야. (Context)
+워크숍 타임테이블(오전/오후), 핵심 프로그램 3가지, 준비물 및 리스크 체크리스트를 작성해줘. (Task)
+각 세션별 예상 소요시간, 목표, 진행 방식을 포함한 개요표로 구성해줘. (Format)</pre>
                 </div>
             </div>
         </section>
@@ -231,7 +231,7 @@
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
                     <i class="fa-solid fa-magnifying-glass-chart text-2xl text-emerald-600 mb-2"></i>
                     <h4 class="font-bold text-slate-800 text-sm mb-1">환각(Hallucination) 검증</h4>
-                    <p class="text-xs text-slate-600">성경 구절 장/절, 역사적 수치, 통계 자료는 반드시 직접 재확인</p>
+                    <p class="text-xs text-slate-600">통계 수치, 법률/재정 조항, 인용 출처 등 중요 데이터는 원문 직접 재확인</p>
                 </div>
             </div>
         </section>

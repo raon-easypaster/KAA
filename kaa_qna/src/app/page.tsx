@@ -119,7 +119,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
         id: 'landing-page-guide',
         title: '랜딩페이지란 무엇인가? (Landing Page Guide)',
-        description: '목회자를 위한 랜딩페이지 제작 가이드입니다.',
+        description: '목회자를 위한 랜딩페이지 제작 가이드 (90분 실습 워크북)',
         href: '/data/landing_page_guide.html',
         target: '_blank',
         category: '목회자용',
@@ -127,7 +127,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         audience: 'pastor',
         difficulty: '입문',
         diffClass: 'easy',
-        time: '약 15분',
+        time: '완독 15분 (실습 90분)',
         fileType: '🔗 열람 가능',
         actionText: '확인하기 ↗️',
         isImportant: false,
@@ -135,7 +135,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
         id: 'welfare-landing-guide',
         title: '장애인 사회복지사를 위한 랜딩페이지 워크북',
-        description: '90분 안에 끝내는 디지털 복지 소통의 첫걸음 (Canva · GitHub · Gemini)',
+        description: '디지털 복지 소통을 위한 랜딩페이지 제작 워크북 (Canva · GitHub · Gemini)',
         href: '/data/welfare_landing_guide.html',
         target: '_blank',
         category: '사회복지사용',
@@ -143,7 +143,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         audience: 'welfare',
         difficulty: '입문',
         diffClass: 'easy',
-        time: '약 25분',
+        time: '완독 15분 (실습 90분)',
         fileType: '📋 워크북',
         actionText: '열람하기 ↗️',
         isImportant: true,
@@ -472,12 +472,12 @@ export default function HomePage() {
                         <a href="/data/github.html" target="_blank" className="roadmap-step-card">
                             <div>
                                 <span className="roadmap-step-num">7</span>
-                                <h3 className="roadmap-step-title">홈페이지·앱 제작</h3>
-                                <p className="roadmap-step-desc">안티그래비티 & 깃허브 기반 무료 배포</p>
+                                <h3 className="roadmap-step-title">홈페이지·웹 배포</h3>
+                                <p className="roadmap-step-desc">제미나이 생성 웹페이지 깃허브 무료 배포</p>
                             </div>
                             <div className="roadmap-badges">
                                 <span className="badge-diff hard">고급</span>
-                                <span className="badge-time">35분</span>
+                                <span className="badge-time">25분</span>
                             </div>
                         </a>
 

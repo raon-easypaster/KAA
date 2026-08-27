@@ -25,6 +25,10 @@
         }
     </script>
     <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Pretendard', sans-serif;
             background-color: #f8fafc;
@@ -106,7 +110,7 @@
         </header>
 
         <!-- 1단계: 마인드셋 (Mindset) -->
-        <section class="space-y-6">
+        <section class="space-y-6" id="s1">
             <div class="flex items-center gap-3 border-b-2 border-blue-600 pb-3">
                 <span class="step-badge bg-blue-600 text-white">1</span>
                 <div>
@@ -173,7 +177,7 @@
         </section>
 
         <!-- 2단계: 소통 기술 (Communication & Prompting) -->
-        <section class="space-y-6">
+        <section class="space-y-6" id="s2">
             <div class="flex items-center gap-3 border-b-2 border-indigo-600 pb-3">
                 <span class="step-badge bg-indigo-600 text-white">2</span>
                 <div>
@@ -321,7 +325,7 @@
         </section>
 
         <!-- 3단계: 실무 적용 (Application) -->
-        <section class="space-y-6">
+        <section class="space-y-6" id="s3">
             <div class="flex items-center gap-3 border-b-2 border-purple-600 pb-3">
                 <span class="step-badge bg-purple-600 text-white">3</span>
                 <div>
@@ -332,7 +336,7 @@
             <div class="grid grid-cols-1 gap-5">
                 
                 <!-- 3-1 -->
-                <div class="point-card space-y-4 border-l-4 border-l-purple-600 bg-purple-50/30">
+                <div class="point-card space-y-4 border-l-4 border-l-purple-600 bg-purple-50/30" id="s3-1">
                     <div>
                         <h3 class="text-lg sm:text-xl font-extrabold text-purple-950 flex items-center gap-2">
                             <i class="fa-solid fa-sliders text-purple-600"></i> 1. 나만의 AI로 커스터마이징 하세요 (나를 위한 전용 앱 생성)
@@ -351,32 +355,32 @@
                             매번 긴 프롬프트를 반복해서 칠 필요 없이, <strong>나의 고유한 사역 데이터와 지침을 미리 저장해 둔 '나만의 전용 AI 비서 앱'</strong>을 만들어 두고 필요할 때마다 즉시 호출하는 방식입니다.
                         </p>
 
-                        <!-- 3 Types of Custom Ministry Apps -->
+                        <!-- 3 Types of Custom Ministry Apps (Synchronized with Vibe Coding Workshop) -->
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
                                 <div class="text-purple-700 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-                                    <i class="fa-solid fa-book-open"></i> 설교 문체 복제 앱
+                                    <i class="fa-solid fa-users"></i> 1. 소그룹 나눔 질문지 생성기
                                 </div>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    설교문 10~20편을 참고자료로 제공하고, 문체·구성·표현의 특징을 분석하도록 설정하여, 성경 본문만 넣으면 <strong>내 고유의 어투와 예화 스타일</strong>로 초안을 잡아주는 전용 앱
+                                    성경 본문이나 설교 요약만 넣으면 청년부·장년부·새가족 등 <strong>대상별 맞춤 3단계 나눔 질문지</strong>를 즉시 자동 생성하는 전용 비서 앱
                                 </p>
                             </div>
 
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
                                 <div class="text-indigo-700 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-                                    <i class="fa-solid fa-users"></i> 소그룹·교재 생성기
+                                    <i class="fa-solid fa-book-open-reader"></i> 2. 성경동화·교육자료 생성기
                                 </div>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    우리 교회 청년부/구역의 특징과 질문 규칙을 세팅해 두어, 설교 요약문만 넣으면 <strong>맞춤형 3단계 나눔 질문지</strong>를 자동 출력
+                                    성경 본문을 유초등부·청소년 눈높이 <strong>스토리텔링 대본과 4컷 삽화 이미지 생성 프롬프트</strong>로 원클릭 변환하는 교육 특화 앱
                                 </p>
                             </div>
 
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
                                 <div class="text-sky-700 font-bold text-xs sm:text-sm flex items-center gap-1.5">
-                                    <i class="fa-solid fa-envelope-circle-check"></i> 목회 행정 자동화 앱
+                                    <i class="fa-solid fa-chart-line"></i> 3. 교인관리 대시보드 (행정 비서)
                                 </div>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    새가족 환영문, 심방 위로 메시지, 주보 공지사항 등 반복되는 서식을 <strong>우리 교회 표준 템플릿</strong>에 맞춰 단숨에 생성
+                                    구글 시트와 실시간 연동되어 <strong>출석 통계, 심방 기록, 기도제목 관리 및 표준 목회 서식</strong>을 단숨에 처리하는 행정 대시보드
                                 </p>
                             </div>
                         </div>
@@ -390,7 +394,7 @@
                 </div>
 
                 <!-- 3-2: LLM Wiki & Second Brain -->
-                <div class="point-card space-y-4 border-l-4 border-l-teal-600 bg-teal-50/20">
+                <div class="point-card space-y-4 border-l-4 border-l-teal-600 bg-teal-50/20" id="s3-2">
                     <div>
                         <h3 class="text-lg sm:text-xl font-extrabold text-teal-950 flex items-center gap-2">
                             <i class="fa-solid fa-brain text-teal-600"></i> 2. AI 에이전트로 '나만의 지식체계' 구축하기 (LLM Wiki & 세컨드 브레인)
@@ -449,7 +453,7 @@
         </section>
 
         <!-- 4단계: 목회자의 책임 (Responsibility) -->
-        <section class="space-y-6">
+        <section class="space-y-6" id="s4">
             <div class="flex items-center gap-3 border-b-2 border-rose-600 pb-3">
                 <span class="step-badge bg-rose-600 text-white">4</span>
                 <div>
