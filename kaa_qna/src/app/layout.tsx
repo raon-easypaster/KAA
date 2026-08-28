@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import VisitorCounter from "@/app/components/VisitorCounter";
+
 export const metadata: Metadata = {
   title: "한국AI연구소",
   description: "한국AI연구소 아카이브 및 커뮤니티입니다.",
@@ -62,6 +64,7 @@ export default function RootLayout({
               한국AI연구소<br />
               미래를 향한 실용적 통찰을 나눕니다.
             </p>
+            <VisitorCounter />
             <p className="footer-copy">© 2026 Korea AI Research Institute. All rights reserved.</p>
           </div>
         </footer>
@@ -69,3 +72,4 @@ export default function RootLayout({
     </html>
   );
 }
+

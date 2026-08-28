@@ -296,17 +296,6 @@ export default function HomePage() {
                             <a href="#start-guide" className="btn btn-primary">시작점 찾기 🚀</a>
                             <a href="#programs" className="btn btn-secondary">전체 자료실 ⬇️</a>
                         </div>
-                        <div className="visitor-counter-badge">
-                            <span className="v-icon">👥</span>
-                            <span className="v-tag">방문자</span>
-                            <span className="v-stat">
-                                Total <strong>{visits.total.toLocaleString()}</strong>
-                            </span>
-                            <span className="v-sep">·</span>
-                            <span className="v-stat">
-                                Today <strong className="today-count">{visits.today.toLocaleString()}</strong>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </section>
