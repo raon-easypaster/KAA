@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지식관리의 진화 & 세컨드 브레인 | Obsidian & LLM Wiki (정리: 김태주)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+  :root{
+    --cmds-green:#134538;
+    --cmds-pink:#E985A2;
+    --bg:#FFFFFF;
+    --bg2:#F5F5F3;
+    --bg3:#EDECEA;
+    --text-primary:#0D0D0D;
+    --text-secondary:#4A4A4A;
+    --text-muted:#888;
+    --border:#E2E2E0;
+    --accent:var(--cmds-green);
+    --accent-on:#FFFFFF;
+    --tag-bg:#EAF2EE;
+    --tag-text:#134538;
+  }
+  [data-theme="dark"]{
+    --bg:#111111;
+    --bg2:#1A1A1A;
+    --bg3:#222222;
+    --text-primary:#F0F0EE;
+    --text-secondary:#B0B0AA;
+    --text-muted:#555;
+    --border:#2A2A2A;
+    --accent:var(--cmds-pink);
+    --accent-on:#1B1B1B;
+    --tag-bg:#3A1F2A;
+    --tag-text:#E985A2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text-primary);transition:background .25s,color .25s;font-family:"Pretendard Variable","Pretendard","SF Pro Display",system-ui,sans-serif;}
+  
+  /* Top Nav */
+  .site-nav {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 10px 18px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .site-nav a {
+    color: #f8fafc;
+    text-decoration: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color .2s;
+  }
+  .site-nav a:hover {
+    color: #facc15;
+  }
+  .site-nav .credit-badge {
+    background: rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #facc15;
+    font-weight: 600;
+  }
+
+  .root{max-width: 820px; margin: 0 auto; padding:2rem 1.1rem 4rem;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:2.25rem}
+  .topbar-title{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .toggle-btn{background:var(--accent);color:var(--accent-on);border:none;border-radius:20px;padding:6px 18px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .25s,color .25s}
+  .hero{margin-bottom:2.75rem}
+  .hero-badge{display:inline-block;padding:4px 12px;background:var(--tag-bg);color:var(--tag-text);font-size:12px;font-weight:700;border-radius:20px;margin-bottom:12px;}
+  .hero h1{font-size:32px;font-weight:800;color:var(--text-primary);line-height:1.25;margin-bottom:.6rem}
+  .hero p{font-size:15px;color:var(--text-muted);line-height:1.6}
+  .hero .author-line {margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--accent);}
+
+  .timeline{position:relative}
+  .tl-spine{position:absolute;left:34px;top:8px;bottom:8px;width:1.5px;background:var(--border);transition:background .25s}
+  .entry{display:grid;grid-template-columns:68px 1fr;margin-bottom:1.25rem;position:relative;z-index:1}
+  .entry-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:18px;gap:5px}
+  .dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);flex-shrink:0;transition:background .25s,border-color .25s}
+  .yr{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text-muted)}
+
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s, box-shadow .25s}
+  .card:hover{box-shadow: 0 4px 20px rgba(0,0,0,0.06);}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;padding:1rem 1.1rem;cursor:pointer;user-select:none;transition:background .2s}
+  .card-header:hover{background:var(--bg2)}
+  .card-meta{display:flex;flex-direction:column;gap:3px}
+  .card-name{font-size:17px;font-weight:700;color:var(--text-primary)}
+  .card-person{font-size:13px;color:var(--text-muted)}
+  .card-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+  .tag{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:var(--tag-bg);color:var(--tag-text);padding:4px 11px;border-radius:20px;transition:background .25s,color .25s}
+  .chevron{font-size:15px;color:var(--text-muted);transition:transform .25s}
+  .chevron.open{transform:rotate(180deg)}
+
+  .card-body{display:none;border-top:1px solid var(--border)}
+  .card-body.open{display:block}
+
+  .q-block{border-left:2.5px solid var(--accent);padding:.6rem .9rem;margin:1.1rem 1.1rem .6rem;background:var(--bg2);border-radius:0 8px 8px 0;transition:background .25s,border-color .25s}
+  .q-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px}
+  .q-text{font-size:16px;font-weight:700;color:var(--text-primary);line-height:1.45}
+
+  .section{padding:.9rem 1.1rem;border-bottom:1px solid var(--border)}
+  .section:last-child{border-bottom:none}
+  .section-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.6rem}
+  .section-body{font-size:15px;color:var(--text-secondary);line-height:1.75}
+  .section-body strong{color:var(--text-primary);font-weight:600}
+  .section-body em{font-style:italic}
+
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.6rem}
+  .chip{font-size:13px;padding:4px 12px;border-radius:20px;border:1px solid var(--border);color:var(--text-secondary);background:var(--bg)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:.6rem}
+  .grid-item{background:var(--bg2);border-radius:9px;padding:.7rem .85rem;transition:background .25s}
+  .grid-item-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px}
+  .grid-item-val{font-size:13px;color:var(--text-primary);line-height:1.55}
+
+  .think-flow{display:flex;flex-direction:column;gap:8px;margin-top:.6rem}
+  .think-step{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-secondary)}
+  .think-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-on);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:background .25s,color .25s}
+  .think-text{line-height:1.6}
+  .think-text strong{color:var(--text-primary);font-weight:600}
+
+  .impact-block{background:var(--bg3);border-radius:9px;padding:.75rem .9rem;margin-top:.6rem;transition:background .25s}
+  .impact-block p{font-size:14px;color:var(--text-secondary);line-height:1.75}
+  .impact-block p strong{color:var(--text-primary);font-weight:600}
+
+  .summary{margin-top:2.25rem;background:var(--bg2);border-radius:14px;border:1px solid var(--border);padding:1.25rem 1.25rem 1.1rem;transition:background .25s,border-color .25s}
+  .summary h2{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.1rem}
+  .flow-row{display:flex;align-items:baseline;gap:9px;margin-bottom:.7rem}
+  .flow-row:last-child{margin-bottom:0}
+  .fl-name{font-size:14px;font-weight:700;color:var(--text-secondary);min-width:110px}
+  .fl-arrow{font-size:13px;color:var(--text-muted)}
+  .fl-action{font-size:15px;font-weight:700;color:var(--accent);transition:color .25s}
+  .fl-q{font-size:13px;color:var(--text-muted);margin-left:3px}
+
+  .footer-box {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-box a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Top Return Nav -->
+  <div class="site-nav">
+    <a href="/">
+      <i class="fa-solid fa-arrow-left"></i> 한국AI연구소 홈으로
+    </a>
+    <div class="credit-badge">
+      <i class="fa-solid fa-pen-nib"></i> 정리: 김태주 (한국AI연구소)
+    </div>
+  </div>
+
+  <div class="root" id="root">
+    <div class="topbar">
+      <span class="topbar-title">CMDSPACE / Knowledge Systems · Second Brain</span>
+      <button class="toggle-btn" id="tog" onclick="toggleTheme()">Dark</button>
+    </div>
+    <div class="hero">
+      <span class="hero-badge">Knowledge Evolution & Second Brain</span>
+      <h1>지식관리의 진화</h1>
+      <p>각 시스템은 하나의 질문에서 시작된다 — 카드를 눌러 상세 내용을 확인하세요</p>
+      <div class="author-line">
+        <i class="fa-solid fa-circle-check"></i> 자료 기획 및 정리: 김태주 공동대표
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-spine"></div>
+
+      <!-- 1. Dewey -->
+      <div class="entry">
+        <div class="entry-dot-col"><div class="dot"></div><div class="yr">1876</div></div>
+        <div class="card">
+          <div class="card-header" onclick="toggle('c1')">
+            <div class="card-meta"><div class="card-name">듀이십진분류법</div><div class="card-person">Melvil Dewey</div></div>
+            <div class="card-right"><div class="tag">분류</div><div class="chevron" id="chev-c1">▾</div></div>
+          </div>
+          <div class="card-body" id="c1">
+            <div class="q-block"><div class="q-label">핵심 질문</div><div class="q-text">"이것은 무엇에 관한 것인가?"</div></div>
+            <div class="section">
+              <div class="section-title">배경</div>
+              <div class="section-body">1876년 사서 Melvil Dewey가 고안했다. 당시 도서관은 책이 들어온 순서대로 꽂혀 있었고, 원하는 책을 찾으려면 전체를 뒤져야 했다. Dewey는 <strong>지식 자체를 10개의 대분류로 나누고, 각 분류에 숫자를 부여</strong>하면 어떤 도서관에서든 동일한 위치에서 책을 찾을 수 있다는 아이디어를 제안했다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">10대 분류</div>
+              <div class="grid2">
+                <div class="grid-item"><div class="grid-item-label">000</div><div class="grid-item-val">총류 · 컴퓨터</div></div>
+                <div class="grid-item"><div class="grid-item-label">100</div><div class="grid-item-val">철학 · 심리학</div></div>
+                <div class="grid-item"><div class="grid-item-label">200</div><div class="grid-item-val">종교 · 신학</div></div>
+                <div class="grid-item"><div class="grid-item-label">300</div><div class="grid-item-val">사회과학</div></div>
+                <div class="grid-item"><div class="grid-item-label">500</div><div class="grid-item-val">자연과학</div></div>
+                <div class="grid-item"><div class="grid-item-label">900</div><div class="grid-item-val">역사 · 지리</div></div>
+              </div>
+            </div>
+            <div class="section">
+              <div class="section-title">핵심 원리</div>
+              <div class="section-body"><strong>주제 = 위치.</strong> 책이 무엇에 관한 것인지만 알면 자동으로 주소가 결정된다. 관계나 맥락은 없다. 지식을 고정된 서랍에 넣는 것이 목적이다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">한계</div>
+              <div class="section-body">분류 체계가 고정되어 있어 <strong>새로운 학문 간 경계 영역</strong>(예: AI 윤리, 생명공학 등)을 다루기 어렵다. 하나의 책이 두 주제를 동시에 다루면 어느 서랍에 넣을지 선택해야 한다. 연결은 불가능하다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">오늘날의 유산</div>
+              <div class="impact-block"><p>전 세계 135개국 30만 개 이상의 도서관이 여전히 DDC를 사용한다. 디지털 시대에도 <strong>"무엇에 관한 것인가"</strong>라는 질문은 검색 태그·카테고리·폴더 구조의 근간이다.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Zettelkasten -->
+      <div class="entry">
+        <div class="entry-dot-col"><div class="dot"></div><div class="yr">1950s</div></div>
+        <div class="card">
+          <div class="card-header" onclick="toggle('c2')">
+            <div class="card-meta"><div class="card-name">제텔카스텐 (Zettelkasten)</div><div class="card-person">Niklas Luhmann</div></div>
+            <div class="card-right"><div class="tag">연결</div><div class="chevron" id="chev-c2">▾</div></div>
+          </div>
+          <div class="card-body" id="c2">
+            <div class="q-block"><div class="q-label">핵심 질문</div><div class="q-text">"이 생각은 무엇과 연결되는가?"</div></div>
+            <div class="section">
+              <div class="section-title">배경</div>
+              <div class="section-body">독일 사회학자 Niklas Luhmann은 30년간 90,000장의 메모 카드로 70권의 책과 400편의 논문을 썼다. "나는 혼자 생각하는 것이 아니다. 내 카드함과 함께 생각한다"고 말했다. <strong>지식의 위치보다 지식 사이의 관계</strong>에 집중한 최초의 시스템이다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">작동 방식 — 4단계</div>
+              <div class="think-flow">
+                <div class="think-step"><div class="think-num">1</div><div class="think-text"><strong>메모 작성:</strong> 새 아이디어를 카드 한 장에 자신의 언어로 기록한다</div></div>
+                <div class="think-step"><div class="think-num">2</div><div class="think-text"><strong>번호 부여:</strong> 21a3b처럼 위치가 아닌 관계를 나타내는 고유 ID를 붙인다</div></div>
+                <div class="think-step"><div class="think-num">3</div><div class="think-text"><strong>연결 추가:</strong> 기존 카드 중 관련 있는 것들의 번호를 직접 기록한다</div></div>
+                <div class="think-step"><div class="think-num">4</div><div class="think-text"><strong>발견:</strong> 예상치 못한 연결에서 새로운 아이디어가 창발한다</div></div>
+              </div>
+            </div>
+            <div class="section">
+              <div class="section-title">핵심 원리</div>
+              <div class="section-body"><strong>생각은 혼자 자라지 않는다.</strong> 아이디어는 다른 아이디어와 만날 때 성장한다. 분류가 아닌 <strong>연결의 밀도</strong>가 시스템의 가치를 결정한다. 카드 수가 많아질수록 기하급수적으로 유용해지는 네트워크 효과가 발생한다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">Obsidian과의 관계</div>
+              <div class="impact-block"><p>오늘날 Obsidian, Roam Research, Logseq 등 <strong>"제2의 뇌" 도구들은 모두 젠텔카스텐의 디지털 구현</strong>이다. 위키링크([[]])가 곧 Luhmann의 카드 번호 참조다. 지식관리 역사에서 가장 큰 르네상스를 일으킨 시스템이다.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PARA -->
+      <div class="entry">
+        <div class="entry-dot-col"><div class="dot"></div><div class="yr">2015</div></div>
+        <div class="card">
+          <div class="card-header" onclick="toggle('c3')">
+            <div class="card-meta"><div class="card-name">PARA</div><div class="card-person">Tiago Forte</div></div>
+            <div class="card-right"><div class="tag">정리</div><div class="chevron" id="chev-c3">▾</div></div>
+          </div>
+          <div class="card-body" id="c3">
+            <div class="q-block"><div class="q-label">핵심 질문</div><div class="q-text">"이 정보는 무엇을 위해 필요한가?"</div></div>
+            <div class="section">
+              <div class="section-title">배경</div>
+              <div class="section-body">생산성 코치 Tiago Forte가 2015년 제안한 디지털 노트 정리 시스템. 주제나 관계가 아닌 <strong>"지금 내 삶에서 이 정보가 얼마나 활성화되어 있는가"</strong>를 기준으로 분류한다. 완벽한 분류 대신 빠른 실행을 우선한다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">4가지 버킷</div>
+              <div class="grid2">
+                <div class="grid-item"><div class="grid-item-label">P — Projects</div><div class="grid-item-val">마감이 있는 현재 진행 중인 작업</div></div>
+                <div class="grid-item"><div class="grid-item-label">A — Areas</div><div class="grid-item-val">지속적으로 책임지는 삶의 영역</div></div>
+                <div class="grid-item"><div class="grid-item-label">R — Resources</div><div class="grid-item-val">언젠가 참고할 주제별 자료</div></div>
+                <div class="grid-item"><div class="grid-item-label">A — Archive</div><div class="grid-item-val">완료되거나 비활성화된 항목</div></div>
+              </div>
+            </div>
+            <div class="section">
+              <div class="section-title">핵심 원리</div>
+              <div class="section-body"><strong>정보는 시간에 따라 활성도가 달라진다.</strong> 오늘의 Resource가 내일의 Project가 될 수 있다. 듀이처럼 주제별로 완벽히 분류하는 대신, <strong>"지금 이것이 필요한가"</strong>를 기준으로 빠르게 판단한다. 불완전한 정리가 완벽한 미완성보다 낫다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">한계와 보완</div>
+              <div class="impact-block"><p>PARA는 <strong>실행에는 강하지만 지식 성장에는 약하다.</strong> Project가 끝나 Archive로 이동한 정보는 죽어버리는 경향이 있다. 이 한계를 보완하기 위해 Forte는 이후 CODE 시스템을 제안했다.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. CODE -->
+      <div class="entry">
+        <div class="entry-dot-col"><div class="dot"></div><div class="yr">2022</div></div>
+        <div class="card">
+          <div class="card-header" onclick="toggle('c4')">
+            <div class="card-meta"><div class="card-name">CODE</div><div class="card-person">Tiago Forte</div></div>
+            <div class="card-right"><div class="tag">창조</div><div class="chevron" id="chev-c4">▾</div></div>
+          </div>
+          <div class="card-body" id="c4">
+            <div class="q-block"><div class="q-label">핵심 질문</div><div class="q-text">"이 지식으로 무엇을 만들 것인가?"</div></div>
+            <div class="section">
+              <div class="section-title">배경</div>
+              <div class="section-body">Tiago Forte가 2022년 저서 <em>Building a Second Brain</em>에서 체계화한 지식 창출 프레임워크. PARA가 <em>어디에 넣을지</em>를 다뤘다면, CODE는 <strong>수집한 지식을 어떻게 결과물로 바꾸는지</strong>의 흐름 전체를 다룬다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">4단계 흐름</div>
+              <div class="think-flow">
+                <div class="think-step"><div class="think-num">C</div><div class="think-text"><strong>Capture (수집):</strong> 공명하는 모든 것을 캡처한다. 완벽한 것만 저장하지 않는다. 끌림이 기준이다</div></div>
+                <div class="think-step"><div class="think-num">O</div><div class="think-text"><strong>Organize (정리):</strong> PARA 기준으로 활성도에 따라 배치한다. 주제가 아닌 쓰임새 기준이다</div></div>
+                <div class="think-step"><div class="think-num">D</div><div class="think-text"><strong>Distill (증류):</strong> Progressive Summarization으로 핵심만 남긴다. 나중의 나를 위해 요약한다</div></div>
+                <div class="think-step"><div class="think-num">E</div><div class="think-text"><strong>Express (표현):</strong> 결과물을 세상에 내보낸다. 글, 발표, 프로젝트, 제품 무엇이든 좋다</div></div>
+              </div>
+            </div>
+            <div class="section">
+              <div class="section-title">핵심 원리 — 중간 패킷</div>
+              <div class="section-body">CODE의 핵심은 <strong>Intermediate Packets(중간 패킷)</strong>이다. 완성된 결과물을 한 번에 만들지 않는다. 수집·정리·증류 과정에서 만들어지는 모든 조각이 다음 결과물의 재료가 된다. <strong>지식은 소비하는 것이 아니라 축적하고 표현하는 것이다.</strong></div>
+            </div>
+            <div class="section">
+              <div class="section-title">패러다임 전환</div>
+              <div class="impact-block"><p>듀이와 루만이 지식을 <em>보관</em>하는 방법을 물었다면, CODE는 처음으로 <strong>"지식을 어떻게 세상과 연결된 결과물로 만드는가"</strong>를 물었다. 지식관리의 목적 자체를 개인의 보관에서 외부 창출로 이동시킨 전환점이다.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. LLM Wiki -->
+      <div class="entry">
+        <div class="entry-dot-col"><div class="dot"></div><div class="yr">2025</div></div>
+        <div class="card">
+          <div class="card-header" onclick="toggle('c5')">
+            <div class="card-meta"><div class="card-name">LLM Wiki</div><div class="card-person">Andrej Karpathy</div></div>
+            <div class="card-right"><div class="tag">AI 네이티브</div><div class="chevron" id="chev-c5">▾</div></div>
+          </div>
+          <div class="card-body" id="c5">
+            <div class="q-block"><div class="q-label">핵심 질문</div><div class="q-text">"AI는 이 지식을 이해할 수 있는가?"</div></div>
+            <div class="section">
+              <div class="section-title">배경</div>
+              <div class="section-body">OpenAI 공동 창업자이자 Tesla AI 전 디렉터 Andrej Karpathy가 2025년 제안한 개념. 기존 지식관리 시스템이 <em>사람</em>이 읽기 위해 설계되었다면, LLM Wiki는 처음부터 <strong>AI가 읽고 이해하고 추론할 수 있도록</strong> 설계된 지식 구조다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">AI-Readable Knowledge의 4조건</div>
+              <div class="think-flow">
+                <div class="think-step"><div class="think-num">1</div><div class="think-text"><strong>읽을 수 있는가 (Readable):</strong> 구조화된 마크다운, 명확한 헤딩, 일관된 포맷. AI가 파싱할 수 있는 형태여야 한다</div></div>
+                <div class="think-step"><div class="think-num">2</div><div class="think-text"><strong>찾을 수 있는가 (Findable):</strong> 벡터 검색, 메타데이터, 태그. AI가 관련 정보를 retrieve할 수 있어야 한다</div></div>
+                <div class="think-step"><div class="think-num">3</div><div class="think-text"><strong>연결할 수 있는가 (Connectable):</strong> 링크, 참조, 맥락. AI가 노트 간 관계를 추론할 수 있어야 한다</div></div>
+                <div class="think-step"><div class="think-num">4</div><div class="think-text"><strong>추론할 수 있는가 (Inferable):</strong> 충분한 컨텍스트와 배경. AI가 명시되지 않은 것까지 이끌어낼 수 있어야 한다</div></div>
+              </div>
+            </div>
+            <div class="section">
+              <div class="section-title">핵심 원리</div>
+              <div class="section-body"><strong>독자가 인간에서 AI로 확장됐다.</strong> 지식의 소비자가 달라지면 구조도 달라진다. 인간은 문맥을 추론하지만 AI는 명시적 구조에 의존한다. <strong>잘 구조화된 지식 = AI와 함께 생각하는 능력</strong>이 된다. Obsidian의 YAML frontmatter, 위키링크, 일관된 템플릿이 모두 LLM Wiki의 요소다.</div>
+            </div>
+            <div class="section">
+              <div class="section-title">지금 여기에서</div>
+              <div class="impact-block"><p>이 대화 자체가 LLM Wiki의 실례다. 구조화된 Obsidian 볼트가 AI와의 협업 품질을 결정한다. <strong>지식관리의 다음 경쟁력은 "AI가 얼마나 잘 이해하도록 구조화했는가"</strong>에서 온다. 인간만을 위한 노트는 이제 절반의 가치를 가진다.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary">
+      <h2>150년의 흐름 — 다섯 문장 요약</h2>
+      <div class="flow-row"><span class="fl-name">듀이</span><span class="fl-arrow">→</span><span class="fl-action">분류하라</span><span class="fl-q">어디에 둘 것인가?</span></div>
+      <div class="flow-row"><span class="fl-name">루만</span><span class="fl-arrow">→</span><span class="fl-action">연결하라</span><span class="fl-q">무엇과 연결할 것인가?</span></div>
+      <div class="flow-row"><span class="fl-name">포르테 (PARA)</span><span class="fl-arrow">→</span><span class="fl-action">실행 중심으로 정리하라</span><span class="fl-q">언제 사용할 것인가?</span></div>
+      <div class="flow-row"><span class="fl-name">포르테 (CODE)</span><span class="fl-arrow">→</span><span class="fl-action">결과물로 표현하라</span><span class="fl-q">무엇을 만들어낼 것인가?</span></div>
+      <div class="flow-row"><span class="fl-name">카르파티</span><span class="fl-arrow">→</span><span class="fl-action">AI가 이해하도록 구조화하라</span><span class="fl-q">어떻게?</span></div>
+    </div>
+
+    <div class="footer-box">
+      <p><strong>정리: 김태주 (한국AI연구소 공동대표)</strong></p>
+      <p style="margin-top:4px;">원문 자료: <a href="https://smdjoo-stack.github.io/260618-obisidian/" target="_blank">smdjoo-stack.github.io/260618-obisidian/ ↗️</a></p>
+      <p style="margin-top:8px;font-size:12px;">© 2026 Korea AI Research Institute. All Rights Reserved.</p>
+    </div>
+  </div>
+
+  <script>
+  const saved = localStorage.getItem('cmds-theme');
+  if(saved) applyTheme(saved);
+  function applyTheme(t){
+    document.getElementById('root').setAttribute('data-theme',t);
+    document.getElementById('tog').textContent = t==='dark'?'Light':'Dark';
+  }
+  function toggleTheme(){
+    const cur = document.getElementById('root').getAttribute('data-theme');
+    const next = cur==='dark'?'light':'dark';
+    applyTheme(next);
+    localStorage.setItem('cmds-theme',next);
+  }
+  function toggle(id){
+    const body = document.getElementById(id);
+    const chev = document.getElementById('chev-'+id);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open',!isOpen);
+    chev.classList.toggle('open',!isOpen);
+  }
+  </script>
+</body>
+</html>

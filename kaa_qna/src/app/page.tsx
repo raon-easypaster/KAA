@@ -212,6 +212,22 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         actionText: '확인하기 ↗️',
         isImportant: true,
     },
+    {
+        id: 'obsidian-second-brain',
+        title: '지식관리의 진화 & 세컨드 브레인 (Obsidian & LLM Wiki)',
+        description: '듀이십진분류부터 루만 제텔카스텐, PARA/CODE, 카르파티 LLM Wiki까지 150년 지식관리의 진화 (정리: 김태주)',
+        href: '/data/obsidian_second_brain.html',
+        target: '_blank',
+        category: '세컨드 브레인',
+        badgeClass: 'edu',
+        audience: 'general',
+        difficulty: '중급',
+        diffClass: 'medium',
+        time: '약 20분',
+        fileType: '📄 인터랙티브 타임라인',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
 ];
 
 export default function HomePage() {
@@ -482,15 +498,15 @@ export default function HomePage() {
                         </a>
 
                         {/* Step 8 */}
-                        <a href="/data/ai_education_guide.html#s3-2" target="_blank" className="roadmap-step-card">
+                        <a href="/data/obsidian_second_brain.html" target="_blank" className="roadmap-step-card">
                             <div>
                                 <span className="roadmap-step-num">8</span>
                                 <h3 className="roadmap-step-title">세컨드 브레인</h3>
-                                <p className="roadmap-step-desc">LLM Wiki 및 지식체계 자동화 구축</p>
+                                <p className="roadmap-step-desc">지식관리의 진화 & 옵시디언 (정리: 김태주)</p>
                             </div>
                             <div className="roadmap-badges">
                                 <span className="badge-diff hard">고급</span>
-                                <span className="badge-time">30분</span>
+                                <span className="badge-time">20분</span>
                             </div>
                         </a>
                     </div>
