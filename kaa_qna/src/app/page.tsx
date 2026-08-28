@@ -665,24 +665,6 @@ export default function HomePage() {
                             </a>
                         ))}
                     </div>
-
-                    {/* 소통 & Q&A */}
-                    <div className="archive-group" style={{ marginTop: '48px' }}>
-                        <h3 className="archive-group-title">💬 소통 및 피드백 (Community & Q&A)</h3>
-                        <div className="archive-grid" style={{ display: 'flex', justifyContent: 'center' }}>
-                            <a href="/qa" className="archive-card important" style={{ maxWidth: '450px', width: '100%' }}>
-                                <div>
-                                    <span className="badge info">Board</span>
-                                    <h3>자주 묻는 질문 (Q&A)<br />게시판 바로가기</h3>
-                                    <p>궁금한 점이나 새로운 교육 요청을 남겨주시면 연구소에서 성심껏 답변해 드립니다.</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">💬 자유 게시판</span>
-                                    <span className="download-link">질문 및 의견 남기기 ↗️</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </section>
 

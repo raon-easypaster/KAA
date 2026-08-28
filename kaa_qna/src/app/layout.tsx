@@ -46,9 +46,6 @@ export default function RootLayout({
                 <a href="/#contact" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
                   오시는 길
                 </a>
-                <a href="/qa" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "var(--accent-soft)", color: "var(--primary)", border: "1px solid var(--accent)", cursor: "pointer" }}>
-                  Q&A 바로가기 ↗️
-                </a>
               </div>
             </div>
           </nav>
