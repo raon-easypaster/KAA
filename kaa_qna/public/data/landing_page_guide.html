@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>목회자를 위한 랜딩페이지 제작 워크북</title>
+    <title>목회자를 위한 랜딩페이지 제작 워크북 (읽기 15분 · 실습 90분) | 한국AI연구소</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -99,6 +99,16 @@
 
 <body class="text-slate-800">
 
+    <!-- Top Sticky Return Nav -->
+    <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white px-6 py-3 flex justify-between items-center text-sm">
+        <a href="/" class="flex items-center gap-2 font-bold text-amber-400 hover:text-amber-300 transition">
+            <i class="fa-solid fa-arrow-left"></i> 한국AI연구소 홈으로
+        </a>
+        <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 px-3.5 py-1 rounded-full text-xs font-semibold text-blue-200">
+            ⏱️ 소요시간: 읽기 15분 · 실습 90분
+        </div>
+    </nav>
+
     <!-- HERO -->
     <section
         class="bg-gradient-to-br from-blue-900 to-indigo-800 text-white py-24 px-6 text-center relative overflow-hidden">
@@ -109,9 +119,11 @@
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
                 목회자를 위한<br>랜딩페이지 제작 워크북
             </h1>
-            <p class="text-xl opacity-90 mb-10 font-light">
-                90분 실습 완성 워크북 <span class="text-sm bg-blue-500/40 px-2.5 py-1 rounded-full ml-2 font-normal">📖 가이드 완독 약 15분</span>
-            </p>
+            <div class="flex items-center justify-center gap-3 flex-wrap mb-8">
+                <span class="bg-white/10 backdrop-blur border border-white/20 px-5 py-2 rounded-full text-base font-bold text-amber-300 shadow-sm">
+                    ⏱️ 읽기 15분 · 실습 90분
+                </span>
+            </div>
         </div>
     </section>
 
