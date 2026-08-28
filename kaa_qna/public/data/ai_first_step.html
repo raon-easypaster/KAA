@@ -587,7 +587,7 @@
         part: "PART 5. 소통의 기술 (프롬프트)",
         type: "cards4",
         title: "마법의 4단계 질문 공식: A-C-T-F",
-        subtitle: "\"알아서 해줘\" 대신 이 4가지만 적어주면 명답이 나옵니다. (출처: OpenAI·PMI 표준 프롬프트 프레임워크)",
+        subtitle: "\"알아서 해줘\" 대신 이 4가지만 적어주면 명답이 나옵니다.",
         cards: [
           {
             title: "A (Act as)",
@@ -605,7 +605,8 @@
             title: "F (Format)",
             desc: "형식 지정\n\n\"월별 표(Table) 형태로 3줄 핵심 요약을 포함해줘.\""
           }
-        ]
+        ],
+        footerNote: "📌 <strong>ACTF 공식 배경</strong>: ACTF는 RTF(Role-Task-Format), CO-STAR 등 널리 쓰이는 프롬프트 구조를 참고해 <strong>한국AI연구소</strong>가 목회·실무 현장에 맞게 체계화한 4단계 공식입니다."
       },
       {
         id: 24,
@@ -1141,13 +1142,21 @@
       } else if (slide.cards) {
         const gridCols = slide.cards.length === 2 ? 'md:grid-cols-2' : (slide.cards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4');
         return `
-          <div class="grid grid-cols-1 ${gridCols} gap-4">
-            ${slide.cards.map(c => `
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-400 transition">
-                <h5 class="text-lg font-bold text-blue-950 mb-2">${c.title}</h5>
-                <div class="text-base text-slate-700 whitespace-pre-line leading-relaxed">${c.desc}</div>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 ${gridCols} gap-4">
+              ${slide.cards.map(c => `
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-400 transition">
+                  <h5 class="text-lg font-bold text-blue-950 mb-2">${c.title}</h5>
+                  <div class="text-base text-slate-700 whitespace-pre-line leading-relaxed">${c.desc}</div>
+                </div>
+              `).join('')}
+            </div>
+            ${slide.footerNote ? `
+              <div class="p-3.5 bg-blue-50/80 rounded-xl border border-blue-200 text-xs sm:text-sm text-blue-950 flex items-start gap-2.5 font-medium">
+                <i class="fa-solid fa-circle-info text-blue-600 mt-0.5"></i>
+                <div class="leading-relaxed">${slide.footerNote}</div>
               </div>
-            `).join('')}
+            ` : ''}
           </div>
         `;
       } else if (slide.type === 'table') {
