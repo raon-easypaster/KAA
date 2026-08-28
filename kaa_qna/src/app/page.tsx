@@ -232,6 +232,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
 
 export default function HomePage() {
     const [audienceFilter, setAudienceFilter] = useState<'all' | 'pastor' | 'welfare' | 'general'>('all');
+    const [visits, setVisits] = useState<{ total: number; today: number }>({ total: 1380, today: 24 });
 
     useEffect(() => {
         const observerOptions = {
@@ -250,6 +251,25 @@ export default function HomePage() {
 
         const fadeElements = document.querySelectorAll('.fade-up');
         fadeElements.forEach(el => observer.observe(el));
+
+        // Visitor counter fetch & recording
+        try {
+            const hasHit = sessionStorage.getItem('kaa_session_hit');
+            const method = hasHit ? 'GET' : 'POST';
+            fetch('/api/counter', { method })
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.total) {
+                        setVisits({ total: data.total, today: data.today });
+                        if (!hasHit) {
+                            sessionStorage.setItem('kaa_session_hit', 'true');
+                        }
+                    }
+                })
+                .catch(err => console.warn('Visitor counter fetch error:', err));
+        } catch (e) {
+            console.warn(e);
+        }
 
         return () => observer.disconnect();
     }, []);
@@ -275,6 +295,17 @@ export default function HomePage() {
                         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                             <a href="#start-guide" className="btn btn-primary">시작점 찾기 🚀</a>
                             <a href="#programs" className="btn btn-secondary">전체 자료실 ⬇️</a>
+                        </div>
+                        <div className="visitor-counter-badge">
+                            <span className="v-icon">👥</span>
+                            <span className="v-tag">방문자</span>
+                            <span className="v-stat">
+                                Total <strong>{visits.total.toLocaleString()}</strong>
+                            </span>
+                            <span className="v-sep">·</span>
+                            <span className="v-stat">
+                                Today <strong className="today-count">{visits.today.toLocaleString()}</strong>
+                            </span>
                         </div>
                     </div>
                 </div>

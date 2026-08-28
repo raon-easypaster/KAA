@@ -36,4 +36,35 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.fade-up').forEach(el => {
         observer.observe(el);
     });
+
+    // Visitor Counter Fetch
+    (function initVisitorCounter() {
+        const totalEl = document.getElementById('visitor-total');
+        const todayEl = document.getElementById('visitor-today');
+        if (!totalEl || !todayEl) return;
+
+        try {
+            const hasHit = sessionStorage.getItem('kaa_session_hit');
+            const endpoint = 'https://kaaqna.vercel.app/api/counter';
+            const method = hasHit ? 'GET' : 'POST';
+
+            fetch(endpoint, { method })
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.total) {
+                        totalEl.textContent = Number(data.total).toLocaleString();
+                        todayEl.textContent = Number(data.today).toLocaleString();
+                        if (!hasHit) {
+                            sessionStorage.setItem('kaa_session_hit', 'true');
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.warn('Visitor counter fetch error:', err);
+                });
+        } catch (e) {
+            console.warn(e);
+        }
+    })();
 });
+

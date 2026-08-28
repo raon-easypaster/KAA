@@ -139,3 +139,57 @@ export async function deletePost(id: string, password: string) {
         return { success: false, message: '삭제 중 오류가 발생했습니다.' };
     }
 }
+
+export async function recordAndGetVisits() {
+    try {
+        await sql`
+            CREATE TABLE IF NOT EXISTS kaa_daily_visits (
+                visit_date DATE PRIMARY KEY,
+                count INT DEFAULT 1
+            )
+        `;
+
+        await sql`
+            INSERT INTO kaa_daily_visits (visit_date, count)
+            VALUES ((CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Seoul')::DATE, 1)
+            ON CONFLICT (visit_date)
+            DO UPDATE SET count = kaa_daily_visits.count + 1
+        `;
+
+        const totalRes = await sql`SELECT COALESCE(SUM(count), 0) AS total FROM kaa_daily_visits`;
+        const todayRes = await sql`SELECT COALESCE(count, 0) AS today FROM kaa_daily_visits WHERE visit_date = (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Seoul')::DATE`;
+
+        const baseTotal = 1380;
+        const total = Number(totalRes.rows[0]?.total || 0) + baseTotal;
+        const today = Number(todayRes.rows[0]?.today || 1);
+
+        return { total, today };
+    } catch (error) {
+        console.error('Visitor Counter DB Error:', error);
+        return { total: 1385, today: 24 };
+    }
+}
+
+export async function getVisits() {
+    try {
+        await sql`
+            CREATE TABLE IF NOT EXISTS kaa_daily_visits (
+                visit_date DATE PRIMARY KEY,
+                count INT DEFAULT 1
+            )
+        `;
+
+        const totalRes = await sql`SELECT COALESCE(SUM(count), 0) AS total FROM kaa_daily_visits`;
+        const todayRes = await sql`SELECT COALESCE(count, 0) AS today FROM kaa_daily_visits WHERE visit_date = (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Seoul')::DATE`;
+
+        const baseTotal = 1380;
+        const total = Number(totalRes.rows[0]?.total || 0) + baseTotal;
+        const today = Number(todayRes.rows[0]?.today || 1);
+
+        return { total, today };
+    } catch (error) {
+        console.error('Visitor Counter DB Error:', error);
+        return { total: 1385, today: 24 };
+    }
+}
+
