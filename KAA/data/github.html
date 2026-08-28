@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인포그래픽 깃허브 배포 가이드</title>
+    <title>안티그래비티 & 깃허브 웹 배포 가이드 (13단계)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        * { scroll-behavior: smooth; }
         body { font-family: 'Pretendard', sans-serif; }
         .step-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
         .icon-container { background: linear-gradient(135deg, #e0e7ff 0%, #eef2ff 100%); }
@@ -14,24 +16,51 @@
 </head>
 <body class="bg-slate-50 text-slate-900 leading-relaxed">
 
+    <!-- Top Return Nav -->
+    <div class="bg-slate-900 text-white text-xs py-2 px-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <a href="/" class="hover:text-amber-300 font-bold flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-arrow-left"></i> 한국AI연구소 홈으로
+            </a>
+            <span class="text-slate-400">안티그래비티 웹앱 & 깃허브 무료 배포 (13단계)</span>
+        </div>
+    </div>
+
     <!-- Header Section -->
-    <header class="bg-indigo-600 text-white py-16 px-4 shadow-lg text-center">
+    <header class="bg-gradient-to-r from-indigo-700 via-blue-700 to-slate-900 text-white py-16 px-4 shadow-lg text-center">
         <div class="max-w-4xl mx-auto">
-            <div class="inline-block p-3 bg-indigo-500 rounded-2xl mb-6 shadow-inner">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <div class="inline-block p-3 bg-indigo-500/30 border border-indigo-400/40 rounded-2xl mb-6 shadow-inner">
+                <i class="fa-brands fa-github text-4xl"></i>
             </div>
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">인포그래픽 깃허브 배포 가이드</h1>
-            <p class="text-indigo-100 text-lg md:text-xl font-light">제미나이로 만든 콘텐츠를 웹사이트로 변환하고 깃허브에 무료로 올리는 15단계</p>
+            <h1 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">안티그래비티 & 깃허브 웹 배포 가이드</h1>
+            <p class="text-indigo-100 text-base md:text-xl font-light">안티그래비티와 제미나이로 만든 웹앱을 깃허브에 무료로 올리는 <strong>13단계 실무 가이드</strong></p>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         
+        <!-- Antigravity Overview Card -->
+        <div class="mb-12 bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-7 rounded-3xl shadow-xl border border-indigo-500/20 space-y-3">
+            <div class="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Antigravity & AI Studio Development Overview
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white">웹페이지 제작부터 인터넷 무료 배포까지</h2>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                1. <strong>Google Antigravity</strong> 또는 <strong>Gemini Canvas</strong>에서 자연어로 원하는 웹페이지를 코딩하여 <code class="bg-slate-800 text-amber-300 px-2 py-0.5 rounded">index.html</code> 파일을 완성합니다.<br>
+                2. 완성된 파일을 <strong>GitHub Pages</strong>에 업로드하면 전 세계 누구나 접속 가능한 공식 웹사이트가 즉시 개설됩니다.
+            </p>
+            <div class="pt-1 flex flex-wrap gap-2">
+                <a href="/data/vibe_coding_workshop.html#s10" target="_blank" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">
+                    <i class="fa-solid fa-laptop-code"></i> 안티그래비티 홈페이지 제작 실습 바로가기 ↗️
+                </a>
+            </div>
+        </div>
+
         <!-- Intro -->
-        <div class="mb-16 text-center">
-            <span class="bg-indigo-100 text-indigo-600 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wide">Tutorial</span>
-            <h2 class="text-3xl font-bold mt-4 text-slate-800">배포 프로세스 시각화</h2>
-            <p class="text-slate-500 mt-2">아래의 단계를 따라하면 누구나 자신만의 웹페이지를 가질 수 있습니다.</p>
+        <div class="mb-12 text-center">
+            <span class="bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">총 13단계 배포 로드맵</span>
+            <h2 class="text-2xl sm:text-3xl font-bold mt-3 text-slate-800">13단계 배포 프로세스</h2>
+            <p class="text-slate-500 mt-2 text-xs sm:text-sm">아래 13개 단계를 순서대로 따라하면 나만의 웹페이지를 가질 수 있습니다.</p>
         </div>
 
         <div class="space-y-12">
@@ -101,37 +130,43 @@
                 </div>
             </section>
 
-            <!-- Phase 3: Deployment -->
+            <!-- Phase 3: Deployment (11~13단계) -->
             <section>
-                <h3 class="flex items-center text-2xl font-bold mb-8 text-indigo-700">
+                <h3 class="flex items-center text-xl sm:text-2xl font-bold mb-6 text-indigo-700">
                     <span class="w-10 h-10 bg-indigo-700 text-white rounded-xl flex items-center justify-center mr-4 shadow-md font-mono">03</span>
-                    최종 웹사이트 배포
+                    GitHub Pages 최종 무료 배포 (11~13단계)
                 </h3>
                 <div class="bg-slate-900 text-slate-100 p-8 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden">
-                    <!-- Background Decoration -->
                     <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full -mr-16 -mt-16"></div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 relative z-10">
+                    <div class="grid md:grid-cols-2 gap-8 relative z-10">
                         <div>
-                            <h4 class="text-white font-bold text-xl mb-6 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                페이지 설정 (11~13단계)
+                            <h4 class="text-white font-bold text-lg sm:text-xl mb-4 flex items-center">
+                                <i class="fa-solid fa-sliders text-indigo-400 mr-2"></i>
+                                페이지 설정 (11~12단계)
                             </h4>
-                            <ul class="space-y-4 text-slate-400">
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3"></span>Settings 메뉴 접속</li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3"></span>좌측 Pages 탭 클릭</li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3"></span>Branch를 main으로 저장</li>
+                            <ul class="space-y-4 text-slate-300 text-sm sm:text-base">
+                                <li class="flex items-start">
+                                    <span class="w-6 h-6 rounded bg-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-xs mr-3 mt-0.5">11</span>
+                                    <span>저장소 상단 <strong>Settings</strong> 메뉴 탭 접속</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-6 h-6 rounded bg-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-xs mr-3 mt-0.5">12</span>
+                                    <span>좌측 <strong>Pages</strong> 클릭 ➔ Branch를 <strong>main</strong>으로 선택 후 <strong>Save</strong> 클릭</span>
+                                </li>
                             </ul>
                         </div>
                         <div class="bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
-                            <h4 class="text-white font-bold text-xl mb-6 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>
-                                배포 완료 (14~15단계)
+                            <h4 class="text-white font-bold text-lg sm:text-xl mb-4 flex items-center">
+                                <i class="fa-solid fa-circle-check text-green-400 mr-2"></i>
+                                배포 완료 & 접속 (13단계)
                             </h4>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">잠시 후 나타나는 상단 배너의 <strong>Visit site</strong> 버튼을 클릭하세요. 전 세계 누구나 접속 가능한 주소가 생성됩니다!</p>
+                            <p class="text-slate-300 text-xs sm:text-sm mb-4 leading-relaxed">
+                                1~2분 후 상단에 생성되는 <strong>Visit site</strong> 버튼을 클릭하면 전 세계 누구나 접속할 수 있는 공식 웹페이지가 열립니다.
+                            </p>
                             <div class="bg-indigo-600/20 py-3 px-4 rounded-xl border border-indigo-500/30 text-center">
-                                <span class="text-indigo-300 text-xs font-mono uppercase tracking-widest block mb-1">Live URL</span>
-                                <span class="text-white font-bold truncate block italic">yoursite.github.io</span>
+                                <span class="text-indigo-300 text-xs font-mono uppercase tracking-widest block mb-1">13단계 완성 Live URL</span>
+                                <span class="text-white font-bold text-sm sm:text-base truncate block font-mono">https://[사용자명].github.io/[저장소명]</span>
                             </div>
                         </div>
                     </div>
@@ -139,9 +174,16 @@
             </section>
         </div>
 
+        <!-- Back to Home -->
+        <div class="text-center mt-16 pt-8 border-t border-slate-200">
+            <a href="/" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-3.5 rounded-xl transition shadow">
+                <i class="fa-solid fa-arrow-left"></i> 한국AI연구소 자료실 메인으로
+            </a>
+        </div>
+
         <!-- Footer Note -->
-        <footer class="mt-24 pt-10 border-t border-slate-200 text-center">
-            <p class="text-slate-400 text-sm">© 2024 인포그래픽 제작 및 배포 가이드. 본 페이지는 예시 프로젝트입니다.</p>
+        <footer class="mt-12 pt-6 text-center">
+            <p class="text-slate-400 text-xs">© 2026 안티그래비티 & 깃허브 웹 배포 가이드 (13단계). 한국AI연구소.</p>
         </footer>
     </main>
 

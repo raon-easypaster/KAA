@@ -119,7 +119,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
         id: 'landing-page-guide',
         title: '랜딩페이지란 무엇인가? (Landing Page Guide)',
-        description: '목회자를 위한 랜딩페이지 제작 가이드 (90분 실습 워크북)',
+        description: '목회자를 위한 랜딩페이지 제작 가이드 (읽기 15분 · 실습 90분 워크북)',
         href: '/data/landing_page_guide.html',
         target: '_blank',
         category: '목회자용',
@@ -127,7 +127,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         audience: 'pastor',
         difficulty: '입문',
         diffClass: 'easy',
-        time: '완독 15분 (실습 90분)',
+        time: '읽기 15분 · 실습 90분',
         fileType: '🔗 열람 가능',
         actionText: '확인하기 ↗️',
         isImportant: false,
@@ -143,15 +143,15 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         audience: 'welfare',
         difficulty: '입문',
         diffClass: 'easy',
-        time: '완독 15분 (실습 90분)',
+        time: '읽기 15분 · 실습 90분',
         fileType: '📋 워크북',
         actionText: '열람하기 ↗️',
         isImportant: true,
     },
     {
         id: 'github-guide',
-        title: '깃허브 랜딩페이지 구축 (GitHub Pages)',
-        description: '제미나이 생성 코드를 깃허브 웹사이트로 무료 배포하는 15단계 안내입니다.',
+        title: '안티그래비티 & 깃허브 웹 배포 가이드 (13단계)',
+        description: '안티그래비티 및 제미나이 생성 코드를 깃허브로 무료 배포하는 13단계 안내입니다.',
         href: '/data/github.html',
         target: '_blank',
         category: '배포 실무',
@@ -159,7 +159,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         audience: 'general',
         difficulty: '중급',
         diffClass: 'medium',
-        time: '약 20분',
+        time: '약 25분',
         fileType: '📄 인포그래픽',
         actionText: '열람하기 ↗️',
         isImportant: true,
@@ -199,18 +199,18 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
         id: 'easypastor',
         title: '미래 목회를 위한 AI 신학 비서 (Easy Pastor)',
-        description: 'NotebookLM 및 Gemini 통합 나만의 신학 비서 구축 가이드입니다.',
+        description: 'NotebookLM 신학 비서 3단계 구축법 및 실전 프롬프트 레시피 4선 가이드입니다.',
         href: '/data/easypastor.html',
         target: '_blank',
         category: '신학 비서',
         badgeClass: 'info',
         audience: 'pastor',
-        difficulty: '고급',
-        diffClass: 'hard',
-        time: '약 30분',
+        difficulty: '중급',
+        diffClass: 'medium',
+        time: '약 25분',
         fileType: '🔗 열람 가능',
         actionText: '확인하기 ↗️',
-        isImportant: false,
+        isImportant: true,
     },
 ];
 
@@ -472,8 +472,8 @@ export default function HomePage() {
                         <a href="/data/github.html" target="_blank" className="roadmap-step-card">
                             <div>
                                 <span className="roadmap-step-num">7</span>
-                                <h3 className="roadmap-step-title">홈페이지·웹 배포</h3>
-                                <p className="roadmap-step-desc">제미나이 생성 웹페이지 깃허브 무료 배포</p>
+                                <h3 className="roadmap-step-title">홈페이지·앱 제작 & 배포</h3>
+                                <p className="roadmap-step-desc">안티그래비티 앱 제작 & 깃허브 무료 배포 (13단계)</p>
                             </div>
                             <div className="roadmap-badges">
                                 <span className="badge-diff hard">고급</span>

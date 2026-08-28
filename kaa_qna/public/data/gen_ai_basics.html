@@ -172,29 +172,69 @@
             </div>
 
             <!-- Practical Copyable Prompts -->
-            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-copy text-blue-600"></i> 실전 업무용 복사 프롬프트 템플릿
-            </h3>
+            <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-copy text-blue-600"></i> 실전 맞춤형 프롬프트 템플릿 (분야별 선택)
+                </h3>
+            </div>
 
-            <div class="space-y-4">
-                <div class="prompt-box p-4">
-                    <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
-                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 1: 회의록 요약 및 액션 아이템 추출 (비즈니스 실무)</span>
-                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 전문 기획관이자 프로젝트 관리자(PM)야. (Act as)
+            <!-- Category A: General Business -->
+            <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="px-2.5 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-md">💼 일반 직장인 · 비즈니스 실무</span>
+                    <span class="text-xs text-slate-500">프로젝트 관리, 회의록, 기획서 작성용</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="prompt-box p-4">
+                        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+                        <span class="text-xs font-bold text-blue-700 block mb-1">[비즈니스] 회의록 요약 및 액션 아이템 추출</span>
+                        <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 전문 기획관이자 프로젝트 관리자(PM)야. (Act as)
 아래의 회의 녹취록을 읽고 이번 주 프로젝트 회의 결과를 정리해줘. (Context)
 1. 핵심 결정 사항 3가지
 2. 담당자별 액션 아이템(Action Items) 및 마감 기한
 3. 차주 주요 안건을 추출해줘. (Task)
 결과는 팀원이 한눈에 보기 편하도록 표(Table) 형식과 글머리 기호로 정리해줘. (Format)</pre>
-                </div>
+                    </div>
 
-                <div class="prompt-box p-4">
-                    <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
-                    <span class="text-xs font-bold text-blue-700 block mb-1">템플릿 2: 사내 워크숍 및 프로젝트 기획안 작성 (기획 실무)</span>
-                    <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 15년 차 시니어 교육 및 프로젝트 총괄 디렉터야. (Act as)
+                    <div class="prompt-box p-4">
+                        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+                        <span class="text-xs font-bold text-blue-700 block mb-1">[비즈니스] 사내 워크숍 및 프로젝트 기획안 작성</span>
+                        <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 15년 차 시니어 교육 및 프로젝트 총괄 디렉터야. (Act as)
 이번 분기 전사 팀 역량 강화를 위한 1일 집중 워크숍을 준비 중이야. (Context)
 워크숍 타임테이블(오전/오후), 핵심 프로그램 3가지, 준비물 및 리스크 체크리스트를 작성해줘. (Task)
 각 세션별 예상 소요시간, 목표, 진행 방식을 포함한 개요표로 구성해줘. (Format)</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category B: Ministry & Non-profit -->
+            <div class="pt-4 border-t border-slate-100">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="px-2.5 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-md">✝️ 목회자 & 비영리 사역 실무</span>
+                    <span class="text-xs text-slate-500">사역 기획, 수련회, 목회 행정용</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="prompt-box p-4 border-indigo-200 bg-indigo-50/30">
+                        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+                        <span class="text-xs font-bold text-indigo-700 block mb-1">[목회 사역] 교역자 회의록 및 사역 부서별 액션 아이템</span>
+                        <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 노련한 목회 행정 기획 목사야. (Act as)
+아래의 교역자 회의 내용을 바탕으로 주간 사역 실행 계획서를 작성해줘. (Context)
+1. 이번 주 부서별(예배, 교육, 심방, 선교) 핵심 사역 일정
+2. 담당 교역자별 실천 과제(Action Items) 및 마감일
+3. 성도 공지용 주보 안내 문구를 추출해줘. (Task)
+결과는 주간 사역 회의록 양식에 맞춰 깔끔한 표로 작성해줘. (Format)</pre>
+                    </div>
+
+                    <div class="prompt-box p-4 border-indigo-200 bg-indigo-50/30">
+                        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+                        <span class="text-xs font-bold text-indigo-700 block mb-1">[목회 사역] 청년부 수련회 및 교회 연례 행사 기획안</span>
+                        <pre class="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-sans">너는 20년 차 기독교 청소년·청년 수련회 총괄 기획자야. (Act as)
+'회복과 연합'을 주제로 한 2박 3일 청년부 여름 수련회 기획안을 작성 중이야. (Context)
+1. 2박 3일 전체 시간표(오전 묵상, 오후 팀빌딩 활동, 저녁 집회)
+2. 아이스브레이킹 게임 3가지와 세부 규칙
+3. 안전 및 비상 대응 체크리스트를 포함해줘. (Task)
+임원진이 한눈에 확인하고 실행할 수 있는 표준 기획서 형식으로 정리해줘. (Format)</pre>
+                    </div>
                 </div>
             </div>
         </section>
