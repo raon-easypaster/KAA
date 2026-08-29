@@ -137,7 +137,7 @@
         <button onclick="jumpToPart(7)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 7. 세컨드 브레인</button>
         <button onclick="jumpToPart(8)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 8. 맞춤 앱 & 랜딩</button>
         <button onclick="jumpToPart(9)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 9. 바이브 코딩</button>
-        <button onclick="jumpToSlide(42)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 font-bold transition">🌟 최종 결론</button>
+        <button onclick="jumpToSlide(46)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 font-bold transition">🌟 최종 결론</button>
       </div>
     </div>
   </header>
@@ -187,7 +187,7 @@
 
         <div class="bg-slate-900 text-white px-6 py-3 flex items-center justify-between border-t border-slate-800">
           <div class="flex items-center space-x-2 text-sm">
-            <span id="slideCounter" class="font-bold text-amber-400">1 / 42</span>
+            <span id="slideCounter" class="font-bold text-amber-400">1 / 46</span>
             <span class="text-slate-500">|</span>
             <span id="slidePartLabel" class="text-xs text-slate-300 truncate max-w-[200px] sm:max-w-md"></span>
           </div>
@@ -212,7 +212,7 @@
             <i class="fa-solid fa-table-cells text-blue-600"></i>
             <span>슬라이드 전체 둘러보기 (클릭 시 즉시 이동)</span>
           </h3>
-          <span class="text-xs text-slate-500">총 42개 슬라이드</span>
+          <span class="text-xs text-slate-500">총 46개 슬라이드</span>
         </div>
         <div id="slideThumbnailGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-100 rounded-xl border border-slate-200">
           <!-- 썸네일 동적 렌더링 -->
@@ -241,14 +241,14 @@
               <i class="fa-solid fa-play"></i> 슬라이드 발표 모드 시작
             </button>
             <button onclick="openDrawer()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-xl border border-slate-700 flex items-center gap-2 transition">
-              <i class="fa-solid fa-list"></i> 전체 42개 목차 열기
+              <i class="fa-solid fa-list"></i> 전체 46개 목차 열기
             </button>
           </div>
         </div>
       </div>
 
       <div id="docSectionsContainer" class="space-y-16">
-        <!-- 42개 슬라이드 카드 동적 렌더링 -->
+        <!-- 46개 슬라이드 카드 동적 렌더링 -->
       </div>
     </div>
 
@@ -273,10 +273,11 @@
   </footer>
 
   <!-- ========================================================================= -->
-  <!-- 6. 스크립트 로직 (42개 마스터 데이터 및 뷰어 제어) -->
+  <!-- 6. 스크립트 로직 (46개 마스터 데이터 및 뷰어 제어) -->
   <!-- ========================================================================= -->
   <script>
     const masterSlides = [
+      // ================= PART 1. 마인드셋 =================
       {
         id: 1,
         part: "PART 1. 마인드셋 (Mindset)",
@@ -314,6 +315,36 @@
       {
         id: 4,
         part: "PART 1. 마인드셋 (Mindset)",
+        type: "compare",
+        title: "자고 일어나면 바뀌는 메뉴, '기능'이 아닌 '개념과 맥락'의 힘",
+        subtitle: "어디를 누르는지 외우지 마세요. 글의 맥락을 읽듯 AI의 원리를 이해해야 합니다.",
+        bad: {
+          title: "⚡ 매일 겪는 급변과 혼란 (UI의 변화)",
+          desc: "• 자고 일어나면 새로운 모델 등장, 메뉴 위치가 바뀜\n• 어제 그림을 안 그려주던 앱이 오늘은 그림을 그려줌\n• 강사가 '여기 보세요' 했는데 버튼이 없거나, 순차 배포(A/B 롤아웃)로 강사와 학생의 화면이 다른 경우 속출"
+        },
+        good: {
+          title: "💡 우리가 잡아야 할 본질 (개념과 맥락)",
+          desc: "• 단순 버튼 위치나 작업 하나만 외우면 다음 날 UI가 바뀌면 아무것도 못 하게 됩니다.\n• 글의 맥락을 이해하듯 \"아! AI에게 이런 방식으로 일을 시킬 수 있구나!\"라는 원리를 이해해야 합니다.\n• 개념을 잡으면 어떤 새로운 화면이 나와도 스스로 응용할 수 있습니다."
+        }
+      },
+      {
+        id: 5,
+        part: "PART 1. 마인드셋 (Mindset)",
+        type: "compare",
+        title: "AI 광고의 환상 vs 현실: '딸깍'의 거짓말과 비용 폭탄",
+        subtitle: "비싼 특화 앱 강의 찾아다니지 마세요. 범용 AI에게 물어보면 광고인지 진짜인지 다 분석해 줍니다.",
+        bad: {
+          title: "❌ 화려한 광고와 숨겨진 과금",
+          desc: "• \"이 앱 하나면 영상/그림 뚝딱 완성! 당장 강의 들으세요\"\n• 막상 써보면 영상 하나 제작에 엄청난 크레딧과 과금 발생\n• \"딸깍 하나로 월 천만 원/부업 완성\"은 100% 사기거나 미끼 상품입니다."
+        },
+        good: {
+          title: "⭕ 현명한 해결책 & 한국인의 힘",
+          desc: "• 범용 AI(ChatGPT/Gemini/Claude)에게 광고나 영상을 보여주며 \"이거 내가 당장 쓸 수 있어? 과금 얼마야? 광고야 진짜야?\" 물어보면 상세히 안내해 줍니다.\n• 외주는 돈 들고 수정마다 비용이지만, 내가 AI로 만들면 비용 0원에 내 뜻대로 계속 키워갈 수 있습니다.\n• \"될 것 같은데? 할 수 있을 것 같은데? 해줘!\" 하는 한국인의 뚝심이 최고의 무기입니다!"
+        }
+      },
+      {
+        id: 6,
+        part: "PART 1. 마인드셋 (Mindset)",
         type: "split_image",
         title: "자전거를 책으로 배우는 사람은 없습니다",
         subtitle: "복잡한 이론을 공부하려 하지 말고, 오늘 직접 페달을 밟아보세요.",
@@ -322,7 +353,7 @@
         imageUrl: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80"
       },
       {
-        id: 5,
+        id: 7,
         part: "PART 1. 마인드셋 (Mindset)",
         type: "compare",
         title: "AI의 무눈치 vs 인간의 몰염치",
@@ -337,7 +368,7 @@
         }
       },
       {
-        id: 6,
+        id: 8,
         part: "PART 1. 마인드셋 (Mindset)",
         type: "cards2",
         title: "단순 계산기를 넘어 '사역 전담 비서'로의 전환",
@@ -354,7 +385,7 @@
         ]
       },
       {
-        id: 7,
+        id: 9,
         part: "PART 1. 마인드셋 (Mindset)",
         type: "slogan",
         title: "기계는 부지런한 손, 목회자는 뜨거운 심장",
@@ -362,8 +393,10 @@
         slogan: "AI의 몫 (부지런한 손): 방대한 자료 조사, 설교 초안, 행정 문서, 다국어 번역\n\n목회자의 몫 (뜨거운 심장): 눈물의 기도, 성도를 향한 깊은 공감, 영적 통찰과 관계",
         sub: "AI로 아낀 소중한 시간과 에너지를 '말씀 묵상과 한 영혼을 돌보는 목회의 본질'에 온전히 쏟으십시오."
       },
+
+      // ================= PART 2. AI 진화 4단계 =================
       {
-        id: 8,
+        id: 10,
         part: "PART 2. AI 진화 4단계",
         type: "cover",
         title: "인공지능(AI)의 진화 4단계와 에이전트",
@@ -372,7 +405,7 @@
         imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
       },
       {
-        id: 9,
+        id: 11,
         part: "PART 2. AI 진화 4단계",
         type: "cards2",
         title: "1단계 인지 AI & 2단계 생성형 AI",
@@ -389,7 +422,7 @@
         ]
       },
       {
-        id: 10,
+        id: 12,
         part: "PART 2. AI 진화 4단계",
         type: "cards2",
         title: "3단계 AI 에이전트 & 4단계 피지컬 AI",
@@ -406,7 +439,7 @@
         ]
       },
       {
-        id: 11,
+        id: 13,
         part: "PART 2. AI 진화 4단계",
         type: "split_image",
         title: "AI 에이전트의 핵심: 오케스트레이션",
@@ -416,7 +449,7 @@
         imageUrl: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&q=80"
       },
       {
-        id: 12,
+        id: 14,
         part: "PART 2. AI 진화 4단계",
         type: "table",
         title: "햄버거로 정리하는 AI 4단계와 사역 현장 적용",
@@ -431,8 +464,10 @@
           ]
         }
       },
+
+      // ================= PART 3. AI 지식 구조 & 신뢰도 =================
       {
-        id: 13,
+        id: 15,
         part: "PART 3. AI 지식 구조 & 신뢰도",
         type: "cover",
         title: "지식 차단일과 올바른 AI 활용법",
@@ -441,7 +476,7 @@
         imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80"
       },
       {
-        id: 14,
+        id: 16,
         part: "PART 3. AI 지식 구조 & 신뢰도",
         type: "compare",
         title: "검색 엔진 vs 생성형 AI의 본질적 차이",
@@ -456,7 +491,7 @@
         }
       },
       {
-        id: 15,
+        id: 17,
         part: "PART 3. AI 지식 구조 & 신뢰도",
         type: "cards3",
         title: "환각(Hallucination) 현상과 작업별 신뢰도",
@@ -477,7 +512,7 @@
         ]
       },
       {
-        id: 16,
+        id: 18,
         part: "PART 3. AI 지식 구조 & 신뢰도",
         type: "cards4",
         title: "오류 없는 사역을 위한 하이브리드 워크플로우",
@@ -502,7 +537,7 @@
         ]
       },
       {
-        id: 17,
+        id: 19,
         part: "PART 3. AI 지식 구조 & 신뢰도",
         type: "table",
         title: "주요 AI 모델별 특징 및 추천 사역 용도",
@@ -517,8 +552,10 @@
           ]
         }
       },
+
+      // ================= PART 4. 선교사를 위한 IT 기술 (API) =================
       {
-        id: 18,
+        id: 20,
         part: "PART 4. 선교사를 위한 IT 기술 (API)",
         type: "cover",
         title: "선교사와 목회자를 위한 API 쉽게 이해하기",
@@ -527,7 +564,7 @@
         imageUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80"
       },
       {
-        id: 19,
+        id: 21,
         part: "PART 4. 선교사를 위한 IT 기술 (API)",
         type: "split_image",
         title: "내가 주방에 직접 들어가지 않아도 되는 이유",
@@ -537,7 +574,7 @@
         imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
       },
       {
-        id: 20,
+        id: 22,
         part: "PART 4. 선교사를 위한 IT 기술 (API)",
         type: "table",
         title: "선교지 환경에 따른 기술 선택: 온라인 vs 오프라인",
@@ -553,7 +590,7 @@
         }
       },
       {
-        id: 21,
+        id: 23,
         part: "PART 4. 선교사를 위한 IT 기술 (API)",
         type: "cards3",
         title: "선교 사역을 확장하는 3가지 대표 API",
@@ -573,8 +610,10 @@
           }
         ]
       },
+
+      // ================= PART 5. 소통의 기술 (프롬프트) =================
       {
-        id: 22,
+        id: 24,
         part: "PART 5. 소통의 기술 (프롬프트)",
         type: "cover",
         title: "AI와 깊이 소통하는 질문의 기술",
@@ -583,7 +622,7 @@
         imageUrl: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80"
       },
       {
-        id: 23,
+        id: 25,
         part: "PART 5. 소통의 기술 (프롬프트)",
         type: "cards4",
         title: "마법의 4단계 질문 공식: A-C-T-F",
@@ -609,7 +648,7 @@
         footerNote: "📌 <strong>ACTF 공식 배경</strong>: ACTF는 RTF(Role-Task-Format), CO-STAR 등 널리 쓰이는 프롬프트 구조를 참고해 <strong>한국AI연구소</strong>가 목회·실무 현장에 맞게 체계화한 4단계 공식입니다."
       },
       {
-        id: 24,
+        id: 26,
         part: "PART 5. 소통의 기술 (프롬프트)",
         type: "compare",
         title: "정답을 묻지 말고, '최종 목표'를 제시하십시오",
@@ -624,7 +663,7 @@
         }
       },
       {
-        id: 25,
+        id: 27,
         part: "PART 5. 소통의 기술 (프롬프트)",
         type: "cards3",
         title: "탁구 치듯 대화하는 '핑퐁 대화법' (티키타카)",
@@ -645,7 +684,7 @@
         ]
       },
       {
-        id: 26,
+        id: 28,
         part: "PART 5. 소통의 기술 (프롬프트)",
         type: "cards4",
         title: "질문 품질을 200% 끌어올리는 4가지 꿀팁",
@@ -669,8 +708,10 @@
           }
         ]
       },
+
+      // ================= PART 6. 목회 실전 프롬프트 =================
       {
-        id: 27,
+        id: 29,
         part: "PART 6. 목회 실전 프롬프트",
         type: "cover",
         title: "목회자를 위한 실전 프롬프트 라이브러리",
@@ -679,7 +720,7 @@
         imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80"
       },
       {
-        id: 28,
+        id: 30,
         part: "PART 6. 목회 실전 프롬프트",
         type: "prompt",
         title: "[실전 1] 연간 목회 계획서 작성 프롬프트",
@@ -688,7 +729,7 @@
         tip: "📌 활용 팁: 교회 규모와 표어를 구체적으로 적을수록 실무에 바로 쓰는 계획서가 나옵니다."
       },
       {
-        id: 29,
+        id: 31,
         part: "PART 6. 목회 실전 프롬프트",
         type: "prompt",
         title: "[실전 2] 4주 완성 소그룹 성경공부 교안",
@@ -697,7 +738,7 @@
         tip: "📌 활용 팁: 대상(청년, 장년, 새신자)을 명시하면 적용 질문의 깊이가 완전히 달라집니다."
       },
       {
-        id: 30,
+        id: 32,
         part: "PART 6. 목회 실전 프롬프트",
         type: "prompt",
         title: "[실전 3] 새신자 정착 및 소모임 갈등 해결",
@@ -705,8 +746,10 @@
         promptText: "[역할] 경험 많고 따뜻한 소그룹(구역) 코치입니다.\n[상황] 기존 교우들의 친분이 너무 두터워 새로 등록한 부부가 소외감을 느끼고 있습니다.\n[임무] 3개월(12주) 동안의 '새가족 자연스러운 통합 운영 계획서'를 작성해주세요.\n[요구사항] 1. 주차별 관계 형성 목표 2. 부담 없는 교제 활동 아이디어 3. 구역장이 주의할 점 1가지",
         tip: "📌 활용 팁: 현재 겪고 있는 소그룹의 실제 고민(침묵, 소외 등)을 솔직히 적어주세요."
       },
+
+      // ================= PART 7. 신학 비서 & 세컨드 브레인 =================
       {
-        id: 31,
+        id: 33,
         part: "PART 7. 신학 비서 & 세컨드 브레인",
         type: "cover",
         title: "나만의 신학 비서와 세컨드 브레인",
@@ -715,7 +758,7 @@
         imageUrl: "https://images.unsplash.com/photo-1507842229453-769a91032df5?w=800&q=80"
       },
       {
-        id: 32,
+        id: 34,
         part: "PART 7. 신학 비서 & 세컨드 브레인",
         type: "cards2",
         title: "사역 자료를 유기적으로 연결하는 '세컨드 브레인'",
@@ -732,7 +775,7 @@
         ]
       },
       {
-        id: 33,
+        id: 35,
         part: "PART 7. 신학 비서 & 세컨드 브레인",
         type: "cards2",
         title: "신학적 오류 없는 안전한 AI: Source Grounding",
@@ -749,7 +792,7 @@
         ]
       },
       {
-        id: 34,
+        id: 36,
         part: "PART 7. 신학 비서 & 세컨드 브레인",
         type: "cards2",
         title: "NotebookLM의 2대 필살기 기능",
@@ -766,7 +809,7 @@
         ]
       },
       {
-        id: 35,
+        id: 37,
         part: "PART 7. 신학 비서 & 세컨드 브레인",
         type: "cards4",
         title: "NotebookLM 실전 프롬프트 레시피 4선",
@@ -790,8 +833,10 @@
           }
         ]
       },
+
+      // ================= PART 8. 맞춤 앱 & 랜딩페이지 =================
       {
-        id: 36,
+        id: 38,
         part: "PART 8. 맞춤 앱 & 랜딩페이지",
         type: "cover",
         title: "나만의 사역 전용 AI 앱 & 모바일 랜딩페이지",
@@ -800,7 +845,7 @@
         imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80"
       },
       {
-        id: 37,
+        id: 39,
         part: "PART 8. 맞춤 앱 & 랜딩페이지",
         type: "cards3",
         title: "🛠️ 오늘 직접 만드는 핵심 사역 앱 3종 (실습)",
@@ -821,7 +866,7 @@
         ]
       },
       {
-        id: 38,
+        id: 40,
         part: "PART 8. 맞춤 앱 & 랜딩페이지",
         type: "cards4",
         title: "방문자의 결단을 이끄는 랜딩페이지 4단계 구조",
@@ -846,7 +891,7 @@
         ]
       },
       {
-        id: 39,
+        id: 41,
         part: "PART 8. 맞춤 앱 & 랜딩페이지",
         type: "cards4",
         title: "랜딩페이지 제작부터 평생 무료 배포까지",
@@ -871,7 +916,35 @@
         ]
       },
       {
-        id: 40,
+        id: 42,
+        part: "PART 8. 맞춤 앱 & 랜딩페이지",
+        type: "cards4",
+        title: "AI와 함께하는 실전 5단계 워크플로우: [출판사 만들기 사례]",
+        subtitle: "질문 ➔ 나와 연결 ➔ 캡처/분석 ➔ 함께 실행 ➔ 정리 및 카툰화까지 한 번에!",
+        cards: [
+          {
+            title: "1. 절차 질문하기",
+            desc: "\"출판사 만들려면 어떻게 해야 하는지 전체 절차를 알려줘.\"\n👉 전체 로드맵 및 필요 서류 파악"
+          },
+          {
+            title: "2. 나와 연결 (브랜딩)",
+            desc: "\"커뮤니티 라온(라온동행교회, 카페 라온트리, 라온 아카데미)과 연동할 출판사 이름을 추천해줘.\""
+          },
+          {
+            title: "3. 캡처 & 링크 요청",
+            desc: "진행 중 모르는 화면은 캡처해서 \"여기서 어떻게 넘어가? 공식 신청 사이트 링크도 줘.\""
+          },
+          {
+            title: "4. 실행 & 매뉴얼화",
+            desc: "등록 완료 후 \"내가 방금 진행한 출판사 등록 절차를 동역자가 따라 할 수 있게 순서 매뉴얼로 정리해줘.\""
+          }
+        ],
+        footerNote: "🎨 <strong>5단계 (시각화 및 공유)</strong>: \"이 모든 등록 과정을 성도 및 동역자들과 은혜롭게 나눌 수 있도록 4컷 카툰 스토리로 구성해줘.\""
+      },
+
+      // ================= PART 9. 바이브 코딩 & 사역의 본질 =================
+      {
+        id: 43,
         part: "PART 9. 바이브 코딩 & 사역의 본질",
         type: "cover",
         title: "바이브 코딩과 사역의 본질",
@@ -880,7 +953,22 @@
         imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
       },
       {
-        id: 41,
+        id: 44,
+        part: "PART 9. 바이브 코딩 & 사역의 본질",
+        type: "compare",
+        title: "가장 쉬운 건 돈 내는 것 & '예수 천당'과 사역의 본질",
+        subtitle: "하고 싶은 일을 할 수 있는 일로 만드는 것은 여러분의 몫입니다.",
+        bad: {
+          title: "⚠️ '하고 싶은 일' vs '할 수 있는 일'",
+          desc: "• \"돈 안 내려고 AI 배우는 것입니다. 부업/수익화 미끼 상품에 속지 마세요.\"\n• 내 상황, 환경, 성향을 분석하고 내가 할 수 있는 일부터 시작해야 합니다.\n• 하고 싶은 일이 할 수 있는 일이 되게 만드는 훈련은 나의 몫입니다."
+        },
+        good: {
+          title: "✝️ 신학적 본질: '믿음으로 살아내는 삶'",
+          desc: "• \"예수 천당 불신 지옥\"은 입문용 충격요법일 뿐 기독교의 전부가 아닙니다.\n• 기독교의 진짜 본질은 그 다음 스텝인 '믿음으로 치열하게 살아내는 고백과 삶'입니다.\n• AI도 '딸깍' 마법이 아니라, AI와 함께 문제를 고민하고 풀어가는 과정이 진짜 본질입니다."
+        }
+      },
+      {
+        id: 45,
         part: "PART 9. 바이브 코딩 & 사역의 본질",
         type: "cards2",
         title: "사역 맞춤형 확장 아이디어와 AI 예산 관리",
@@ -896,8 +984,10 @@
           }
         ]
       },
+
+      // ================= 전체 강의 최종 결론 =================
       {
-        id: 42,
+        id: 46,
         part: "전체 강의 최종 결론",
         type: "slogan",
         title: "기술은 부지런한 손, 목회자는 뜨거운 심장",
@@ -1125,18 +1215,32 @@
             </div>
             ${slide.imageUrl ? `<img src="${slide.imageUrl}" alt="${slide.title}" class="w-full h-64 object-cover rounded-xl shadow-md border border-slate-200">` : ''}
           </div>
+          ${slide.footerNote ? `
+            <div class="mt-4 p-3.5 bg-blue-50/80 rounded-xl border border-blue-200 text-xs sm:text-sm text-blue-950 flex items-start gap-2.5 font-medium">
+              <i class="fa-solid fa-circle-info text-blue-600 mt-0.5"></i>
+              <div class="leading-relaxed">${slide.footerNote}</div>
+            </div>
+          ` : ''}
         `;
       } else if (slide.type === 'compare') {
         return `
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-red-50/80 border border-red-200 rounded-xl p-6">
-              <h5 class="text-lg font-bold text-red-900 mb-3">${slide.bad.title}</h5>
-              <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-red-50/80 border border-red-200 rounded-xl p-6">
+                <h5 class="text-lg font-bold text-red-900 mb-3">${slide.bad.title}</h5>
+                <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
+              </div>
+              <div class="bg-green-50/80 border border-green-200 rounded-xl p-6">
+                <h5 class="text-lg font-bold text-green-900 mb-3">${slide.good.title}</h5>
+                <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
+              </div>
             </div>
-            <div class="bg-green-50/80 border border-green-200 rounded-xl p-6">
-              <h5 class="text-lg font-bold text-green-900 mb-3">${slide.good.title}</h5>
-              <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
-            </div>
+            ${slide.footerNote ? `
+              <div class="p-3.5 bg-blue-50/80 rounded-xl border border-blue-200 text-xs sm:text-sm text-blue-950 flex items-start gap-2.5 font-medium">
+                <i class="fa-solid fa-circle-info text-blue-600 mt-0.5"></i>
+                <div class="leading-relaxed">${slide.footerNote}</div>
+              </div>
+            ` : ''}
           </div>
         `;
       } else if (slide.cards) {
