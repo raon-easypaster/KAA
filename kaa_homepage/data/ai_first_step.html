@@ -359,12 +359,12 @@
         title: "AI의 무눈치 vs 인간의 몰염치",
         subtitle: "미안해하지 말고 원하는 결과가 나올 때까지 당당하게 요구하세요.",
         bad: {
-          title: "🤖 AI의 무눈치 (눈치가 전혀 없음)",
-          desc: "• AI는 사람처럼 알아서 배려하지 못합니다.\n• 두루뭉술하게 지시하면 뻔하고 엉뚱한 답만 냅니다.\n• 구체적인 배경과 목표를 콕 집어줘야 제대로 일합니다."
+          title: "🤖 AI의 무눈치 (신입사원과 같음)",
+          desc: "• AI는 만능 도깨비 방망이나 소원을 들어주는 지니의 램프가 아닙니다.\n• 이제 막 입사한 열정 넘치는 '신입사원(인턴)'과 같아서, 눈치가 전혀 없고 알아서 배려하지 못합니다.\n• 두루뭉술하게 지시하면 엉뚱한 답만 냅니다. 구체적인 배경과 업무 지시를 콕 집어줘야 최고의 능력을 발휘합니다."
         },
         good: {
-          title: "🙋 인간의 몰염치 (염치없이 뻔뻔하게)",
-          desc: "• AI에게 결코 미안해할 필요가 없습니다!\n• 지치지 않는 무료 인턴 비서에게 10번이든 20번이든 당당하게 수정을 요구하세요.\n• 완벽한 100점짜리가 나올 때까지 계속 지시하십시오."
+          title: "🙋 인간의 몰염치 (염치없이 당당하게)",
+          desc: "• AI에게 결코 미안해하거나 눈치 볼 필요가 없습니다!\n• 신입사원에게 일을 가르치듯, 지치지 않는 무료 비서에게 10번이든 20번이든 당당하게 수정을 요구하세요.\n• 완벽한 100점짜리가 나올 때까지 뻔뻔하게 계속 지시하십시오."
         }
       },
       {
@@ -453,16 +453,19 @@
         part: "PART 2. AI 진화 4단계",
         type: "table",
         title: "햄버거로 정리하는 AI 4단계와 사역 현장 적용",
-        subtitle: "단계별 핵심 역할과 목회 현장 적용점 비교 요약",
+        subtitle: "우리가 집중적으로 활용할 AI는 바로 '2단계 생성형 AI'와 '3단계 AI 에이전트'입니다.",
         table: {
           headers: ["단계 및 구분", "핵심 역할", "햄버거 비유", "목회 및 사역 현장 적용"],
+          highlightRows: [1, 2],
+          highlightLabel: "🎯 우리가 실무·사역에서 집중 활용할 핵심 AI (2단계 & 3단계)",
           rows: [
             ["1. 인지 AI", "식별하고 구별함", "\"이건 햄버거야\"", "안면인식 교적 관리, 성경 필사 스캔"],
             ["2. 생성형 AI", "창작하고 대화함", "\"햄버거 그려줘\"", "설교 예화, 주보 디자인, 성경 퀴즈"],
             ["3. AI 에이전트", "계획하고 대신 실행", "\"주문하고 결제해줘\"", "심방 문자 자동 발송, 사역 일정 자동화"],
             ["4. 피지컬 AI", "현실에서 직접 움직임", "\"요리해서 가져다줘\"", "거동 불편 성도 케어, 시설 자율 관리"]
           ]
-        }
+        },
+        footerNote: "💡 <strong>집중 영역 안내</strong>: 현재 우리 사역 현장에서 가장 강력한 생산성과 은혜를 낳는 핵심 도구는 <strong>[2단계 생성형 AI]</strong>와 <strong>[3단계 AI 에이전트]</strong>입니다."
       },
 
       // ================= PART 3. AI 지식 구조 & 신뢰도 =================
@@ -1264,22 +1267,48 @@
           </div>
         `;
       } else if (slide.type === 'table') {
+        const highlightIndices = slide.table.highlightRows || [];
         return `
-          <div class="overflow-x-auto rounded-xl border border-slate-200">
-            <table class="w-full text-left text-sm md:text-base">
-              <thead class="bg-blue-900 text-white">
-                <tr>
-                  ${slide.table.headers.map(h => `<th class="p-3.5 font-bold">${h}</th>`).join('')}
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
-                ${slide.table.rows.map((row, idx) => `
-                  <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
-                    ${row.map(cell => `<td class="p-3.5 text-slate-800 font-medium">${cell}</td>`).join('')}
+          <div class="space-y-3">
+            ${slide.table.highlightLabel ? `
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-900 rounded-lg text-xs md:text-sm font-bold shadow-sm">
+                <i class="fa-solid fa-bullseye text-amber-600"></i>
+                <span>${slide.table.highlightLabel}</span>
+              </div>
+            ` : ''}
+            <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm">
+              <table class="w-full text-left text-sm md:text-base border-collapse">
+                <thead class="bg-blue-900 text-white">
+                  <tr>
+                    ${slide.table.headers.map(h => `<th class="p-3.5 font-bold">${h}</th>`).join('')}
                   </tr>
-                `).join('')}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                  ${slide.table.rows.map((row, idx) => {
+                    const isHighlighted = highlightIndices.includes(idx);
+                    const rowClass = isHighlighted 
+                      ? 'bg-amber-50/95 font-bold border-y-2 border-l-4 border-r-4 border-amber-500 text-slate-900' 
+                      : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50');
+                    return `
+                      <tr class="${rowClass} transition">
+                        ${row.map((cell, cIdx) => {
+                          const cellContent = (isHighlighted && cIdx === 0)
+                            ? `<div class="flex items-center gap-1.5 flex-wrap"><span>${cell}</span> <span class="px-2 py-0.5 text-[11px] font-extrabold bg-amber-500 text-slate-950 rounded-full shadow-sm">우리가 사용할 AI</span></div>`
+                            : cell;
+                          return `<td class="p-3.5 ${isHighlighted ? 'text-blue-950 font-bold' : 'text-slate-800 font-medium'}">${cellContent}</td>`;
+                        }).join('')}
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+            ${slide.footerNote ? `
+              <div class="p-3.5 bg-blue-50/80 rounded-xl border border-blue-200 text-xs sm:text-sm text-blue-950 flex items-start gap-2.5 font-medium">
+                <i class="fa-solid fa-circle-info text-blue-600 mt-0.5"></i>
+                <div class="leading-relaxed">${slide.footerNote}</div>
+              </div>
+            ` : ''}
           </div>
         `;
       } else if (slide.type === 'prompt') {
@@ -1379,32 +1408,66 @@
       } else if (slide.cards) {
         const gridCols = slide.cards.length === 2 ? 'md:grid-cols-2' : (slide.cards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-4');
         return `
-          <div class="grid grid-cols-1 ${gridCols} gap-4">
-            ${slide.cards.map(c => `
-              <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 hover:border-blue-500 transition">
-                <h4 class="text-xl sm:text-2xl font-extrabold text-blue-950 mb-3">${c.title}</h4>
-                <div class="text-base sm:text-lg text-slate-800 whitespace-pre-line leading-relaxed">${c.desc}</div>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 ${gridCols} gap-4">
+              ${slide.cards.map(c => `
+                <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 hover:border-blue-500 transition">
+                  <h4 class="text-xl sm:text-2xl font-extrabold text-blue-950 mb-3">${c.title}</h4>
+                  <div class="text-base sm:text-lg text-slate-800 whitespace-pre-line leading-relaxed">${c.desc}</div>
+                </div>
+              `).join('')}
+            </div>
+            ${slide.footerNote ? `
+              <div class="p-4 bg-blue-50/90 rounded-2xl border-2 border-blue-200 text-sm sm:text-base text-blue-950 flex items-start gap-3 font-semibold">
+                <i class="fa-solid fa-circle-info text-blue-600 text-lg mt-0.5"></i>
+                <div class="leading-relaxed">${slide.footerNote}</div>
               </div>
-            `).join('')}
+            ` : ''}
           </div>
         `;
       } else if (slide.type === 'table') {
+        const highlightIndices = slide.table.highlightRows || [];
         return `
-          <div class="overflow-x-auto rounded-2xl border-2 border-slate-200">
-            <table class="w-full text-left text-base sm:text-lg">
-              <thead class="bg-blue-900 text-white">
-                <tr>
-                  ${slide.table.headers.map(h => `<th class="p-4 font-bold">${h}</th>`).join('')}
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
-                ${slide.table.rows.map((row, idx) => `
-                  <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
-                    ${row.map(cell => `<td class="p-4 text-slate-800 font-medium">${cell}</td>`).join('')}
+          <div class="space-y-4">
+            ${slide.table.highlightLabel ? `
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/15 border-2 border-amber-500/40 text-amber-950 rounded-xl text-sm sm:text-base font-extrabold shadow-sm">
+                <i class="fa-solid fa-bullseye text-amber-600"></i>
+                <span>${slide.table.highlightLabel}</span>
+              </div>
+            ` : ''}
+            <div class="overflow-x-auto rounded-2xl border-2 border-slate-300 shadow-md">
+              <table class="w-full text-left text-base sm:text-lg border-collapse">
+                <thead class="bg-blue-900 text-white">
+                  <tr>
+                    ${slide.table.headers.map(h => `<th class="p-4 font-bold">${h}</th>`).join('')}
                   </tr>
-                `).join('')}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                  ${slide.table.rows.map((row, idx) => {
+                    const isHighlighted = highlightIndices.includes(idx);
+                    const rowClass = isHighlighted 
+                      ? 'bg-amber-50/95 font-bold border-y-2 border-l-4 border-r-4 border-amber-500 text-slate-900 shadow-inner' 
+                      : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50');
+                    return `
+                      <tr class="${rowClass} transition">
+                        ${row.map((cell, cIdx) => {
+                          const cellContent = (isHighlighted && cIdx === 0)
+                            ? `<div class="flex items-center gap-2 flex-wrap"><span>${cell}</span> <span class="px-2.5 py-0.5 text-xs font-extrabold bg-amber-500 text-slate-950 rounded-full shadow-sm">우리가 사용할 AI</span></div>`
+                            : cell;
+                          return `<td class="p-4 ${isHighlighted ? 'text-blue-950 font-bold' : 'text-slate-800 font-medium'}">${cellContent}</td>`;
+                        }).join('')}
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+            ${slide.footerNote ? `
+              <div class="p-4 bg-blue-50/90 rounded-2xl border-2 border-blue-200 text-sm sm:text-base text-blue-950 flex items-start gap-3 font-semibold">
+                <i class="fa-solid fa-circle-info text-blue-600 text-lg mt-0.5"></i>
+                <div class="leading-relaxed">${slide.footerNote}</div>
+              </div>
+            ` : ''}
           </div>
         `;
       } else if (slide.type === 'prompt') {
