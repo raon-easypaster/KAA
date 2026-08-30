@@ -228,6 +228,22 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         actionText: '열람하기 ↗️',
         isImportant: true,
     },
+    {
+        id: 'pastoral-wiki-lecture',
+        title: '손에 익히기: 목회 위키 구축 실전 (Obsidian & Claude Code)',
+        description: '노트 4개로 시작하는 나만의 목회 위키 구축과 백링크 연결 실전 강의 (강사: 김태주 공동대표)',
+        href: 'https://smdjoo-stack.github.io/pastoral-wiki-lecture/',
+        target: '_blank',
+        category: 'LLM Wiki',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '고급',
+        diffClass: 'hard',
+        time: '약 30분',
+        fileType: '💻 슬라이드 덱',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
 ];
 
 export default function HomePage() {
@@ -527,6 +543,19 @@ export default function HomePage() {
                             <div className="roadmap-badges">
                                 <span className="badge-diff hard">고급</span>
                                 <span className="badge-time">20분</span>
+                            </div>
+                        </a>
+
+                        {/* Step 9 */}
+                        <a href="https://smdjoo-stack.github.io/pastoral-wiki-lecture/" target="_blank" className="roadmap-step-card">
+                            <div>
+                                <span className="roadmap-step-num">9</span>
+                                <h3 className="roadmap-step-title">목회 위키 (LLM Wiki)</h3>
+                                <p className="roadmap-step-desc">옵시디언 & 클로드로 짓는 나만의 목회 위키 실전 (강의: 김태주)</p>
+                            </div>
+                            <div className="roadmap-badges">
+                                <span className="badge-diff hard">고급</span>
+                                <span className="badge-time">30분</span>
                             </div>
                         </a>
                     </div>
