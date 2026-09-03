@@ -1,0 +1,21 @@
+# Netlify Configuration for Korea AI Research Institute (KAA)
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    X-Frame-Options = "ALLOWALL"
+    X-Content-Type-Options = "nosniff"
+
+[[redirects]]
+  from = "/ai-first-step"
+  to = "/data/ai_first_step.html"
+  status = 301
+
+[[redirects]]
+  from = "/guide"
+  to = "/data/kaa-ai-guide.html"
+  status = 301
