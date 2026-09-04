@@ -327,6 +327,7 @@ export default function HomePage() {
                         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                             <a href="#start-guide" className="btn btn-primary">시작점 찾기 🚀</a>
                             <a href="#programs" className="btn btn-secondary">전체 자료실 ⬇️</a>
+                            <a href="/data/laos_feedback.html" target="_blank" className="btn btn-secondary" style={{ background: 'rgba(45, 122, 82, 0.4)', borderColor: '#5db87a', color: '#ffffff' }}>📊 라오스 결과 보고서 ↗️</a>
                         </div>
                     </div>
                 </div>
