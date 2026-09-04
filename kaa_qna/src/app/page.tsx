@@ -247,7 +247,7 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
         id: 'laos-feedback',
         title: '라오스 선교사 AI 교육 피드백 결과 (설문 분석 보고서)',
-        description: '3일간의 선교사 AI 집중 교육 만족도(4.3/5), 자신감 향상(4.4/5) 및 참가자 10인의 생생한 원문 피드백 수록',
+        description: '3일간의 선교사 AI 집중 교육 만족도(4.4/5), 자신감 향상(4.4/5) 및 참가자 11인의 생생한 원문 피드백 수록',
         href: '/data/laos_feedback.html',
         target: '_blank',
         category: '교육 보고서',
@@ -653,16 +653,16 @@ export default function HomePage() {
                                 </div>
                                 <h3 className="featured-title">라오스 선교사 AI 교육 피드백 결과</h3>
                                 <p className="featured-desc">
-                                    3일간의 선교사 AI 활용 집중 교육 참가자 설문 분석 보고서입니다. 전반적 만족도(4.3/5), 자신감 향상(4.4/5), 사역 활용 가능성(4.5/5) 및 참가자 10인의 생생한 원문 피드백을 확인하세요.
+                                    3일간의 선교사 AI 활용 집중 교육 참가자 설문 분석 보고서입니다. 전반적 만족도(4.4/5), 자신감 향상(4.4/5), 사역 활용 가능성(4.5/5) 및 참가자 11인의 생생한 원문 피드백을 확인하세요.
                                 </p>
                                 <div className="featured-highlights">
-                                    <div className="feat-item"><span>📈</span> 종합 만족도 4.3점 &amp; 지속 활용 의향 100% (4.5점)</div>
+                                    <div className="feat-item"><span>📈</span> 종합 만족도 4.4점 &amp; 지속 활용 의향 100% (4.5점)</div>
                                     <div className="feat-item"><span>💡</span> '막연한 두려움 ➔ 자신감'으로의 실질적 인식 전환 입증</div>
-                                    <div className="feat-item"><span>📝</span> 참가자 10인 자유 의견 원문 &amp; 향후 심화 수요 분석</div>
+                                    <div className="feat-item"><span>📝</span> 참가자 11인 자유 의견 원문 &amp; 향후 심화 수요 분석</div>
                                 </div>
                             </div>
                             <div className="featured-footer">
-                                <span className="file-type">📊 설문 분석 보고서 (260903)</span>
+                                <span className="file-type">📊 설문 분석 보고서 (260904)</span>
                                 <a href="/data/laos_feedback.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem', background: '#2d7a52', borderColor: '#2d7a52' }}>
                                     보고서 열람하기 ↗️
                                 </a>
