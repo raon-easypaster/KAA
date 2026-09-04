@@ -244,6 +244,22 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         actionText: '열람하기 ↗️',
         isImportant: true,
     },
+    {
+        id: 'laos-feedback',
+        title: '라오스 선교사 AI 교육 피드백 결과 (설문 분석 보고서)',
+        description: '3일간의 선교사 AI 집중 교육 만족도(4.3/5), 자신감 향상(4.4/5) 및 참가자 10인의 생생한 원문 피드백 수록',
+        href: '/data/laos_feedback.html',
+        target: '_blank',
+        category: '교육 보고서',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 10분',
+        fileType: '📊 설문 분석 보고서',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
 ];
 
 export default function HomePage() {
@@ -623,6 +639,261 @@ export default function HomePage() {
                                 <a href="/data/vibe_coding_workshop.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem' }}>
                                     워크숍 보기 ↗️
                                 </a>
+                            </div>
+                        </div>
+
+                        {/* Featured Card 3: 라오스 AI 교육 피드백 보고서 */}
+                        <div className="featured-card">
+                            <div>
+                                <div className="featured-badge-row">
+                                    <span className="badge-featured" style={{ background: '#2d7a52', color: '#fff' }}>📊 SPECIAL REPORT</span>
+                                    <span className="badge-diff easy">보고서</span>
+                                    <span className="badge-time">⏱️ 약 10분</span>
+                                </div>
+                                <h3 className="featured-title">라오스 선교사 AI 교육 피드백 결과</h3>
+                                <p className="featured-desc">
+                                    3일간의 선교사 AI 활용 집중 교육 참가자 설문 분석 보고서입니다. 전반적 만족도(4.3/5), 자신감 향상(4.4/5), 사역 활용 가능성(4.5/5) 및 참가자 10인의 생생한 원문 피드백을 확인하세요.
+                                </p>
+                                <div className="featured-highlights">
+                                    <div className="feat-item"><span>📈</span> 종합 만족도 4.3점 &amp; 지속 활용 의향 100% (4.5점)</div>
+                                    <div className="feat-item"><span>💡</span> '막연한 두려움 ➔ 자신감'으로의 실질적 인식 전환 입증</div>
+                                    <div className="feat-item"><span>📝</span> 참가자 10인 자유 의견 원문 &amp; 향후 심화 수요 분석</div>
+                                </div>
+                            </div>
+                            <div className="featured-footer">
+                                <span className="file-type">📊 설문 분석 보고서 (260903)</span>
+                                <a href="/data/laos_feedback.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem', background: '#2d7a52', borderColor: '#2d7a52' }}>
+                                    보고서 열람하기 ↗️
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ================= 🛠️ 추천 도구 & AI 에이전트 가이드 ================= */}
+            <section className="tools-section" id="ai-tools">
+                <div className="container fade-up">
+                    <div className="start-header">
+                        <span className="start-eyebrow">CURATED AI TOOLS & AGENTS</span>
+                        <h2 className="start-title">추천 AI 도구 &amp; 에이전트 가이드</h2>
+                        <p className="start-subtitle">
+                            한국AI연구소 강의와 실습에서 실제로 검증하고 추천하는 핵심 도구와 차세대 AI 에이전트 모음입니다.
+                        </p>
+                    </div>
+
+                    {/* 1. 3대 핵심 코딩 에이전트 */}
+                    <div className="tools-category-block">
+                        <div className="tools-category-header">
+                            <span style={{ fontSize: '1.4rem' }}>🤖</span>
+                            <h3 className="tools-category-title">3대 핵심 코딩 에이전트 (AI Agents)</h3>
+                            <span className="tools-category-desc">사람의 말(자연어)을 이해하여 기획부터 코딩, 디버깅, 배포까지 자율 수행</span>
+                        </div>
+                        <div className="tools-grid">
+                            {/* Agent 1: Antigravity */}
+                            <div className="tool-card tool-card-highlight">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">🚀</span>
+                                        <span className="tool-tag agent">Google DeepMind</span>
+                                    </div>
+                                    <h4 className="tool-name">구글 안티그래비티<br /><small style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-500)' }}>(Google Antigravity)</small></h4>
+                                    <div className="tool-summary">올인원 자율 코딩 &amp; 웹 배포 에이전트</div>
+                                    <p className="tool-desc">
+                                        단순 코드 생성을 넘어 계획 수립(Planning)부터 터미널 실행, 브라우저 진단, 깃허브 푸시, Vercel/Netlify 배포까지 대신 완수하는 차세대 에이전틱 AI 환경입니다.
+                                    </p>
+                                    <ul className="tool-features">
+                                        <li><span>✓</span> 코딩 몰라도 자연어로 교회 웹앱/홈페이지 제작</li>
+                                        <li><span>✓</span> 터미널 명령·네트워크 진단·멀티 파일 자율 수정</li>
+                                        <li><span>✓</span> 한 번의 대화로 전 세계 무료 호스팅 배포 완결</li>
+                                    </ul>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)', fontWeight: 600 }}>실습 핵심 도구</span>
+                                    <a href="/data/vibe_coding_workshop.html" target="_blank" className="tool-link-btn">워크숍 보기 →</a>
+                                </div>
+                            </div>
+
+                            {/* Agent 2: OpenAI Codex */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">🧠</span>
+                                        <span className="tool-tag agent">OpenAI</span>
+                                    </div>
+                                    <h4 className="tool-name">오픈AI 코덱스<br /><small style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-500)' }}>(OpenAI Codex)</small></h4>
+                                    <div className="tool-summary">자연어 ➔ 코드 변환의 원천 엔진</div>
+                                    <p className="tool-desc">
+                                        수십억 줄의 오픈소스 코드를 학습하여 자연어를 컴퓨터 코드로 바꿔주는 현대 AI 코딩의 시초이자 GitHub Copilot의 원천 두뇌입니다.
+                                    </p>
+                                    <ul className="tool-features">
+                                        <li><span>✓</span> 자연어 주석만으로 프로그래밍 코드 자동 생성</li>
+                                        <li><span>✓</span> 구글 시트 교인관리 자동화 스크립트 작성</li>
+                                        <li><span>✓</span> 복잡한 매크로 및 코드 한글 번역·해설</li>
+                                    </ul>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)', fontWeight: 600 }}>원천 엔진 기술</span>
+                                    <a href="https://openai.com/index/openai-codex/" target="_blank" rel="noopener noreferrer" className="tool-link-btn">공식 사이트 ↗️</a>
+                                </div>
+                            </div>
+
+                            {/* Agent 3: Claude Code */}
+                            <div className="tool-card tool-card-highlight">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">🛠️</span>
+                                        <span className="tool-tag agent">Anthropic</span>
+                                    </div>
+                                    <h4 className="tool-name">앤트로픽 클로드 코드<br /><small style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-500)' }}>(Claude Code)</small></h4>
+                                    <div className="tool-summary">터미널 기반 대규모 파일 &amp; 위키 구축</div>
+                                    <p className="tool-desc">
+                                        터미널(CLI)에서 내 컴퓨터의 전체 폴더와 파일을 직접 다루며, 수많은 설교 원고와 노트를 연결하여 나만의 목회 위키(LLM Wiki)를 자율 구축합니다.
+                                    </p>
+                                    <ul className="tool-features">
+                                        <li><span>✓</span> 설교 마크다운 파일 수백 개 자동 백링크 연결</li>
+                                        <li><span>✓</span> [김태주 대표] 옵시디언 목회 위키 실전 도구</li>
+                                        <li><span>✓</span> 프로젝트 대규모 문서 일괄 정밀 수정</li>
+                                    </ul>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)', fontWeight: 600 }}>위키 구축 도구</span>
+                                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" className="tool-link-btn">공식 사이트 ↗️</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 2. 코드 저장 & 무료 웹 배포 */}
+                    <div className="tools-category-block">
+                        <div className="tools-category-header">
+                            <span style={{ fontSize: '1.4rem' }}>🚀</span>
+                            <h3 className="tools-category-title">코드 저장 &amp; 무료 웹 배포 (Hosting &amp; Deployment)</h3>
+                            <span className="tools-category-desc">내가 만든 웹페이지와 사역 도구를 전 세계에 무료로 발행</span>
+                        </div>
+                        <div className="tools-grid">
+                            {/* GitHub */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">🐙</span>
+                                        <span className="tool-tag">저장소 &amp; 배포</span>
+                                    </div>
+                                    <h4 className="tool-name">GitHub (깃허브)</h4>
+                                    <div className="tool-summary">소스코드 저장 &amp; 평생 무료 웹 호스팅</div>
+                                    <p className="tool-desc">
+                                        자료와 코드를 안전하게 보관하고, <strong>GitHub Pages</strong>를 통해 동남아/라오스/한국 어디서든 끊김 없는 초고속 무료 웹사이트를 배포합니다.
+                                    </p>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <a href="/data/github.html" target="_blank" className="tool-link-btn">13단계 가이드 →</a>
+                                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="tool-link-btn">github.com ↗️</a>
+                                </div>
+                            </div>
+
+                            {/* Netlify */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">🌐</span>
+                                        <span className="tool-tag">드래그 배포</span>
+                                    </div>
+                                    <h4 className="tool-name">Netlify (넷리파이)</h4>
+                                    <div className="tool-summary">폴더 드래그 3초 만에 글로벌 웹 배포</div>
+                                    <p className="tool-desc">
+                                        깃허브 연동뿐만 아니라 내 컴퓨터의 HTML 폴더를 마우스로 끌어다 놓기만 해도(Drop to deploy) 즉시 무료 웹사이트로 띄워줍니다.
+                                    </p>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)' }}>AWS 싱가포르 CDN</span>
+                                    <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer" className="tool-link-btn">netlify.com ↗️</a>
+                                </div>
+                            </div>
+
+                            {/* Vercel */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">⚡</span>
+                                        <span className="tool-tag">풀스택 호스팅</span>
+                                    </div>
+                                    <h4 className="tool-name">Vercel (버셀)</h4>
+                                    <div className="tool-summary">Next.js &amp; 웹앱 글로벌 엣지 자동 배포</div>
+                                    <p className="tool-desc">
+                                        Next.js 제작사에서 제공하는 클라우드 플랫폼으로, 깃허브 푸시와 동시에 전 세계 엣지 서버에 고성능으로 자동 빌드 및 배포됩니다.
+                                    </p>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--gray-500)' }}>글로벌 엣지 배포</span>
+                                    <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="tool-link-btn">vercel.com ↗️</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 3. 생성형 AI & 신학 비서 / 지식관리 */}
+                    <div className="tools-category-block" style={{ marginBottom: 0 }}>
+                        <div className="tools-category-header">
+                            <span style={{ fontSize: '1.4rem' }}>📚</span>
+                            <h3 className="tools-category-title">생성형 AI 모델 &amp; 신학 비서 / 지식관리</h3>
+                            <span className="tools-category-desc">생각을 확장하고 나만의 지식을 축적하는 필수 도구</span>
+                        </div>
+                        <div className="tools-grid">
+                            {/* NotebookLM */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">📖</span>
+                                        <span className="tool-tag">신학 비서</span>
+                                    </div>
+                                    <h4 className="tool-name">Google NotebookLM</h4>
+                                    <div className="tool-summary">내 문서 기반 환각 없는 AI 신학 비서</div>
+                                    <p className="tool-desc">
+                                        내 설교 원고, 성경 주석, 신학 서적(PDF)을 업로드하여 오직 내 자료만을 근거로 정확하게 답변하고 2인 팟캐스트 오디오를 생성합니다.
+                                    </p>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <a href="/data/easypastor.html" target="_blank" className="tool-link-btn">구축 가이드 →</a>
+                                    <a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer" className="tool-link-btn">접속하기 ↗️</a>
+                                </div>
+                            </div>
+
+                            {/* Obsidian */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">📓</span>
+                                        <span className="tool-tag">세컨드 브레인</span>
+                                    </div>
+                                    <h4 className="tool-name">Obsidian (옵시디언)</h4>
+                                    <div className="tool-summary">로컬 마크다운 제텔카스텐 지식 위키</div>
+                                    <p className="tool-desc">
+                                        서버 없이 내 컴퓨터에 영구 보관되는 마크다운 노트 앱으로, 설교와 성경 구절 간의 쌍방향 백링크(`[[본문]]`) 연결을 지원합니다.
+                                    </p>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <a href="/data/obsidian_second_brain.html" target="_blank" className="tool-link-btn">진화사 타임라인 →</a>
+                                    <a href="https://obsidian.md" target="_blank" rel="noopener noreferrer" className="tool-link-btn">obsidian.md ↗️</a>
+                                </div>
+                            </div>
+
+                            {/* 5 Models Quick Card */}
+                            <div className="tool-card">
+                                <div className="tool-card-top">
+                                    <div className="tool-badge-row">
+                                        <span className="tool-icon">💬</span>
+                                        <span className="tool-tag">5대 대화형 AI</span>
+                                    </div>
+                                    <h4 className="tool-name">ChatGPT · Claude · Gemini</h4>
+                                    <div className="tool-summary">사역 목적별 맞춤형 AI 모델 선택</div>
+                                    <p className="tool-desc">
+                                        행정 문서/기획(ChatGPT), 장문 분석/바이브코딩(Claude), 구글 생태계 연동/AI Studio(Gemini), 실시간 리서치(Grok/Perplexity)를 상황에 맞게 활용합니다.
+                                    </p>
+                                </div>
+                                <div className="tool-card-footer">
+                                    <a href="/data/ai_first_step.html#s19" target="_blank" className="tool-link-btn">5대 모델 비교표 →</a>
+                                    <a href="/data/aistudio.html" target="_blank" className="tool-link-btn">AI Studio 가이드 →</a>
+                                </div>
                             </div>
                         </div>
                     </div>

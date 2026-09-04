@@ -986,3 +986,175 @@ footer {
     color: #facc15;
     font-weight: 700;
 }
+/* ======================================================
+   AI Tools & Agents Section
+   ====================================================== */
+.tools-section {
+    padding: 70px 0;
+    background: #f8fafc;
+    border-top: 1px solid var(--gray-300);
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.tools-category-block {
+    margin-bottom: 40px;
+}
+
+.tools-category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+    flex-wrap: wrap;
+}
+
+.tools-category-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--black);
+}
+
+.tools-category-desc {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    margin-left: auto;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 960px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tool-card {
+    background: white;
+    border: 1px solid var(--gray-300);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 24px rgba(21, 76, 121, 0.08);
+}
+
+.tool-card-highlight {
+    border: 1.5px solid var(--primary);
+    background: linear-gradient(135deg, rgba(238, 247, 255, 0.5) 0%, #ffffff 100%);
+}
+
+.tool-card-top {
+    margin-bottom: 16px;
+}
+
+.tool-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.tool-icon {
+    font-size: 1.8rem;
+}
+
+.tool-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--bg-warm);
+    color: var(--primary);
+}
+
+.tool-tag.agent {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.tool-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 6px;
+}
+
+.tool-summary {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.tool-desc {
+    font-size: 0.88rem;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+.tool-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--gray-300);
+}
+
+.tool-features li {
+    font-size: 0.82rem;
+    color: var(--gray-700);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.tool-features li span {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.tool-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--gray-300);
+    padding-top: 14px;
+    margin-top: auto;
+}
+
+.tool-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    transition: color 0.2s ease;
+}
+
+.tool-link-btn:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}

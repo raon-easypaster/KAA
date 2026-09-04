@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>라오스 AI 교육 피드백</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --surface2: #f2f0ec;
+    --border: #e4e1d8;
+    --text: #1c2330;
+    --muted: #6b7280;
+    --navy: #1e3a5f;
+    --coral: #e5634a;
+    --coral-light: #f0856f;
+    --gold: #c9873a;
+    --green: #2d7a52;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1924; --surface: #192231; --surface2: #1f2d40;
+      --border: #2a3a4f; --text: #e8e4dc; --muted: #8a9bb0;
+      --navy: #2a5a9a; --coral: #e5734e; --coral-light: #ed8f74;
+      --gold: #d4963f; --green: #3a9a68;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1924; --surface: #192231; --surface2: #1f2d40;
+    --border: #2a3a4f; --text: #e8e4dc; --muted: #8a9bb0;
+    --navy: #2a5a9a; --coral: #e5734e; --coral-light: #ed8f74;
+    --gold: #d4963f; --green: #3a9a68;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', '나눔고딕', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .page-header {
+    background: var(--navy);
+    color: #fff;
+    padding: clamp(28px, 5vw, 52px) clamp(20px, 5vw, 48px) clamp(24px, 4vw, 44px);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(229,99,74,0.15);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--coral-light); margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: 700; line-height: 1.25; margin-bottom: 10px;
+  }
+  .header-sub {
+    font-size: clamp(12px, 2vw, 14px);
+    color: rgba(255,255,255,0.6); margin-bottom: 28px;
+  }
+  .header-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 500; }
+  .meta-value { font-size: clamp(13px, 2vw, 15px); font-weight: 500; color: rgba(255,255,255,0.9); }
+
+  /* CONTENT */
+  .content { max-width: 1060px; margin: 0 auto; padding: clamp(24px, 4vw, 48px) clamp(16px, 4vw, 32px) clamp(48px, 8vw, 80px); }
+
+  /* KPI */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .kpi-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 14px 14px;
+    position: relative;
+  }
+  .kpi-tile::before {
+    content: ''; position: absolute;
+    top: 0; left: 14px; right: 14px;
+    height: 3px; border-radius: 0 0 3px 3px;
+    background: var(--tile-color, var(--navy));
+  }
+  .kpi-label { font-size: 11px; color: var(--muted); font-weight: 500; line-height: 1.4; margin-bottom: 10px; }
+  .kpi-score { font-size: clamp(26px, 4vw, 34px); font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; line-height: 1; }
+  .kpi-score span { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .kpi-stars { display: flex; gap: 2px; margin-top: 8px; }
+  .star {
+    width: 9px; height: 9px; display: inline-block;
+    background: var(--tile-color, var(--navy));
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    opacity: 0.25;
+  }
+  .star.filled { opacity: 1; }
+  .star.half { opacity: 0.55; }
+
+  /* SECTION */
+  .section-title {
+    font-size: clamp(15px, 3vw, 18px); font-weight: 700; color: var(--text);
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 3px; }
+
+  /* GRID */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: clamp(16px, 3vw, 24px);
+  }
+  .chart-card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 16px; line-height: 1.4; }
+  .chart-card-title small { display: block; font-weight: 400; color: var(--muted); font-size: 11px; margin-top: 2px; }
+
+  /* BAR CHART — label위 bar아래로 모바일 대응 */
+  .bar-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .bar-item { display: flex; flex-direction: column; gap: 4px; }
+  .bar-item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .bar-label { font-size: 12px; color: var(--text); line-height: 1.3; }
+  .bar-count { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+  .bar-track { height: 18px; background: var(--surface2); border-radius: 4px; overflow: hidden; width: 100%; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+
+  /* SCORE */
+  .score-dist { display: flex; flex-direction: column; gap: 8px; }
+  .score-row { display: grid; grid-template-columns: 20px 1fr 36px; gap: 8px; align-items: center; }
+  .score-num { font-size: 12px; font-weight: 600; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+
+  /* DONUT */
+  .donut-wrapper { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 120px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-count { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  /* QUOTES */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .quote-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: clamp(16px, 3vw, 22px);
+    position: relative;
+  }
+  .quote-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 10px; left: 14px;
+    font-size: 32px; line-height: 1;
+    color: var(--coral); opacity: 0.4;
+    font-family: Georgia, serif;
+  }
+  .quote-text { font-size: clamp(12px, 2vw, 13px); line-height: 1.75; color: var(--text); padding-top: 16px; }
+  .quote-meta { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .quote-badge {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    padding: 3px 8px; border-radius: 100px;
+    background: var(--surface2); color: var(--muted);
+  }
+  .quote-badge.morning { background: rgba(30,58,95,0.1); color: var(--navy); }
+  .quote-badge.evening { background: rgba(229,99,74,0.1); color: var(--coral); }
+
+  /* SUMMARY BOX */
+  .summary-box {
+    background: var(--navy); color: #fff;
+    border-radius: 12px;
+    padding: clamp(20px, 4vw, 32px) clamp(20px, 4vw, 36px);
+    margin-bottom: 16px;
+  }
+  .summary-title { font-size: clamp(14px, 2.5vw, 17px); font-weight: 700; margin-bottom: 16px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .summary-col-label {
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.45); font-weight: 500; margin-bottom: 10px;
+  }
+  .summary-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .summary-list li {
+    font-size: clamp(12px, 2vw, 13px); color: rgba(255,255,255,.85);
+    display: flex; gap: 8px;
+  }
+  .summary-list li span:first-child { flex-shrink: 0; }
+
+  /* FOOTER */
+  .report-footer {
+    text-align: center; padding: 28px 16px;
+    font-size: 12px; color: var(--muted);
+    border-top: 1px solid var(--border);
+    max-width: 1060px; margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-eyebrow">설문 분석 보고서</div>
+  <h1 class="header-title">라오스 AI 교육 피드백 결과</h1>
+  <p class="header-sub">3일간의 선교사 AI 활용 교육 — 참가자 만족도 및 학습 효과 분석</p>
+  <div class="header-meta">
+    <div class="meta-item">
+      <span class="meta-label">교육 일정</span>
+      <span class="meta-value">2026년 9월 1–3일</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">총 응답자</span>
+      <span class="meta-value">10명</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">강사</span>
+      <span class="meta-value">이광복 목사 · 김태주 목사</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">응답 마감</span>
+      <span class="meta-value">2026. 9. 3 오후 4:44</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-tile" style="--tile-color:#2d7a52">
+      <div class="kpi-label">전반적 만족도</div>
+      <div class="kpi-score">4.3<span>/5</span></div>
+      <div class="kpi-stars">
+        <span class="star filled" style="background:#2d7a52"></span><span class="star filled" style="background:#2d7a52"></span><span class="star filled" style="background:#2d7a52"></span><span class="star filled" style="background:#2d7a52"></span><span class="star half" style="background:#2d7a52"></span>
+      </div>
+    </div>
+    <div class="kpi-tile" style="--tile-color:#2a5a9a">
+      <div class="kpi-label">AI 자신감 향상</div>
+      <div class="kpi-score">4.4<span>/5</span></div>
+      <div class="kpi-stars">
+        <span class="star filled" style="background:#2a5a9a"></span><span class="star filled" style="background:#2a5a9a"></span><span class="star filled" style="background:#2a5a9a"></span><span class="star filled" style="background:#2a5a9a"></span><span class="star half" style="background:#2a5a9a"></span>
+      </div>
+    </div>
+    <div class="kpi-tile" style="--tile-color:#c9873a">
+      <div class="kpi-label">사역 현장 활용 가능성</div>
+      <div class="kpi-score">4.5<span>/5</span></div>
+      <div class="kpi-stars">
+        <span class="star filled" style="background:#c9873a"></span><span class="star filled" style="background:#c9873a"></span><span class="star filled" style="background:#c9873a"></span><span class="star filled" style="background:#c9873a"></span><span class="star half" style="background:#c9873a"></span>
+      </div>
+    </div>
+    <div class="kpi-tile" style="--tile-color:#7a6a9a">
+      <div class="kpi-label">강사 설명 이해도</div>
+      <div class="kpi-score">3.9<span>/5</span></div>
+      <div class="kpi-stars">
+        <span class="star filled" style="background:#7a6a9a"></span><span class="star filled" style="background:#7a6a9a"></span><span class="star filled" style="background:#7a6a9a"></span><span class="star filled" style="background:#7a6a9a"></span><span class="star" style="background:#7a6a9a"></span>
+      </div>
+    </div>
+    <div class="kpi-tile" style="--tile-color:#e5634a">
+      <div class="kpi-label">지속 활용 의향</div>
+      <div class="kpi-score">4.5<span>/5</span></div>
+      <div class="kpi-stars">
+        <span class="star filled" style="background:#e5634a"></span><span class="star filled" style="background:#e5634a"></span><span class="star filled" style="background:#e5634a"></span><span class="star filled" style="background:#e5634a"></span><span class="star half" style="background:#e5634a"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- S1 -->
+  <h2 class="section-title">참가자 구성 및 사전 경험<small>Q1–2 · 10명 응답 기준</small></h2>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-card-title">참석 반 분포<small>오전반 vs 야간반</small></div>
+      <div class="donut-wrapper">
+        <svg width="110" height="110" viewBox="0 0 120 120" style="flex-shrink:0">
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#e4e1d8" stroke-width="18"/>
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#1e3a5f" stroke-width="18" stroke-dasharray="202.3 289.0" stroke-dashoffset="72.25"/>
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#e5634a" stroke-width="18" stroke-dasharray="86.7 289.0" stroke-dashoffset="-130.0"/>
+          <text x="60" y="55" text-anchor="middle" font-size="22" font-weight="700" fill="currentColor">10</text>
+          <text x="60" y="70" text-anchor="middle" font-size="10" fill="#8a9bb0">명</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#1e3a5f"></div><span>오전반</span><span class="legend-count">7명</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e5634a"></div><span>야간반</span><span class="legend-count">3명</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">교육 전 AI 사용 경험<small>참여 전 AI 활용 수준</small></div>
+      <div class="bar-list">
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">몇 번 사용해 본 적 있다</span><span class="bar-count">4명</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#1e3a5f"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">필요할 때 가끔 사용</span><span class="bar-count">4명</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#2a5a9a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">비교적 자주 사용</span><span class="bar-count">1명</span></div><div class="bar-track"><div class="bar-fill" style="width:10%;background:#7a9ac0"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">업무·사역에 적극 활용</span><span class="bar-count">1명</span></div><div class="bar-track"><div class="bar-fill" style="width:10%;background:#e5634a"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <h2 class="section-title">만족도 및 교육 효과<small>Q3–7 · 5점 척도 응답</small></h2>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-card-title">전반적 만족도 분포<small>3일간 AI 교육 종합 평가</small></div>
+      <div class="score-dist">
+        <div class="score-row"><div class="score-num">5</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#2d7a52"></div></div><div class="bar-count">4명</div></div>
+        <div class="score-row"><div class="score-num">4</div><div class="bar-track"><div class="bar-fill" style="width:50%;background:#5a9e6f"></div></div><div class="bar-count">5명</div></div>
+        <div class="score-row"><div class="score-num">3</div><div class="bar-track"><div class="bar-fill" style="width:10%;background:#c9873a"></div></div><div class="bar-count">1명</div></div>
+        <div class="score-row"><div class="score-num">2</div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><div class="bar-count">0명</div></div>
+        <div class="score-row"><div class="score-num">1</div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><div class="bar-count">0명</div></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">교육 내용 난이도<small>전체 참가자 체감 기준</small></div>
+      <div class="bar-list">
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">조금 어려웠다</span><span class="bar-count">6명</span></div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#c9873a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">적절했다</span><span class="bar-count">3명</span></div><div class="bar-track"><div class="bar-fill" style="width:30%;background:#2d7a52"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">매우 어려웠다</span><span class="bar-count">1명</span></div><div class="bar-track"><div class="bar-fill" style="width:10%;background:#d95f3b"></div></div></div>
+      </div>
+      <p style="margin-top:16px;font-size:12px;color:var(--muted);line-height:1.6;padding:12px;background:var(--surface2);border-radius:6px;">⚠ 참가자 10명 중 7명(70%)이 내용이 어렵다고 응답. 수준별 반 편성 또는 사전 기초 교육이 개선점으로 제안됨.</p>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">강사 설명 이해도 분포<small>강의 진행 방식 명확성</small></div>
+      <div class="score-dist">
+        <div class="score-row"><div class="score-num">5</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#2d7a52"></div></div><div class="bar-count">4명</div></div>
+        <div class="score-row"><div class="score-num">4</div><div class="bar-track"><div class="bar-fill" style="width:20%;background:#5a9e6f"></div></div><div class="bar-count">2명</div></div>
+        <div class="score-row"><div class="score-num">3</div><div class="bar-track"><div class="bar-fill" style="width:30%;background:#c9873a"></div></div><div class="bar-count">3명</div></div>
+        <div class="score-row"><div class="score-num">2</div><div class="bar-track"><div class="bar-fill" style="width:10%;background:#d95f3b"></div></div><div class="bar-count">1명</div></div>
+        <div class="score-row"><div class="score-num">1</div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><div class="bar-count">0명</div></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">강의와 실습 비율 평가<small>현재 구성에 대한 의견</small></div>
+      <div class="bar-list">
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">현재 비율이 적절했다</span><span class="bar-count">6명</span></div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#2d7a52"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">실습이 더 많았으면</span><span class="bar-count">3명</span></div><div class="bar-track"><div class="bar-fill" style="width:30%;background:#c9873a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">강의가 더 많았으면</span><span class="bar-count">1명</span></div><div class="bar-track"><div class="bar-fill" style="width:10%;background:#7a6a9a"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <h2 class="section-title">콘텐츠 분석<small>Q8 · 가장 도움된 내용 / Q12 · 향후 배우고 싶은 내용 (복수 응답)</small></h2>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-card-title">가장 도움이 된 교육 내용<small>복수 선택, 총 10명 응답</small></div>
+      <div class="bar-list">
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">생성형 AI 사용법</span><span class="bar-count">7명</span></div><div class="bar-track"><div class="bar-fill" style="width:70%;background:#1e3a5f"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">좋은 질문·프롬프트 작성</span><span class="bar-count">5명</span></div><div class="bar-track"><div class="bar-fill" style="width:50%;background:#2a5a9a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">홈페이지·앱 AI 활용 제작</span><span class="bar-count">5명</span></div><div class="bar-track"><div class="bar-fill" style="width:50%;background:#2a5a9a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">AI 기본 개념과 이해</span><span class="bar-count">4명</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#5a80b0"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">AI를 사역에 적용하는 법</span><span class="bar-count">4명</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#5a80b0"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">자료 조사·요약·분석</span><span class="bar-count">2명</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;background:#8aabb0"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">이미지 제작</span><span class="bar-count">2명</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;background:#8aabb0"></div></div></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">앞으로 더 배우고 싶은 내용<small>복수 선택, 향후 교육 수요</small></div>
+      <div class="bar-list">
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">영상 제작 및 편집</span><span class="bar-count">7명</span></div><div class="bar-track"><div class="bar-fill" style="width:70%;background:#e5634a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">AI 에이전트·업무 자동화</span><span class="bar-count">7명</span></div><div class="bar-track"><div class="bar-fill" style="width:70%;background:#e5634a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">개인 자료와 AI 연결 활용</span><span class="bar-count">6명</span></div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#d4763f"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">문서·보고서 자동화</span><span class="bar-count">5명</span></div><div class="bar-track"><div class="bar-fill" style="width:50%;background:#c9873a"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">생성형 AI 심화 활용</span><span class="bar-count">4명</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#b89050"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">LLM WIKI</span><span class="bar-count">4명</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;background:#b89050"></div></div></div>
+        <div class="bar-item"><div class="bar-item-top"><span class="bar-label">프롬프트 작성 심화</span><span class="bar-count">3명</span></div><div class="bar-track"><div class="bar-fill" style="width:30%;background:#a09860"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <h2 class="section-title">참가자 자유 의견<small>Q13 · 원문 전체 수록 (편집 없음)</small></h2>
+  <div class="quote-grid">
+    <div class="quote-card">
+      <div class="quote-text">홈페이지 작업과 생성형 AI, 성경 공부 교제 만들기 등등 생소했지만 직접 결과물들을 보니 너무 신기했습니다. 엉성하고 부끄러운 결과물이었지만 선교지에서 할 수 있다는 자신감이 생겼습니다. 할 수 있다는 자신감이 큰 수확이었습니다.<br><br>이광복 목사님과 김태주 목사님~! 3일 동안 정말 수고 많으셨습니다. 시간과 재정을 드려 라오스에 오셔서 진심으로 고맙고 감사드립니다. 잘 가르쳐 주셔서 라오스 선교에 귀한 도구가 될 것 같습니다!! 한국에 잘 돌아가시고 너무 애쓰셨습니다.</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 5점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">컴퓨터 사양이 그리 좋은 것도 아니었고 컴퓨터에 대한 기본 이해도 부족한 상태임에도 자세한 설명과 친절한 가르침을 받아 어렵게 생각했었던 새로운 분야에 대한 흥미를 갖게 되었습니다. 더 알고 싶고 잘 해 보고 싶은 생각을 갖게 된 것만으로도 감사합니다^^</div>
+      <div class="quote-meta"><span class="quote-badge evening">야간반</span><span style="font-size:11px;color:var(--muted)">만족도 4점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">아침에 일어나며 이광복 강사님의 환한 미소가 떠오르네요. 어렵지만 AI를 해야 하겠다는 생각을 하게 되었습니다. 시간과 재정으로 섬겨주셔서 감사해요. AS와 한국 방문 시 도움을 요청합니다. 감사합니다. 수고하셨습니다.</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 4점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">재미있게 짧은 시간에 많은 것을 가르쳐 주시느라 애쓰셨습니다. 용어들과 익숙해지기까지 더 친해져야 할 것 같아요. 강의 실습 타이밍을 놓치면 따라가는 게 어려우니 순서를 화면에 보여주면 좋을 것 같아요. 두 분의 호흡도 굿. 배우러 가는 길이 설레이는 시간이었어요. 정말 감사합니다.</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 5점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">AI 교육은 어렵다는 막연한 생각을 했어요. 하지만 실제로 해보니 나도 할 수 있겠는데 라고 바뀌었어요. 비서에게 계속 시켜볼게요. 다음에 또 배울 기회가 있으면 좋겠어요. 그때는 좀 더 길게 길게 ㅎㅎㅎ 짧아서 아쉬웠거든요. 수고해 주신 두 분 정말 감사드립니다 😁 건강하세요.</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 4점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text"><strong>1. (좋았던 점) 개념 설명과 실습을 병행한 강의 방식</strong><br>단순히 템플릿만 제공하는 데 그치지 않고, 기본 개념을 먼저 설명한 뒤 직접 실습해볼 수 있도록 구성해주셔서 좋았습니다. 배운 내용을 다양한 방식으로 응용할 수 있는 길이 열린 느낌이었습니다.<br><br><strong>2. (아쉬운 점) 인터넷 환경으로 인한 진행 속도 저하</strong><br>인터넷 속도 및 보안 설정 문제로 인해 실습이 원활하게 진행되지 못한 부분이 아쉬웠습니다.<br><br><strong>3. (아쉬운 점) 수준별 반 편성의 필요성</strong><br>AI 초급 강의였지만, 참가자들 간 실력 편차가 있었던 만큼 수준에 따라 반을 나누어 진행했더라면 더 효과적이었을 것 같습니다.<br><br><strong>4. (바라는 점) 옵시디언 활용법 추가 학습</strong><br>옵시디언(Obsidian) 활용 방법에 대해 좀 더 배워보고 싶다는 아쉬움이 남습니다.<br><br><strong>5. (개선 제안) 실습 시간 확대 및 자료 사전 배포</strong><br>실습 비중을 좀 더 늘리거나 강의 자료를 사전에 배포해 예습할 수 있도록 하면 좋겠습니다.<br><br><strong>6. (바라는 점) 심화 과정 개설 요청</strong><br>초급 과정 이후 이어서 들을 수 있는 심화 과정이 개설되면 좋겠습니다.<br><br>*AI 강의였던 만큼 저의 생각들을 적어서 생성형 AI에게 정리를 부탁해 봤습니다. 정말 고생 많으셨습니다! 감사합니다!</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 5점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">AI 시대에 살면서 정작 AI를 이해하지 못하고 세상의 발전에 무관심하게 살았는데 이번 기회를 통해서 앞으로 관심을 가지고 배워야겠다는 생각이 들었다. 또한 동료들의 열심과 성취 과정을 보면서 부럽기도 하고 뒤쳐지면 안 되겠다는 경각심도 느끼게 되었다.<br><br>아쉬운 점은 이렇게 좋은 기회를 제대로 활용하지 못 한 것 같다. 수준별 교육이라던지 쌩초보자를 위한 기본 용어 설명과 AI 기초 사용 방법을 1일 사전교육 방식으로 AI 유경험자를 통해 미리 받았으면 좋을 것 같다는 생각이 들었다. 이번 강의를 위한 재정과 시간을 헌신하며 그분의 나라를 세워가는 강의자 분들께 경의를 표한다.</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 4점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">너무 훌륭했다. 그러나 실습이 좀 더 많았으면 좋겠다. 자비량으로 오셔서 수고가 많으셨네요.</div>
+      <div class="quote-meta"><span class="quote-badge morning">오전반</span><span style="font-size:11px;color:var(--muted)">만족도 4점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">가장 좋았던 점은 AI에 대한 막연한 두려움이 있었는데 비서처럼 활용할 수 있겠다는 적극적인 개념으로 바뀌었다는 것이고, AI를 시작하게 된 강사 본인의 경험이 듣는 이에게도 이렇게 활용 가능할 거라는 꿈을 갖게 되어 감사했다. 생각해 두었던 아이디어를 홈페이지로 만들어 볼 수 있어 기뻤다.<br><br>아쉬웠던 점은 내주신 숙제를 꼼꼼히 봐주실 수 있는 시간이 없어서 강의와 함께 이루어져 어수선한 상황이 된 게 많이 아쉽다. 스스로 잘하고 있는지 점검하거나 한 프로젝트를 끝까지 마무리하고 다른 것을 배우는 게 좋았을 거 같다. 문제가 생겼을 때 구체적으로 찾는 과정을 배우는 것도 중요하다고 생각한다.<br><br>열악한 상황에서도 한 개라도 더 가르쳐주고 싶으신 강사님의 열정이 느껴져 감사했다. 이 모든 것의 주인이 하나님임을 고백했다. 마지막 날은 이 강의를 위해 많은 분들의 수고와 헌신에 은혜 주시기를 기도합니다.</div>
+      <div class="quote-meta"><span class="quote-badge evening">야간반</span><span style="font-size:11px;color:var(--muted)">만족도 3점</span></div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-text">최고의 강의를 들었습니다. 특별히 AI의 개념을 송두리째 바꿔주신 시간이었습니다. 전산을 전공하고 개발자로서 생활했을 때 클라이언트의 요구분석과 코딩을 하며 힘겨워하던 때 같이 일하는 개발자들끼리 "언젠가 자연어를 컴퓨터가 이해할 날이 오겠지"라고 말했었는데 그날이 왔네요.<br><br>정말 머리를 세게 맞은 기분이고 오랫동안 생각만 하고 막상 손을 댈 수 없었던 모든 것에 있어서 맞춤형 앱 개발이 진행될 수 있다는 것을 보게 하셨습니다. 거인의 어깨 위에서 손잡아 주셔서 함께 올라타게 해주셔서 감사드립니다.<br><br>아주 유능하고 믿음직스러운 부교역자를 소개받은 기분입니다. 귀한 가르침을 저의 실무에 잘 적용하고 경험을 쌓아서 현지인들에게도 잘 소개하도록 하겠습니다. 거인의 어깨에 계속 앉히겠습니다. 감사드립니다~ 영육간에 건강하시고 평안하십시오. 다시금 감사드립니다~~</div>
+      <div class="quote-meta"><span class="quote-badge evening">야간반</span><span style="font-size:11px;color:var(--muted)">만족도 5점</span></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <div class="summary-title">종합 평가 및 개선 제안</div>
+    <div class="summary-grid">
+      <div>
+        <div class="summary-col-label">강점</div>
+        <ul class="summary-list">
+          <li><span style="color:#5db87a">✓</span><span>참가자 100%가 향후 AI 지속 활용 의향 표명 (평균 4.5점)</span></li>
+          <li><span style="color:#5db87a">✓</span><span>'막연한 두려움 → 자신감'으로의 인식 전환 효과 탁월</span></li>
+          <li><span style="color:#5db87a">✓</span><span>개념 + 실습 병행 방식 참가자들의 높은 호응</span></li>
+          <li><span style="color:#5db87a">✓</span><span>사역 현장 활용 가능성 평균 4.5점 — 선교적 연결성 인정</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="summary-col-label">개선 제안</div>
+        <ul class="summary-list">
+          <li><span style="color:#e5a070">→</span><span>수준별 반 편성 도입 (초급·중급 구분)</span></li>
+          <li><span style="color:#e5a070">→</span><span>실습 비중 확대 또는 사전 자료 배포</span></li>
+          <li><span style="color:#e5a070">→</span><span>안정적 인터넷 환경 사전 점검 (속도·보안 설정)</span></li>
+          <li><span style="color:#e5a070">→</span><span>영상 편집·AI 에이전트 심화 과정 수요 높음 (각 7명)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="report-footer">
+  라오스 AI 교육 피드백 설문 — 2026년 9월 · 응답자 10명 · 강사 이광복 목사 · 김태주 목사
+</footer>
+
+</body>
+</html>
