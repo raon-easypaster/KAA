@@ -23,8 +23,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
         id: 'ai-first-step',
         title: 'AI, 두려움을 넘어 일상으로 (어서와 AI는 처음이지)',
-        description: '42개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)',
-        href: '/data/ai_first_step.html',
+        description: '46개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)',
+        href: '/data/ai_first_step.html?mode=slide',
         target: '_blank',
         category: 'AI 첫걸음',
         badgeClass: 'edu',
@@ -32,8 +32,8 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         difficulty: '입문',
         diffClass: 'easy',
         time: '약 15분',
-        fileType: '💻 반응형 슬라이드',
-        actionText: '열람하기 ↗️',
+        fileType: '💻 반응형 슬라이드 & 문서',
+        actionText: '슬라이드 보기 ↗️',
         isImportant: true,
     },
     {
@@ -346,17 +346,22 @@ export default function HomePage() {
 
                     <div className="start-grid">
                         {/* Option 1 */}
-                        <a href="/data/ai_first_step.html" target="_blank" className="start-card">
-                            <div>
+                        <div className="start-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <a href="/data/ai_first_step.html" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <span className="start-card-icon">🚀</span>
                                 <h3 className="start-card-title">AI 처음이에요</h3>
-                                <p className="start-card-desc">기초 개념부터 두려움을 깨는 42개 슬라이드 완벽 가이드</p>
+                                <p className="start-card-desc">기초 개념부터 두려움을 깨는 46개 슬라이드 완벽 가이드</p>
+                            </a>
+                            <div className="start-card-footer" style={{ flexDirection: 'column', gap: '8px', alignItems: 'stretch', marginTop: '12px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span className="start-time-badge">⏱️ 약 15분</span>
+                                    <a href="/data/ai_first_step.html" target="_blank" className="start-card-arrow" style={{ textDecoration: 'none' }}>문서 보기 →</a>
+                                </div>
+                                <a href="/data/ai_first_step.html?mode=slide" target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '7px 12px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', borderRadius: '8px', textDecoration: 'none', boxShadow: '0 2px 6px rgba(217, 119, 6, 0.3)', transition: 'transform 0.15s' }}>
+                                    🖥️ 슬라이드 전체화면 발표 바로보기
+                                </a>
                             </div>
-                            <div className="start-card-footer">
-                                <span className="start-time-badge">⏱️ 약 15분</span>
-                                <span className="start-card-arrow">시작하기 →</span>
-                            </div>
-                        </a>
+                        </div>
 
                         {/* Option 2: 3일 집중 교육 */}
                         <a href="/data/kaa-ai-guide.html" target="_blank" className="start-card" style={{ borderColor: '#225d52', background: 'linear-gradient(135deg, rgba(230, 240, 235, 0.4) 0%, #ffffff 100%)' }}>
