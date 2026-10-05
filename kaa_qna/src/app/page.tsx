@@ -21,6 +21,22 @@ interface ArchiveItem {
 
 const ARCHIVE_ITEMS: ArchiveItem[] = [
     {
+        id: 'pastor-ai-seminar',
+        title: 'AI는 부지런한 손, 목회자는 뜨거운 심장 (목회자 실전 AI 세미나)',
+        description: '설교 연구(미드라시·와키홀) & 2차 콘텐츠 & 라온동행교회(raondonghaeng.org) 실전 사례 25개 슬라이드',
+        href: '/data/pastor_ai_seminar.html?mode=slide',
+        target: '_blank',
+        category: '목회 AI 특강',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '입문',
+        diffClass: 'easy',
+        time: '약 20분',
+        fileType: '💻 반응형 슬라이드 & 문서',
+        actionText: '특강 슬라이드 보기 ↗️',
+        isImportant: true,
+    },
+    {
         id: 'ai-first-step',
         title: 'AI, 두려움을 넘어 일상으로 (어서와 AI는 처음이지)',
         description: '46개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)',
@@ -345,6 +361,27 @@ export default function HomePage() {
                     </div>
 
                     <div className="start-grid">
+                        {/* Option 0 (NEW): 목회자 AI 특강 */}
+                        <div className="start-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderColor: '#d97706', background: 'linear-gradient(135deg, rgba(254, 243, 199, 0.5) 0%, #ffffff 100%)' }}>
+                            <a href="/data/pastor_ai_seminar.html" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                    <span className="start-card-icon" style={{ margin: 0 }}>💡</span>
+                                    <span style={{ background: '#b45309', color: '#ffffff', fontSize: '0.7rem', fontWeight: 800, padding: '2px 8px', borderRadius: '12px' }}>NEW 특강</span>
+                                </div>
+                                <h3 className="start-card-title">AI는 부지런한 손, 목회자는 뜨거운 심장</h3>
+                                <p className="start-card-desc">설교 연구(미드라시·와키홀) & 2차 콘텐츠 & 라온동행교회(raondonghaeng.org) 실전 사례 25선</p>
+                            </a>
+                            <div className="start-card-footer" style={{ flexDirection: 'column', gap: '8px', alignItems: 'stretch', marginTop: '12px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span className="start-time-badge">⏱️ 약 20분</span>
+                                    <a href="/data/pastor_ai_seminar.html" target="_blank" className="start-card-arrow" style={{ textDecoration: 'none' }}>문서 보기 →</a>
+                                </div>
+                                <a href="/data/pastor_ai_seminar.html?mode=slide" target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '7px 12px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', borderRadius: '8px', textDecoration: 'none', boxShadow: '0 2px 6px rgba(217, 119, 6, 0.3)', transition: 'transform 0.15s' }}>
+                                    🖥️ 슬라이드 전체화면 발표 바로보기
+                                </a>
+                            </div>
+                        </div>
+
                         {/* Option 1 */}
                         <div className="start-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                             <a href="/data/ai_first_step.html" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
