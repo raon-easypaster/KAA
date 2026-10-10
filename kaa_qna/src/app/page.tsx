@@ -13,7 +13,7 @@ interface ArchiveItem {
     audience: 'pastor' | 'welfare' | 'general';
     difficulty: '입문' | '중급' | '고급';
     diffClass: 'easy' | 'medium' | 'hard';
-    time: string;
+    time?: string;
     fileType: string;
     actionText: string;
     isImportant?: boolean;
@@ -99,6 +99,35 @@ const ARCHIVE_ITEMS: ArchiveItem[] = [
         fileType: '🛠️ 마스터 강의안',
         actionText: '열람하기 ↗️',
         isImportant: true,
+    },
+    {
+        id: 'dept-homepage-workshop',
+        title: 'AI 에이전트로 우리 부서 홈페이지 만들기 (교회학교 교사 교육)',
+        description: '생성형 AI 이해부터 PRD 작성 실습, 에이전트로 만들고 고치기까지 한 번에 정리한 안내 페이지입니다.',
+        href: '/data/dept_homepage_workshop.html',
+        target: '_blank',
+        category: '교사 교육',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '중급',
+        diffClass: 'medium',
+        fileType: '🛠️ 실습 가이드',
+        actionText: '열람하기 ↗️',
+        isImportant: true,
+    },
+    {
+        id: 'dept-homepage-slides',
+        title: '부서 홈페이지 만들기 수업 슬라이드 (AI 에이전트 · PRD 실습)',
+        description: '수업 진행용 69장 슬라이드입니다. 방향키로 넘기고 차례 검색과 다크모드를 지원합니다.',
+        href: '/data/dept_homepage_slides.html',
+        target: '_blank',
+        category: '슬라이드',
+        badgeClass: 'edu',
+        audience: 'pastor',
+        difficulty: '중급',
+        diffClass: 'medium',
+        fileType: '📊 강의 슬라이드',
+        actionText: '열람하기 ↗️',
     },
     {
         id: 'gen-ai-basics',
@@ -996,7 +1025,7 @@ export default function HomePage() {
                                     <div className="card-meta-row">
                                         <span className={`badge ${item.badgeClass}`}>{item.category}</span>
                                         <span className={`badge-diff ${item.diffClass}`}>{item.difficulty}</span>
-                                        <span className="badge-time">⏱️ {item.time}</span>
+                                        {item.time && <span className="badge-time">⏱️ {item.time}</span>}
                                     </div>
                                     <h3>{item.title}</h3>
                                     <p>{item.description}</p>
