@@ -22,9 +22,9 @@
           },
           colors: {
             brand: {
-              navy: '#1E3A8A',
-              dark: '#0F172A',
-              blue: '#2563EB',
+              navy: '#0F172A',
+              blue: '#1E40AF',
+              accent: '#2563EB',
               amber: '#D97706',
               gold: '#F59E0B',
               bgLight: '#F8FAFC'
@@ -36,6 +36,11 @@
   </script>
 
   <style>
+    :root {
+      --font-scale: 1.15;
+      --slide-base-size: 1rem;
+    }
+
     body {
       font-family: 'Pretendard', sans-serif;
       scroll-behavior: smooth;
@@ -56,60 +61,21 @@
       background: #94a3b8;
     }
 
-    .slide-aspect {
-      aspect-ratio: 16 / 9;
-    }
-
     /* Presentation Stage & Fullscreen Styles */
     .slide-stage-container {
       transition: all 0.2s ease-in-out;
+      width: 100%;
     }
 
-    /* Native Fullscreen & CSS Overlay Fallback - Separate rules for 100% browser compatibility */
-    .slide-stage-container:fullscreen {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      max-width: 100vw !important;
-      max-height: 100vh !important;
-      border-radius: 0 !important;
-      border: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      z-index: 99999 !important;
-      background: #090d16 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-      overflow: hidden !important;
+    /* Standard Presentation Aspect Ratio */
+    .slide-inner-card {
+      min-height: 620px;
+      aspect-ratio: 16 / 9;
     }
 
-    .slide-stage-container:-webkit-full-screen {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      max-width: 100vw !important;
-      max-height: 100vh !important;
-      border-radius: 0 !important;
-      border: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      z-index: 99999 !important;
-      background: #090d16 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-      overflow: hidden !important;
-    }
-
+    /* Fullscreen Mode (Native & CSS Fallback) */
+    .slide-stage-container:fullscreen,
+    .slide-stage-container:-webkit-full-screen,
     .slide-stage-container.is-fullscreen {
       position: fixed !important;
       top: 0 !important;
@@ -130,41 +96,19 @@
       flex-direction: column !important;
       justify-content: space-between !important;
       overflow: hidden !important;
+      --font-scale: 1.4 !important;
     }
 
-    /* Inner card scaling */
-    .slide-stage-container:fullscreen .slide-inner-card {
-      width: 100% !important;
-      max-width: 1600px !important;
-      height: 100% !important;
-      max-height: calc(100vh - 64px) !important;
-      margin: auto !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      display: flex !important;
-      flex-direction: column !important;
-      background: #ffffff !important;
-    }
-
-    .slide-stage-container:-webkit-full-screen .slide-inner-card {
-      width: 100% !important;
-      max-width: 1600px !important;
-      height: 100% !important;
-      max-height: calc(100vh - 64px) !important;
-      margin: auto !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      display: flex !important;
-      flex-direction: column !important;
-      background: #ffffff !important;
-    }
-
+    /* Fullscreen inner stage utilizes 100% viewport */
+    .slide-stage-container:fullscreen .slide-inner-card,
+    .slide-stage-container:-webkit-full-screen .slide-inner-card,
     .slide-stage-container.is-fullscreen .slide-inner-card {
-      width: 100% !important;
-      max-width: 1600px !important;
-      height: 100% !important;
-      max-height: calc(100vh - 64px) !important;
-      margin: auto !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: calc(100vh - 56px) !important;
+      max-height: calc(100vh - 56px) !important;
+      aspect-ratio: auto !important;
+      margin: 0 !important;
       border-radius: 0 !important;
       box-shadow: none !important;
       display: flex !important;
@@ -172,65 +116,123 @@
       background: #ffffff !important;
     }
 
-    /* Fullscreen Floating Hover Side Navigation Buttons */
+    /* Fullscreen typography scaling */
+    .slide-stage-container:fullscreen #slideRenderArea,
+    .slide-stage-container:-webkit-full-screen #slideRenderArea,
+    .slide-stage-container.is-fullscreen #slideRenderArea {
+      padding: 2.5rem 4rem !important;
+      overflow-y: auto !important;
+    }
+
+    /* Dynamic Scaled Text Utility Classes */
+    .scale-title {
+      font-size: calc(2.0rem * var(--font-scale)) !important;
+      line-height: 1.2 !important;
+    }
+    .scale-subtitle {
+      font-size: calc(1.1rem * var(--font-scale)) !important;
+      line-height: 1.45 !important;
+    }
+    .scale-card-title {
+      font-size: calc(1.15rem * var(--font-scale)) !important;
+      line-height: 1.35 !important;
+    }
+    .scale-body {
+      font-size: calc(1.0rem * var(--font-scale)) !important;
+      line-height: 1.7 !important;
+    }
+    .scale-badge {
+      font-size: calc(0.85rem * var(--font-scale)) !important;
+    }
+    .scale-table-header {
+      font-size: calc(0.95rem * var(--font-scale)) !important;
+    }
+    .scale-table-body {
+      font-size: calc(0.9rem * var(--font-scale)) !important;
+    }
+    .scale-slogan {
+      font-size: calc(1.9rem * var(--font-scale)) !important;
+      line-height: 1.45 !important;
+    }
+
+    /* Responsive Fullscreen Floating Nav Buttons */
     .slide-nav-hover-btn {
       opacity: 0;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.25s ease, transform 0.2s ease;
     }
     .slide-stage-container:hover .slide-nav-hover-btn,
+    .slide-stage-container:fullscreen .slide-nav-hover-btn,
+    .slide-stage-container:-webkit-full-screen .slide-nav-hover-btn,
     .slide-stage-container.is-fullscreen .slide-nav-hover-btn {
-      opacity: 0.85;
+      opacity: 0.9;
     }
     .slide-nav-hover-btn:hover {
       opacity: 1 !important;
-      transform: scale(1.1);
+      transform: scale(1.12);
+    }
+
+    /* Ensure slide render area properly uses full height */
+    #slideRenderArea {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+    }
+    #slideRenderArea > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
 
   <!-- ========================================================================= -->
-  <!-- 1. 상단 글로벌 네비게이션 헤더 & 햄버거 버튼 & 퀵 바로가기 -->
+  <!-- 1. 상단 글로벌 네비게이션 헤더 -->
   <!-- ========================================================================= -->
-  <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-lg border-b border-slate-800 backdrop-blur-md bg-opacity-95">
+  <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-xl border-b border-slate-800 backdrop-blur-md bg-opacity-95">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
         <!-- 좌측: 햄버거 메뉴 버튼 & 로고 타이틀 -->
         <div class="flex items-center space-x-3">
-          <button id="drawerToggleBtn" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 hover:text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500 transition">
+          <button id="drawerToggleBtn" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 hover:text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500 transition" title="전체 목차 열기">
             <i class="fa-solid fa-bars text-xl"></i>
             <span class="sr-only">목차 메뉴 열기</span>
           </button>
           
           <div class="flex flex-col cursor-pointer" onclick="scrollToTop()">
             <div class="flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-xs font-bold bg-amber-500 text-slate-950 rounded">목회 AI 세미나</span>
-              <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+              <span class="px-2 py-0.5 text-xs font-black bg-amber-500 text-slate-950 rounded shadow-sm">인천 목회자 세미나</span>
+              <h1 class="text-base sm:text-lg md:text-xl font-black tracking-tight text-white flex items-center gap-1.5">
                 <span>AI는 부지런한 손, 목회자는 뜨거운 심장</span>
               </h1>
             </div>
-            <p class="text-xs text-slate-400 hidden sm:block">설교 대필을 넘어 목회 전반을 혁신하는 실전 AI 활용법 (2시간 마스터)</p>
+            <p class="text-xs text-amber-300/90 font-medium hidden sm:block">
+              📅 11월 17일 / 24일 특강 | 설교·홍보·교인 소통 통합 관리 (라온동행교회 실전)
+            </p>
           </div>
         </div>
 
-        <!-- 우측 툴바: 뷰 모드 전환 / 라온동행교회 링크 / 전체화면 발표 -->
+        <!-- 우측 툴바: 폰트 크기 / 라온동행교회 링크 / 모드 전환 / 전체화면 발표 -->
         <div class="flex items-center space-x-2 sm:space-x-3">
-          <!-- 홈으로 바로가기 -->
-          <a href="../index.html" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-house"></i>
-            <span class="hidden sm:inline">자료실 홈</span>
-          </a>
+          <!-- 폰트 크기 조절기 -->
+          <div class="hidden sm:flex items-center bg-slate-800 rounded-lg p-1 border border-slate-700 text-xs font-bold text-slate-300" title="가독성 폰트 크기 조절">
+            <button onclick="adjustFontSize(-0.1)" class="px-2 py-1 rounded hover:bg-slate-700 hover:text-white transition" title="글자 작게">A-</button>
+            <span id="fontScaleDisplay" class="px-1.5 text-amber-400">100%</span>
+            <button onclick="adjustFontSize(0.1)" class="px-2 py-1 rounded hover:bg-slate-700 hover:text-white transition" title="글자 크게">A+</button>
+          </div>
 
           <!-- 라온동행교회 링크 -->
-          <a href="https://raondonghaeng.org" target="_blank" class="px-3 py-1.5 rounded-md bg-blue-900/60 hover:bg-blue-800 text-blue-200 text-xs sm:text-sm font-bold flex items-center gap-1.5 border border-blue-500/40 transition" title="라온동행교회 공식 홈페이지 (실제 구축 사례)">
+          <a href="https://raondonghaeng.org" target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-900/70 hover:bg-blue-800 text-blue-200 text-xs sm:text-sm font-bold flex items-center gap-1.5 border border-blue-500/50 transition shadow-sm" title="라온동행교회 공식 홈페이지 (실제 구축 사례)">
             <i class="fa-solid fa-church text-amber-400"></i>
             <span class="hidden md:inline">라온동행교회</span>
           </a>
 
           <!-- 뷰 모드 탭 (문서 모드 vs 슬라이드 모드) -->
-          <div class="bg-slate-800 p-1 rounded-lg flex items-center text-xs sm:text-sm font-medium">
-            <button id="modeDocBtn" onclick="switchViewMode('doc')" class="px-3 py-1.5 rounded-md bg-blue-600 text-white flex items-center gap-1.5 transition font-bold">
+          <div class="bg-slate-800 p-1 rounded-lg flex items-center text-xs sm:text-sm font-semibold border border-slate-700">
+            <button id="modeDocBtn" onclick="switchViewMode('doc')" class="px-3 py-1.5 rounded-md bg-blue-600 text-white flex items-center gap-1.5 transition font-bold shadow">
               <i class="fa-solid fa-book-open"></i>
               <span class="hidden sm:inline">문서 모드</span>
             </button>
@@ -241,36 +243,36 @@
           </div>
 
           <!-- 전체화면 발표 바로가기 -->
-          <button onclick="startPresentation()" class="px-3 py-1.5 rounded-md bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-md transition" title="전체화면 슬라이드 발표 (단축키: F)">
+          <button onclick="startPresentation()" class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-lg transition" title="전체화면 발표 (단축키: F)">
             <i class="fa-solid fa-expand"></i>
             <span class="hidden sm:inline">전체화면 발표</span>
           </button>
         </div>
       </div>
 
-      <!-- 상단 퀵 바로가기 태그 바 (가로 스크롤) -->
+      <!-- 상단 퀵 바로가기 태그 바 -->
       <div class="flex items-center space-x-2 py-2 overflow-x-auto no-scrollbar border-t border-slate-800 text-xs">
-        <span class="text-slate-400 font-semibold flex-shrink-0 flex items-center gap-1">
-          <i class="fa-solid fa-bolt text-amber-400"></i> 바로가기:
+        <span class="text-slate-400 font-bold flex-shrink-0 flex items-center gap-1">
+          <i class="fa-solid fa-bolt text-amber-400"></i> 파트:
         </span>
-        <button onclick="jumpToPart(1)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 1. 마인드셋 & 병목</button>
-        <button onclick="jumpToPart(2)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 2. 설교 연구 & 2차 사역</button>
-        <button onclick="jumpToPart(3)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 3. 맞춤 에이전트 & 웹앱</button>
-        <button onclick="jumpToPart(4)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 4. 로드맵 & 스터디 선별</button>
-        <button onclick="jumpToSlide(25)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 font-bold transition">🌟 결론 & 사명</button>
+        <button onclick="jumpToPart(1)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 1. 마인드셋 & 통합 사역</button>
+        <button onclick="jumpToPart(2)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 2. 설교 연구 & 2차 교재</button>
+        <button onclick="jumpToPart(3)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 3. 맞춤 도구 & 라온동행교회</button>
+        <button onclick="jumpToPart(4)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-blue-900 text-slate-200 hover:text-amber-300 transition">Part 4. 11월 일정 & 2027 스터디</button>
+        <button onclick="jumpToSlide(25)" class="flex-shrink-0 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 font-bold transition">🌟 결론 & 뜨거운 심장</button>
       </div>
     </div>
   </header>
 
   <!-- ========================================================================= -->
-  <!-- 2. 슬라이드 아웃 사이드바 (목차 & 검색 드로어) -->
+  <!-- 2. 슬라이드 아웃 사이드바 (목차 & 검색) -->
   <!-- ========================================================================= -->
-  <div id="drawerBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity" onclick="closeDrawer()"></div>
+  <div id="drawerBackdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden transition-opacity" onclick="closeDrawer()"></div>
   <aside id="drawer" class="fixed top-0 left-0 bottom-0 w-80 sm:w-96 bg-slate-900 text-white z-50 shadow-2xl flex flex-col -translate-x-full transition-transform duration-300 ease-in-out border-r border-slate-800">
     <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
       <div class="flex items-center space-x-2">
         <i class="fa-solid fa-list-check text-amber-400"></i>
-        <h2 class="font-bold text-base text-white">전체 25개 슬라이드 목차</h2>
+        <h2 class="font-extrabold text-base text-white">전체 25개 슬라이드 목차</h2>
       </div>
       <button onclick="closeDrawer()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
         <i class="fa-solid fa-xmark text-lg"></i>
@@ -280,76 +282,82 @@
     <div class="p-3 border-b border-slate-800 bg-slate-900">
       <div class="relative">
         <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
-        <input type="text" id="tocSearchInput" oninput="filterToc()" placeholder="미드라시, 쇼츠, 라온동행교회, 프롬프트..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500">
+        <input type="text" id="tocSearchInput" oninput="filterToc()" placeholder="미드라시, 쇼츠, 11월 일정, 라온동행..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500">
       </div>
     </div>
 
     <div id="tocList" class="flex-1 overflow-y-auto p-3 space-y-1 text-sm">
-      <!-- JavaScript로 목차 항목 동적 렌더링 -->
+      <!-- JavaScript 동적 목차 -->
     </div>
 
     <div class="p-3 border-t border-slate-800 bg-slate-950 text-center text-xs text-slate-400 flex flex-col gap-1">
-      <div>💡 "AI는 부지런한 손, 목회자는 뜨거운 심장"</div>
+      <div class="font-bold text-amber-400">💡 11월 17일 / 24일 인천 목회자 특강</div>
       <a href="https://raondonghaeng.org" target="_blank" class="text-blue-400 hover:text-blue-300 font-semibold">⛪ 라온동행교회 (raondonghaeng.org) ↗</a>
     </div>
   </aside>
 
   <!-- ========================================================================= -->
-  <!-- 3. 메인 콘텐츠 영역 (문서 모드 & 슬라이드 모드) -->
+  <!-- 3. 메인 콘텐츠 영역 -->
   <!-- ========================================================================= -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     <!-- [뷰 모드 A] 슬라이드 프레젠테이션 뷰어 -->
     <div id="slideViewContainer" class="hidden">
-      <!-- 슬라이드 스테이지 컨테이너 (전체화면 발표 대상) -->
-      <div id="slideStage" class="slide-stage-container bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-700 max-w-5xl mx-auto flex flex-col relative group">
+      <!-- 슬라이드 스테이지 컨테이너 (전체화면 대상) -->
+      <div id="slideStage" class="slide-stage-container bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-700 max-w-6xl mx-auto flex flex-col relative group">
         
-        <!-- 슬라이드 본체 캔버스 (16:9 비율 및 반응형 스크롤 지원) -->
-        <div class="slide-inner-card bg-white flex-1 slide-aspect flex flex-col relative overflow-hidden">
+        <!-- 슬라이드 본체 캔버스 -->
+        <div class="slide-inner-card bg-white flex-1 flex flex-col relative overflow-hidden">
           
           <!-- 슬라이드 동적 내용 렌더링 영역 -->
           <div id="slideRenderArea" class="flex-1 p-6 md:p-10 flex flex-col justify-between overflow-y-auto">
-            <!-- 슬라이드 동적 내용 -->
+            <!-- JavaScript 동적 렌더링 -->
           </div>
 
-          <!-- 좌/우 플로팅 네비게이션 버튼 (마우스 호버 & 터치) -->
-          <button onclick="prevSlide()" class="slide-nav-hover-btn absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-900/80 hover:bg-slate-900 text-amber-400 shadow-2xl backdrop-blur-md flex items-center justify-center text-xl z-20 border border-amber-500/30 transition focus:outline-none" title="이전 슬라이드 (← / PageUp)">
+          <!-- 좌/우 플로팅 네비게이션 버튼 -->
+          <button onclick="prevSlide()" class="slide-nav-hover-btn absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900/85 hover:bg-slate-950 text-amber-400 shadow-2xl backdrop-blur-md flex items-center justify-center text-2xl z-20 border-2 border-amber-500/40 transition focus:outline-none" title="이전 슬라이드 (← / PageUp)">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
-          <button onclick="nextSlide()" class="slide-nav-hover-btn absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-900/80 hover:bg-slate-900 text-amber-400 shadow-2xl backdrop-blur-md flex items-center justify-center text-xl z-20 border border-amber-500/30 transition focus:outline-none" title="다음 슬라이드 (→ / Space / PageDown)">
+          <button onclick="nextSlide()" class="slide-nav-hover-btn absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900/85 hover:bg-slate-950 text-amber-400 shadow-2xl backdrop-blur-md flex items-center justify-center text-2xl z-20 border-2 border-amber-500/40 transition focus:outline-none" title="다음 슬라이드 (→ / Space / PageDown)">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
 
         <!-- 슬라이드 하단 인터랙티브 컨트롤 바 -->
-        <div id="slideControlBar" class="bg-slate-900 text-white px-4 sm:px-6 py-3.5 flex items-center justify-between border-t border-slate-800 z-30 flex-shrink-0 select-none">
-          <!-- 좌측: 슬라이드 번호 및 파트 안내 -->
+        <div id="slideControlBar" class="bg-slate-950 text-white px-4 sm:px-6 py-3 flex items-center justify-between border-t border-slate-800 z-30 flex-shrink-0 select-none">
+          <!-- 좌측: 슬라이드 카운터 & 제목 -->
           <div class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm">
-            <span id="slideCounter" class="font-extrabold text-amber-400 bg-slate-800 px-3 py-1 rounded-lg border border-slate-700 shadow-inner">1 / 25</span>
+            <span id="slideCounter" class="font-black text-amber-400 bg-slate-800 px-3 py-1 rounded-lg border border-slate-700 shadow-inner">1 / 25</span>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <span id="slidePartLabel" class="text-xs sm:text-sm text-slate-300 truncate max-w-[160px] sm:max-w-xs md:max-w-md font-medium"></span>
+            <span id="slidePartLabel" class="text-xs sm:text-sm text-slate-300 truncate max-w-[180px] sm:max-w-xs md:max-w-md font-medium"></span>
           </div>
 
-          <!-- 우측: 제어 버튼 그룹 -->
+          <!-- 우측: 폰트 조절 & 네비 제어 -->
           <div class="flex items-center space-x-1.5 sm:space-x-2.5">
-            <!-- 이전 / 다음 버튼 -->
-            <button onclick="prevSlide()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition text-xs sm:text-sm font-semibold flex items-center gap-1.5 border border-slate-700" title="이전 슬라이드 (← / PageUp)">
+            <!-- 폰트 크기 확대/축소 -->
+            <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700 text-xs font-bold text-slate-200">
+              <button onclick="adjustFontSize(-0.1)" class="px-2.5 py-1 hover:bg-slate-700 text-amber-300 transition" title="글자 축소">A-</button>
+              <button onclick="adjustFontSize(0.1)" class="px-2.5 py-1 hover:bg-slate-700 text-amber-300 transition border-l border-slate-700" title="글자 확대">A+</button>
+            </div>
+
+            <!-- 이전 / 다음 -->
+            <button onclick="prevSlide()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition text-xs sm:text-sm font-bold flex items-center gap-1 border border-slate-700" title="이전 (←)">
               <i class="fa-solid fa-chevron-left"></i>
               <span class="hidden sm:inline">이전</span>
             </button>
-            <button onclick="nextSlide()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition text-xs sm:text-sm font-semibold flex items-center gap-1.5 border border-slate-700" title="다음 슬라이드 (→ / Space / PageDown)">
+            <button onclick="nextSlide()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition text-xs sm:text-sm font-bold flex items-center gap-1 border border-slate-700" title="다음 (→)">
               <span class="hidden sm:inline">다음</span>
               <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <!-- 목차 열기 버튼 -->
-            <button onclick="openDrawer()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition text-xs sm:text-sm font-semibold flex items-center gap-1.5 border border-slate-700" title="전체 25개 목차 열기">
+            <!-- 목차 -->
+            <button onclick="openDrawer()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition text-xs sm:text-sm font-bold flex items-center gap-1 border border-slate-700" title="전체 목차 열기">
               <i class="fa-solid fa-list-ul"></i>
               <span class="hidden md:inline">목차</span>
             </button>
 
-            <!-- 전체화면 토글 버튼 -->
-            <button id="fullscreenToggleBtn" onclick="toggleFullscreen()" class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold transition text-xs sm:text-sm flex items-center gap-1.5 shadow-lg" title="전체화면 발표 토글 (단축키: F / ESC)">
+            <!-- 전체화면 토글 -->
+            <button id="fullscreenToggleBtn" onclick="toggleFullscreen()" class="px-3.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black transition text-xs sm:text-sm flex items-center gap-1.5 shadow-lg" title="전체화면 발표 (F)">
               <i id="fullscreenIcon" class="fa-solid fa-expand"></i>
               <span id="fullscreenText" class="hidden sm:inline">전체화면</span>
             </button>
@@ -357,85 +365,82 @@
         </div>
       </div>
 
-      <!-- 썸네일 둘러보기 -->
-      <div class="mt-8 max-w-5xl mx-auto">
+      <!-- 슬라이드 썸네일 그리드 -->
+      <div class="mt-8 max-w-6xl mx-auto">
         <div class="flex items-center justify-between mb-3">
-          <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+          <h3 class="font-black text-base text-slate-800 flex items-center gap-2">
             <i class="fa-solid fa-table-cells text-blue-600"></i>
-            <span>슬라이드 전체 둘러보기 (클릭 시 즉시 이동)</span>
+            <span>슬라이드 25장 전체 한눈에 보기</span>
           </h3>
-          <span class="text-xs text-slate-500">총 25개 슬라이드</span>
+          <span class="text-xs text-slate-500 font-semibold">총 25개 슬라이드 | 클릭 시 즉시 점프</span>
         </div>
-        <div id="slideThumbnailGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-100 rounded-xl border border-slate-200">
-          <!-- 썸네일 동적 렌더링 -->
+        <div id="slideThumbnailGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 max-h-48 overflow-y-auto p-2.5 bg-slate-100 rounded-2xl border border-slate-200">
+          <!-- JavaScript 동적 생성 -->
         </div>
       </div>
     </div>
 
-    <!-- [뷰 모드 B] 웹 문서 모드 (반응형 카드 스크롤 가이드북) -->
+    <!-- [뷰 모드 B] 웹 문서 모드 -->
     <div id="docViewContainer" class="space-y-12">
-      <!-- 인트로 히어로 배너 -->
-      <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-        <div class="absolute right-0 top-0 bottom-0 w-1/3 opacity-25 bg-cover bg-center pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80');"></div>
+      <!-- 인트로 히어로 배너 (한국 목회자 연구 사진 연동) -->
+      <div class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+        <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-25 bg-cover bg-center pointer-events-none" style="background-image: url('images/korean_pastor_study.jpg');"></div>
         <div class="relative z-10 max-w-3xl space-y-4">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full text-xs font-bold">
-            <i class="fa-solid fa-sparkles"></i> 2026-2027 목회자 실전 AI 세미나 특강 교재
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-full text-xs sm:text-sm font-black">
+            <i class="fa-solid fa-calendar-check text-amber-400"></i> 2026년 11월 17일 / 24일 예정 | 인천 지역 목회자 실전 AI 특강 교재
           </div>
-          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">
             AI는 부지런한 손,<br><span class="text-amber-400">목회자는 뜨거운 심장</span>
           </h2>
-          <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-            "설교 대필의 환상을 깨고, 설교 연구의 깊이와 주 7일 사역을 완성하십시오."<br class="hidden sm:block">
+          <p class="text-lg md:text-xl text-slate-200 font-light leading-relaxed">
+            "단순히 설교 시간을 줄이는 것을 넘어, 설교·교회 홍보·교인 소통을 <strong class="text-amber-300 font-bold">통합적으로 관리</strong>하십시오."<br class="hidden sm:block">
             라온동행교회(<a href="https://raondonghaeng.org" target="_blank" class="text-amber-400 hover:underline font-bold">raondonghaeng.org</a>)의 현장 실전 노하우를 바탕으로 한 2시간 완성 커리큘럼입니다.
           </p>
           <div class="pt-2 flex flex-wrap items-center gap-3 text-sm">
-            <button onclick="startPresentation(1)" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl shadow-lg flex items-center gap-2 transition transform hover:-translate-y-0.5">
-              <i class="fa-solid fa-expand"></i> 전체화면 발표 시작
+            <button onclick="startPresentation(1)" class="px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl shadow-xl flex items-center gap-2 transition transform hover:-translate-y-0.5">
+              <i class="fa-solid fa-expand"></i> 전체화면 슬라이드 발표 시작
             </button>
-            <button onclick="switchViewMode('slide')" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg flex items-center gap-2 transition">
+            <button onclick="switchViewMode('slide')" class="px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg flex items-center gap-2 transition">
               <i class="fa-solid fa-desktop"></i> 슬라이드 모드
             </button>
-            <a href="https://raondonghaeng.org" target="_blank" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-blue-300 font-bold rounded-xl border border-slate-700 flex items-center gap-2 transition">
-              <i class="fa-solid fa-church"></i> 라온동행교회 사례 ↗
+            <a href="https://raondonghaeng.org" target="_blank" class="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-blue-300 font-bold rounded-xl border border-slate-700 flex items-center gap-2 transition">
+              <i class="fa-solid fa-church text-amber-400"></i> 라온동행교회 사례 ↗
             </a>
           </div>
         </div>
       </div>
 
+      <!-- 문서 모드 25개 슬라이드 카드 -->
       <div id="docSectionsContainer" class="space-y-16">
-        <!-- 25개 슬라이드 카드 동적 렌더링 -->
+        <!-- JavaScript 동적 렌더링 -->
       </div>
     </div>
 
   </main>
 
-  <!-- ========================================================================= -->
-  <!-- 4. 토스트 알림 -->
-  <!-- ========================================================================= -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-amber-400 px-5 py-3 rounded-xl shadow-2xl border border-amber-500/30 flex items-center space-x-2 text-sm font-semibold transition-all transform translate-y-20 opacity-0 pointer-events-none">
+  <!-- 토스트 알림 -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-amber-400 px-5 py-3 rounded-xl shadow-2xl border border-amber-500/40 flex items-center space-x-2 text-sm font-bold transition-all transform translate-y-20 opacity-0 pointer-events-none">
     <i class="fa-solid fa-circle-check text-green-400"></i>
-    <span id="toastMsg">클립보드에 복사되었습니다!</span>
+    <span id="toastMsg">클립보드에 프롬프트가 복사되었습니다!</span>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- 5. 푸터 -->
-  <!-- ========================================================================= -->
+  <!-- 푸터 -->
   <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-20 py-8 text-center text-sm">
     <div class="max-w-7xl mx-auto px-4 space-y-3">
-      <p class="font-medium text-slate-300">💡 목회자 실전 AI 세미나 — "AI는 부지런한 손, 목회자는 뜨거운 심장"</p>
+      <p class="font-bold text-slate-200">💡 11월 목회자 실전 AI 세미나 — "AI는 부지런한 손, 목회자는 뜨거운 심장"</p>
       <div class="flex items-center justify-center gap-4 text-xs text-slate-400">
         <a href="https://raondonghaeng.org" target="_blank" class="hover:text-amber-400 transition font-bold flex items-center gap-1">
           <i class="fa-solid fa-church text-amber-400"></i> 라온동행교회 (raondonghaeng.org)
         </a>
         <span>|</span>
-        <a href="../index.html" class="hover:text-slate-200 transition">한국AI연구소 아카이브</a>
+        <a href="../index.html" class="hover:text-slate-200 transition">한국AI연구소 교육 아카이브</a>
       </div>
-      <p class="text-[11px] text-slate-500">Google Slides 스크립트 연동 및 반응형 전체화면 발표 지원</p>
+      <p class="text-[11px] text-slate-500">2026년 11월 17일/24일 인천 세미나 및 2027 후속 스터디 연계</p>
     </div>
   </footer>
 
   <!-- ========================================================================= -->
-  <!-- 6. 스크립트 로직 (25개 마스터 데이터 및 뷰어 제어) -->
+  <!-- 4. 마스터 슬라이드 데이터 및 인터랙션 스크립트 -->
   <!-- ========================================================================= -->
   <script>
     const masterSlides = [
@@ -445,9 +450,9 @@
         part: "PART 1. 마인드셋 & 패러다임 전환",
         type: "cover",
         title: "AI는 부지런한 손,\n목회자는 뜨거운 심장",
-        subtitle: "설교 대필의 환상을 깨고, 목회 전반을 혁신하는 실전 AI 활용법",
-        badge: "💡 \"AI는 일을 덜어주는 도구일 뿐, 사역의 중심은 언제나 목회자의 영성과 사랑입니다.\"\n\n라온동행교회(raondonghaeng.org) 현장 사역 기반 실전 세미나",
-        imageUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80"
+        subtitle: "설교 대필의 환상을 깨고, 목회 전반을 통합 관리하는 실전 AI 활용법",
+        badge: "💡 \"AI를 통해 설교 시간을 줄이는 것뿐 아니라, 사역의 통합적 관리를 완성합니다.\"\n\n📅 11월 특강 (17일 / 24일 예정) | 라온동행교회(raondonghaeng.org) 실전 사례",
+        imageUrl: "images/korean_pastor_study.jpg"
       },
       {
         id: 2,
@@ -471,22 +476,22 @@
         title: "AI는 사역의 '세탁기'입니다",
         subtitle: "손빨래의 고단함에서 벗어나 가족과 사랑을 나눌 시간을 얻듯이",
         contentTitle: "🧺 세탁기 혁명이 목회에 던지는 교훈",
-        content: "• 옛날에는 온종일 차가운 개울가에서 손빨래를 하느라 가족을 돌아볼 여유가 없었습니다.\n\n• 세탁기가 나왔을 때 \"정성이 사라진다\"는 비판도 있었지만, 세탁기는 주부에게 '삶의 여유와 사랑의 시간'을 선물했습니다.\n\n• AI는 목회 행정과 자료 정리라는 '손빨래'를 대신해 주는 사역의 세탁기입니다!",
-        imageUrl: "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=800&q=80"
+        content: "• 옛날에는 온종일 차가운 개울가에서 손빨래를 하느라 가족과 성도를 돌아볼 여유가 없었습니다.\n\n• 세탁기가 나왔을 때 \"정성이 사라진다\"는 우려도 있었지만, 세탁기는 주부에게 '삶의 여유와 사랑의 시간'을 선물했습니다.\n\n• AI는 목회 행정과 자료 정리라는 '손빨래'를 대신해 주는 사역의 세탁기입니다!",
+        imageUrl: "images/korean_pastor_peace.jpg"
       },
       {
         id: 4,
         part: "PART 1. 마인드셋 & 패러다임 전환",
         type: "compare",
-        title: "최고급 주방 도구가 있어도 요리할 생각이 없으면 무용지물",
+        title: "내 업무에 맞지 않는 최고급 도구는 먼지만 쌓입니다",
         subtitle: "도구 자체보다 중요한 것은 '내 사역의 병목(Needs)이 무엇인가'를 정의하는 것입니다.",
         bad: {
           title: "⚠️ 목적 없는 툴 만능주의",
-          desc: "• 삐까뻔쩍한 최고급 주방 도구를 사줬는데 요리할 마음이 없으면 먼지만 쌓입니다.\n• 남들이 쓴다고 무작정 유료 툴을 구독하면 월세 폭탄만 맞고 방치됩니다.\n• AI를 배우기 전에 '내가 해결하고 싶은 사역의 문제가 무엇인지' 파악해야 합니다."
+          desc: "• 삐까뻔쩍한 최고급 주방 도구를 사줬는데 요리할 마음이 없으면 먼지만 쌓입니다.\n• 남들이 쓴다고 무작정 유료 툴을 구독하면 월세 폭탄만 맞고 방치됩니다.\n• AI는 한글이나 엑셀과 달라, 내 업무 파악과 필요성 인지가 없으면 효과가 미미합니다."
         },
         good: {
           title: "💡 목회 업무의 명확한 정의",
-          desc: "• 설교 자료 조사의 한계인가? 성도와의 주중 소통 부재인가? 교회 홍보의 어려움인가?\n• 내 사역의 막힌 혈을 정확히 짚을 때 AI는 강력한 해결 도구가 됩니다.\n• 목회자 본인의 방향성과 열정이 최고의 프롬프트입니다!"
+          desc: "• 설교 자료 조사의 한계인가? 성도와의 주중 소통 부재인가? 교회 홍보의 어려움인가?\n• 내 사역의 막힌 혈을 정확히 짚을 때 AI는 강력한 해결 도구가 됩니다.\n• 의지와 노력이 있는 목회자는 AI로 사역 효율을 몇 배로 끌어올립니다!"
         }
       },
       {
@@ -494,7 +499,7 @@
         part: "PART 1. 마인드셋 & 패러다임 전환",
         type: "compare",
         title: "쇼츠(Shorts) AI의 딜레마: 100원 vs 300만 원",
-        subtitle: "상황과 인프라에 따라 똑같은 도구도 최고의 무기가 되거나 쓰레기가 됩니다.",
+        subtitle: "영상이 없으면 쇼츠 프로그램도 무의미합니다. 내 교회의 현실 여건에 맞춰야 합니다.",
         bad: {
           title: "📹 영상 인프라가 없는 교회",
           desc: "• 주일 설교 영상 녹화 시스템이 없는 상태에서 쇼츠 AI 프로그램은 아무 가치가 없음\n• 쇼츠 하나 만들겠다고 카메라/조명/방송 장비에 수백만 원 투자하면 본말전도\n• 내 교회의 현재 인프라에 맞는 AI 도구부터 단계별로 도입해야 함"
@@ -508,7 +513,7 @@
         id: 6,
         part: "PART 1. 마인드셋 & 패러다임 전환",
         type: "cards",
-        title: "목회자마다 설교의 기준과 눈높이는 다릅니다",
+        title: "목회자마다 설교와 사역의 눈높이는 다릅니다",
         subtitle: "모두를 똑같이 만족시키는 만능 버튼은 없습니다. 내 수준과 깊이에 맞춰 활용해야 합니다.",
         cards: [
           {
@@ -535,7 +540,7 @@
         title: "AI로 여는 성경 연구의 신지평과\n주 7일 묵상 생태계",
         subtitle: "고고학·문헌 연구 10분 완성 & 설교 1편을 다채널 양육 교재로 확장하기",
         badge: "📜 모세의 지팡이(미드라시 전승) & 바로 대면(와키 홀 고고학) 실전 탐색 사례",
-        imageUrl: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&q=80"
+        imageUrl: "images/korean_pastor_study.jpg"
       },
       {
         id: 8,
@@ -557,7 +562,7 @@
             desc: "• 지팡이가 미디안 제사장 이드로의 집 마당에 꽂혀 아무도 뽑지 못함\n• 모세가 와서 단번에 뽑아내자 이드로가 선지자임을 알아보고 십보라와 결혼시킴"
           }
         ],
-        footerNote: "💡 신학적 교훈: AI가 전승을 빠르게 찾아주면, 목회자는 성경 텍스트와 비교하여 설교적 교훈으로 소화하고 분별합니다."
+        footerNote: "💡 신학적 교훈: AI가 전승 자료를 빠르게 찾아주면, 목회자는 성경 본문과 비교하여 설교적 교훈으로 소화하고 분별합니다."
       },
       {
         id: 9,
@@ -686,7 +691,7 @@
         title: "남이 만든 프로그램을 사지 말고,\n내 목회에 맞게 만들어라",
         subtitle: "비싼 월세 SaaS의 한계와 2026 노코드 AI 에이전트(Agent) 혁명",
         badge: "⛪ 실제 사례: 라온동행교회(raondonghaeng.org) 홈페이지 & 나만의 AI 신학 비서 구축기",
-        imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
+        imageUrl: "images/korean_pastors_workshop.jpg"
       },
       {
         id: 16,
@@ -711,7 +716,7 @@
         subtitle: "외주 비용 0원, 비전과 따뜻함이 담긴 반응형 모바일 최적화 웹사이트",
         contentTitle: "🌐 라온동행교회 홈페이지의 사역적 가치",
         content: "• 현대인과 청년들은 교회를 방문하기 전 반드시 인터넷과 모바일로 검색합니다.\n\n• 전도지와 주보보다 강력한 교회 소개 및 예배 안내 창구 역할을 수행합니다.\n\n• 코딩 한 줄 몰라도 AI와 대화하며 라온동행교회(raondonghaeng.org) 같은 아름다운 공식 홈페이지를 하루 만에 제작하고 인터넷에 무료로 배포할 수 있습니다!",
-        imageUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&q=80"
+        imageUrl: "images/korean_church_digital.jpg"
       },
       {
         id: 18,
@@ -722,7 +727,7 @@
         cards: [
           {
             title: "🌟 목회 철학과 따뜻한 소개",
-            desc: "• 교회의 정체성과 담임목회자의 목회 비전 소개\n• 처음 방문하는 성도를 위한 친절한 안내"
+            desc: "• 교회의 정체성과 담임목회자의 목회 비전 소개\n• 처음 방문하는 성도를 위한 친절한 환영 인사"
           },
           {
             title: "📍 예배 시간 & 오시는 길",
@@ -786,7 +791,7 @@
         title: "자전거를 책으로 배울 수는 없습니다",
         subtitle: "오늘 직접 페달을 밟고, 내 손으로 사역 도구를 만드는 여정을 시작하십시오.",
         badge: "🚲 \"설명만 듣는 세미나는 일주일이면 잊혀집니다. 직접 만들어 내 손에 쥐어야 내 것이 됩니다.\"",
-        imageUrl: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80"
+        imageUrl: "images/korean_pastors_workshop.jpg"
       },
       {
         id: 22,
@@ -807,27 +812,27 @@
         id: 23,
         part: "PART 4. 로드맵 & 2027 스터디 선별",
         type: "cards",
-        title: "2027 인천/지역 목회자 실전 AI 사역 연구회 4단계 커리큘럼",
-        subtitle: "기초 마인드셋부터 나만의 사역 웹앱 배포까지 단계별 마스터 로드맵",
+        title: "11월 특강 일정 및 인천 목회자 사역 연구회 로드맵",
+        subtitle: "11월 17일 또는 24일 2시간 특강 후, 실제 활용 의지 있는 목회자를 선별하여 심화 스터디를 추진합니다.",
         cards: [
           {
-            title: "1단계: 마인드셋 & 프롬프트",
-            desc: "• ACTF 4원칙 기반 고품질 질문법\n• 설교 배경 연구 & 주석 교차검증 실습"
+            title: "📅 11월 17일 or 24일 (잠정)",
+            desc: "• 2시간 완성 집중 특강\n• AI 개념 및 목회 통합 관리 방향 제시\n• 임원진 및 목회자 공감대 형성"
           },
           {
-            title: "2단계: 주 7일 사역 파이프라인",
-            desc: "• 설교 ➔ 5일 큐티, 소그룹 질문지 자동화\n• 음성 회의록 & 숏폼 영상 제작 워크숍"
+            title: "🎯 실천 의지 참여자 선별",
+            desc: "• 단순 수강생이 아닌 실전 의지자 중심\n• 내 교회 병목 해결에 진심인 목회자 구성\n• 후원 재단 기대에 부합하는 가시적 결실 도출"
           },
           {
-            title: "3단계: 교회 홈페이지 & 지식 서고",
-            desc: "• 라온동행교회 스타일 모바일 웹사이트 제작\n• NotebookLM 나만의 신학 도서관 구축"
+            title: "🤝 인천 지역 연구 공유 네트워크",
+            desc: "• 인천 지역 목회자 모임 활성화\n• 주 7일 사역 도구 및 신학 비서 공동 연구\n• 오류 해결 및 맞춤 프롬프트 공유"
           },
           {
-            title: "4단계: 나만의 맞춤 사역 앱",
-            desc: "• 성도 심방 케어 봇 & 바이브 코딩 실습\n• GitHub 무료 배포 및 인터넷 공식 개설"
+            title: "🚀 2027 심화 실습 스터디",
+            desc: "• 반기/연간 단위 체계적 심화 코스\n• 교회 홈페이지 배포 & 나만의 앱 구축\n• 지속 가능한 디지털 목회 생태계 완성"
           }
         ],
-        footerNote: "💡 이번 특강 후 실제로 참여하여 함께 연구하고 도구를 만들어갈 목회자 스터디 그룹을 모집합니다."
+        footerNote: "💡 이번 2시간 특강은 맛보기가 아니라, 목회 패러다임을 바꾸고 동역자를 찾는 출발점입니다."
       },
       {
         id: 24,
@@ -858,13 +863,30 @@
         title: "기술은 부지런한 손, 목회자는 뜨거운 심장",
         subtitle: "AI는 일을 덜어주는 도구일 뿐, 사역의 중심은 언제나 목회자의 영성과 사랑입니다.",
         slogan: "첨단 기술을 지혜로운 도구로 활용하여 시간과 에너지를 아끼십시오.\n\n그리고 그 아낀 소중한 시간으로\n한 영혼을 더 뜨겁게 사랑하고 위로하는 목회의 본질에 헌신하십시오!",
-        sub: "라온동행교회(raondonghaeng.org)와 함께 두려움을 넘어 은혜의 도구로 승리하시기를 축복합니다."
+        sub: "라온동행교회(raondonghaeng.org)와 함께 두려움을 넘어 은혜의 도구로 승리하시기를 축복합니다.",
+        imageUrl: "images/korean_pastor_pulpit.jpg"
       }
     ];
 
     let currentSlideIndex = 0;
     let currentMode = 'doc';
-    let fontSizeDelta = 0;
+    let currentFontScale = 1.15;
+
+    function applyFontScale() {
+      document.documentElement.style.setProperty('--font-scale', currentFontScale);
+      const slideStage = document.getElementById('slideStage');
+      if (slideStage && slideStage.classList.contains('is-fullscreen')) {
+        slideStage.style.setProperty('--font-scale', currentFontScale);
+      }
+      const display = document.getElementById('fontScaleDisplay');
+      if (display) display.innerText = `${Math.round(currentFontScale * 100)}%`;
+    }
+
+    function adjustFontSize(delta) {
+      currentFontScale = Math.max(0.8, Math.min(1.8, currentFontScale + delta));
+      applyFontScale();
+      showToast(`글자 크기: ${Math.round(currentFontScale * 100)}%`);
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       renderTocList(masterSlides);
@@ -872,8 +894,8 @@
       renderSlideThumbnails();
       renderCurrentSlide();
       setupTouchGestures();
+      applyFontScale();
 
-      // URL 파라미터 및 해시 기반 모드 자동 전환
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const hash = window.location.hash;
@@ -924,6 +946,10 @@
           } else if (e.key === 'End') {
             e.preventDefault();
             jumpToSlide(masterSlides.length);
+          } else if (e.key === '+' || e.key === '=') {
+            adjustFontSize(0.1);
+          } else if (e.key === '-' || e.key === '_') {
+            adjustFontSize(-0.1);
           }
         }
 
@@ -1084,7 +1110,7 @@
                 <span class="w-3 h-6 bg-blue-600 rounded-full inline-block"></span>
                 ${currentPart}
               </h3>
-              <span class="text-xs font-semibold text-slate-500 bg-slate-200 px-2.5 py-1 rounded-full">Part Section</span>
+              <span class="text-xs font-bold text-slate-500 bg-slate-200 px-2.5 py-1 rounded-full">Part Section</span>
             </div>
           `;
         }
@@ -1093,23 +1119,22 @@
           <div id="doc-slide-${slide.id}" class="bg-white rounded-2xl p-6 md:p-8 shadow-md border border-slate-200 hover:shadow-xl transition relative group">
             <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
               <div class="flex items-center space-x-2">
-                <span class="px-2.5 py-1 text-xs font-extrabold bg-blue-100 text-blue-800 rounded-md">#${slide.id}</span>
+                <span class="px-2.5 py-1 text-xs font-black bg-blue-100 text-blue-900 rounded-md">#${slide.id}</span>
                 <span class="text-xs font-bold text-slate-500">${slide.part}</span>
               </div>
               <div class="flex items-center space-x-2">
                 <button onclick="startPresentation(${slide.id})" class="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500 text-amber-900 hover:text-slate-950 border border-amber-500/30 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-                  <i class="fa-solid fa-expand text-amber-600"></i> 전체화면 발표
-                </button>
-                <button onclick="jumpToSlide(${slide.id})" class="px-2.5 py-1 bg-slate-100 hover:bg-blue-600 text-slate-700 hover:text-white border border-slate-200 rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
-                  <i class="fa-solid fa-desktop"></i> 슬라이드 보기
+                  <i class="fa-solid fa-expand"></i> 이 슬라이드 전체화면 발표
                 </button>
               </div>
             </div>
 
-            <h4 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2 leading-tight whitespace-pre-line">${slide.title}</h4>
-            <p class="text-base md:text-lg text-slate-600 mb-6 font-medium">${slide.subtitle}</p>
+            <h4 class="text-xl md:text-3xl font-black text-slate-900 whitespace-pre-line mb-2">${slide.title}</h4>
+            <p class="text-base md:text-lg text-slate-600 font-medium mb-6">${slide.subtitle}</p>
 
-            ${renderDocCardContent(slide)}
+            <div class="doc-body-content">
+              ${renderDocSlideBody(slide)}
+            </div>
           </div>
         `;
       });
@@ -1117,63 +1142,62 @@
       container.innerHTML = html;
     }
 
-    function renderDocCardContent(slide) {
+    function renderDocSlideBody(slide) {
       if (slide.type === 'cover') {
         return `
-          <div class="bg-slate-900 text-white rounded-xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center gap-6">
-            ${slide.imageUrl ? `<img src="${slide.imageUrl}" alt="${slide.title}" class="w-full md:w-1/3 h-48 object-cover rounded-lg shadow-md">` : ''}
-            <div class="flex-1 space-y-3">
-              <div class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded text-xs font-bold">핵심 주제</div>
-              <div class="text-base md:text-lg font-bold text-amber-300 leading-relaxed">${slide.badge ? slide.badge.replace(/\n/g, '<br>') : ''}</div>
-              <div class="pt-2">
-                <a href="https://raondonghaeng.org" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition">
-                  <i class="fa-solid fa-church"></i> 라온동행교회 (raondonghaeng.org) 바로가기 ↗
-                </a>
+          <div class="bg-slate-900 text-white rounded-xl p-6 md:p-8 relative overflow-hidden border border-slate-800">
+            <div class="relative z-10 space-y-4 max-w-2xl">
+              <div class="inline-block px-3 py-1 bg-amber-500 text-slate-950 font-bold text-xs rounded">${slide.part}</div>
+              <div class="text-lg md:text-xl font-bold text-amber-300 whitespace-pre-line leading-relaxed bg-slate-950/80 p-5 rounded-xl border border-amber-500/40">
+                ${slide.badge || ''}
               </div>
             </div>
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="mt-4 rounded-xl shadow-lg w-full max-h-80 object-cover border border-slate-700">` : ''}
           </div>
         `;
       } else if (slide.type === 'split_image') {
         return `
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
-              <h5 class="text-xl font-bold text-blue-900 mb-3">${slide.contentTitle}</h5>
-              <div class="text-base md:text-lg text-slate-800 space-y-2 leading-relaxed whitespace-pre-line">${slide.content}</div>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-6">
+              <h5 class="font-extrabold text-blue-900 text-lg mb-2">${slide.contentTitle}</h5>
+              <div class="text-slate-700 whitespace-pre-line leading-relaxed text-sm sm:text-base">${slide.content}</div>
               ${slide.title.includes('라온동행교회') ? `
-                <div class="mt-4 pt-4 border-t border-slate-200">
-                  <a href="https://raondonghaeng.org" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition shadow">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 라온동행교회 공식 홈페이지 방문 (raondonghaeng.org)
+                <div class="mt-4 pt-3 border-t border-slate-200">
+                  <a href="https://raondonghaeng.org" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition">
+                    <i class="fa-solid fa-church"></i> 라온동행교회 (raondonghaeng.org) 바로가기 ↗
                   </a>
                 </div>
               ` : ''}
             </div>
-            ${slide.imageUrl ? `<img src="${slide.imageUrl}" alt="${slide.title}" class="w-full h-64 object-cover rounded-xl shadow-md border border-slate-200">` : ''}
+            ${slide.imageUrl ? `
+              <div>
+                <img src="${slide.imageUrl}" class="w-full rounded-xl shadow-md border border-slate-200 max-h-72 object-cover">
+                <p class="text-xs text-slate-500 text-center mt-2 font-medium">한국 사역 현장 실전 연계</p>
+              </div>
+            ` : ''}
           </div>
         `;
       } else if (slide.type === 'compare') {
         return `
-          <div class="space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="bg-red-50/80 border border-red-200 rounded-xl p-6">
-                <h5 class="text-lg font-bold text-red-900 mb-3">${slide.bad.title}</h5>
-                <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
-              </div>
-              <div class="bg-green-50/80 border border-green-200 rounded-xl p-6">
-                <h5 class="text-lg font-bold text-green-900 mb-3">${slide.good.title}</h5>
-                <div class="text-base text-slate-800 whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
-              </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-red-50/70 border border-red-200 rounded-xl p-5">
+              <h5 class="font-extrabold text-red-900 text-base mb-2">${slide.bad.title}</h5>
+              <div class="text-slate-800 text-sm sm:text-base whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
+            </div>
+            <div class="bg-green-50/70 border border-green-200 rounded-xl p-5">
+              <h5 class="font-extrabold text-green-900 text-base mb-2">${slide.good.title}</h5>
+              <div class="text-slate-800 text-sm sm:text-base whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
             </div>
           </div>
         `;
       } else if (slide.type === 'cards') {
-        const gridCols = slide.cards.length === 2 ? 'md:grid-cols-2' : (slide.cards.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-4');
         return `
           <div class="space-y-4">
-            <div class="grid grid-cols-1 ${gridCols} gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               ${slide.cards.map(c => `
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 hover:border-blue-400 transition">
-                  <h5 class="text-lg font-bold text-blue-950 mb-2">${c.title}</h5>
-                  <div class="text-base text-slate-700 whitespace-pre-line leading-relaxed">${c.desc}</div>
+                  <h5 class="font-bold text-blue-900 text-base mb-2">${c.title}</h5>
+                  <div class="text-slate-700 text-sm sm:text-base whitespace-pre-line leading-relaxed">${c.desc}</div>
                 </div>
               `).join('')}
             </div>
@@ -1188,15 +1212,15 @@
       } else if (slide.type === 'table') {
         const highlightIndices = slide.table.highlightRows || [];
         return `
-          <div class="space-y-3">
+          <div class="space-y-4">
             ${slide.table.highlightLabel ? `
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-900 rounded-lg text-xs md:text-sm font-bold shadow-sm">
-                <i class="fa-solid fa-bullseye text-amber-600"></i>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/15 border border-amber-500/40 text-amber-950 rounded-lg text-xs font-bold">
+                <i class="fa-solid fa-star text-amber-600"></i>
                 <span>${slide.table.highlightLabel}</span>
               </div>
             ` : ''}
-            <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm">
-              <table class="w-full text-left text-sm md:text-base border-collapse">
+            <div class="overflow-x-auto rounded-xl border border-slate-300">
+              <table class="w-full text-left text-xs sm:text-sm">
                 <thead class="bg-blue-900 text-white">
                   <tr>
                     ${slide.table.headers.map(h => `<th class="p-3.5 font-bold">${h}</th>`).join('')}
@@ -1231,7 +1255,7 @@
             <div class="bg-slate-900 rounded-xl p-5 border border-amber-500/40 relative">
               <div class="flex items-center justify-between text-xs text-amber-400 font-bold mb-2">
                 <span><i class="fa-solid fa-terminal mr-1"></i> 복사용 프롬프트</span>
-                <button onclick="copyToClipboard(\`${slide.promptText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded text-xs font-bold transition flex items-center gap-1">
+                <button onclick="copyToClipboard(\`${slide.promptText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded text-xs font-bold transition flex items-center gap-1 shadow">
                   <i class="fa-regular fa-copy"></i> 복사하기
                 </button>
               </div>
@@ -1247,6 +1271,7 @@
           <div class="bg-gradient-to-r from-blue-900 via-blue-950 to-slate-900 text-amber-300 rounded-2xl p-8 text-center shadow-lg border border-blue-700">
             <div class="text-2xl md:text-3xl font-extrabold whitespace-pre-line leading-relaxed mb-4">"${slide.slogan}"</div>
             <p class="text-base md:text-lg text-blue-100 font-medium">${slide.sub}</p>
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="mt-6 rounded-xl shadow-xl max-h-72 mx-auto object-cover border border-amber-500/30">` : ''}
           </div>
         `;
       }
@@ -1263,28 +1288,28 @@
 
       if (slide.type === 'cover') {
         contentHtml = `
-          <div class="bg-slate-900 text-white rounded-xl p-8 md:p-12 flex-1 flex flex-col justify-between relative overflow-hidden border border-slate-800">
-            <div class="relative z-10 space-y-3">
-              <span class="inline-block px-4 py-1.5 bg-blue-900 text-blue-200 rounded-lg text-sm font-bold border border-blue-600">${slide.part}</span>
-              <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight whitespace-pre-line">${slide.title}</h2>
-              <p class="text-lg sm:text-2xl text-blue-300 font-medium">${slide.subtitle}</p>
+          <div class="bg-slate-950 text-white rounded-2xl p-8 md:p-12 flex-1 flex flex-col justify-between relative overflow-hidden border border-slate-800 shadow-2xl">
+            <div class="relative z-10 space-y-4">
+              <span class="scale-badge inline-block px-4 py-1.5 bg-blue-900 text-blue-200 rounded-lg font-black border border-blue-600 tracking-wider">${slide.part}</span>
+              <h2 class="scale-title font-black text-white leading-tight whitespace-pre-line">${slide.title}</h2>
+              <p class="scale-subtitle text-blue-200 font-medium">${slide.subtitle}</p>
             </div>
-            <div class="relative z-10 bg-slate-950/80 border border-amber-500/40 rounded-xl p-6 text-xl sm:text-2xl font-bold text-amber-300 whitespace-pre-line leading-relaxed">
+            <div class="relative z-10 bg-slate-900/90 border-2 border-amber-500/50 rounded-2xl p-6 md:p-8 scale-card-title font-bold text-amber-300 whitespace-pre-line leading-relaxed shadow-xl backdrop-blur-md">
               ${slide.badge || ''}
             </div>
-            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="absolute right-0 bottom-0 top-0 w-1/3 object-cover opacity-25 pointer-events-none">` : ''}
+            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="absolute right-0 bottom-0 top-0 w-5/12 object-cover opacity-20 pointer-events-none">` : ''}
           </div>
         `;
       } else {
         contentHtml = `
           <div class="flex-1 flex flex-col justify-between">
             <div class="mb-4">
-              <div class="inline-block px-3 py-1 bg-blue-50 text-blue-900 border border-blue-200 rounded-md text-xs font-extrabold mb-1">${slide.part}</div>
-              <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight whitespace-pre-line">${slide.title}</h2>
-              <p class="text-sm sm:text-lg text-slate-600 font-medium mt-1">${slide.subtitle}</p>
+              <div class="scale-badge inline-block px-3 py-1 bg-blue-100 text-blue-950 border border-blue-300 rounded-md font-black mb-1.5">${slide.part}</div>
+              <h2 class="scale-title font-black text-slate-950 leading-tight whitespace-pre-line">${slide.title}</h2>
+              <p class="scale-subtitle text-slate-600 font-semibold mt-1">${slide.subtitle}</p>
             </div>
 
-            <div class="flex-1 flex flex-col justify-center">
+            <div class="flex-1 flex flex-col justify-center my-2">
               ${renderSlideBody(slide)}
             </div>
           </div>
@@ -1299,30 +1324,39 @@
       if (slide.type === 'split_image') {
         return `
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            <div class="bg-slate-50 border border-slate-300 rounded-2xl p-6">
-              <h4 class="text-2xl font-extrabold text-blue-950 mb-3">${slide.contentTitle}</h4>
-              <div class="text-lg sm:text-xl text-slate-800 whitespace-pre-line leading-relaxed">${slide.content}</div>
+            <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-sm">
+              <h4 class="scale-card-title font-black text-blue-950 mb-3">${slide.contentTitle}</h4>
+              <div class="scale-body text-slate-800 whitespace-pre-line leading-relaxed font-normal">${slide.content}</div>
               ${slide.title.includes('라온동행교회') ? `
-                <div class="mt-4 pt-3 border-t border-slate-200">
-                  <a href="https://raondonghaeng.org" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition shadow">
+                <div class="mt-5 pt-4 border-t border-slate-200">
+                  <a href="https://raondonghaeng.org" target="_blank" class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-black text-base rounded-xl transition shadow-md">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> raondonghaeng.org 바로가기 ↗
                   </a>
                 </div>
               ` : ''}
             </div>
-            ${slide.imageUrl ? `<img src="${slide.imageUrl}" class="w-full h-72 object-cover rounded-2xl shadow-md border border-slate-200">` : ''}
+            ${slide.imageUrl ? `
+              <div class="flex flex-col items-center">
+                <img src="${slide.imageUrl}" class="w-full h-80 object-cover rounded-2xl shadow-xl border-2 border-slate-200">
+                <p class="text-xs text-slate-500 mt-2 font-bold">라온동행교회 및 한국 목회 사역 실전 현장</p>
+              </div>
+            ` : ''}
           </div>
         `;
       } else if (slide.type === 'compare') {
         return `
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-red-50/90 border-2 border-red-200 rounded-2xl p-6">
-              <h4 class="text-xl sm:text-2xl font-extrabold text-red-900 mb-3">${slide.bad.title}</h4>
-              <div class="text-lg sm:text-xl text-slate-800 whitespace-pre-line leading-relaxed">${slide.bad.desc}</div>
+            <div class="bg-red-50/95 border-2 border-red-300 rounded-2xl p-6 shadow-sm">
+              <h4 class="scale-card-title font-black text-red-950 mb-3 flex items-center gap-2">
+                <span>${slide.bad.title}</span>
+              </h4>
+              <div class="scale-body text-slate-900 whitespace-pre-line leading-relaxed font-medium">${slide.bad.desc}</div>
             </div>
-            <div class="bg-green-50/90 border-2 border-green-200 rounded-2xl p-6">
-              <h4 class="text-xl sm:text-2xl font-extrabold text-green-900 mb-3">${slide.good.title}</h4>
-              <div class="text-lg sm:text-xl text-slate-800 whitespace-pre-line leading-relaxed">${slide.good.desc}</div>
+            <div class="bg-green-50/95 border-2 border-green-300 rounded-2xl p-6 shadow-sm">
+              <h4 class="scale-card-title font-black text-green-950 mb-3 flex items-center gap-2">
+                <span>${slide.good.title}</span>
+              </h4>
+              <div class="scale-body text-slate-900 whitespace-pre-line leading-relaxed font-medium">${slide.good.desc}</div>
             </div>
           </div>
         `;
@@ -1332,15 +1366,15 @@
           <div class="space-y-4">
             <div class="grid grid-cols-1 ${gridCols} gap-4">
               ${slide.cards.map(c => `
-                <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 hover:border-blue-500 transition">
-                  <h4 class="text-xl sm:text-2xl font-extrabold text-blue-950 mb-3">${c.title}</h4>
-                  <div class="text-base sm:text-lg text-slate-800 whitespace-pre-line leading-relaxed">${c.desc}</div>
+                <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-5 hover:border-blue-500 transition shadow-sm">
+                  <h4 class="scale-card-title font-black text-blue-950 mb-2.5">${c.title}</h4>
+                  <div class="scale-body text-slate-800 whitespace-pre-line leading-relaxed">${c.desc}</div>
                 </div>
               `).join('')}
             </div>
             ${slide.footerNote ? `
-              <div class="p-4 bg-blue-50/90 rounded-2xl border-2 border-blue-200 text-sm sm:text-base text-blue-950 flex items-start gap-3 font-semibold">
-                <i class="fa-solid fa-circle-info text-blue-600 text-lg mt-0.5"></i>
+              <div class="p-4 bg-blue-50/95 rounded-2xl border-2 border-blue-200 scale-body text-blue-950 flex items-start gap-3 font-semibold">
+                <i class="fa-solid fa-circle-info text-blue-600 text-xl mt-0.5"></i>
                 <div class="leading-relaxed">${slide.footerNote}</div>
               </div>
             ` : ''}
@@ -1351,27 +1385,27 @@
         return `
           <div class="space-y-4">
             ${slide.table.highlightLabel ? `
-              <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/15 border-2 border-amber-500/40 text-amber-950 rounded-xl text-sm sm:text-base font-extrabold shadow-sm">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/20 border-2 border-amber-500/50 text-amber-950 rounded-xl scale-badge font-black shadow-sm">
                 <i class="fa-solid fa-bullseye text-amber-600"></i>
                 <span>${slide.table.highlightLabel}</span>
               </div>
             ` : ''}
             <div class="overflow-x-auto rounded-2xl border-2 border-slate-300 shadow-md">
-              <table class="w-full text-left text-base sm:text-lg border-collapse">
-                <thead class="bg-blue-900 text-white">
+              <table class="w-full text-left border-collapse">
+                <thead class="bg-blue-950 text-white">
                   <tr>
-                    ${slide.table.headers.map(h => `<th class="p-4 font-bold">${h}</th>`).join('')}
+                    ${slide.table.headers.map(h => `<th class="p-4 scale-table-header font-black">${h}</th>`).join('')}
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200">
                   ${slide.table.rows.map((row, idx) => {
                     const isHighlighted = highlightIndices.includes(idx);
                     const rowClass = isHighlighted 
-                      ? 'bg-amber-50/95 font-bold border-y-2 border-l-4 border-r-4 border-amber-500 text-slate-900 shadow-inner' 
+                      ? 'bg-amber-50 font-bold border-y-2 border-l-4 border-r-4 border-amber-500 text-slate-950 shadow-inner' 
                       : (idx % 2 === 0 ? 'bg-white' : 'bg-slate-50');
                     return `
                       <tr class="${rowClass} transition">
-                        ${row.map(cell => `<td class="p-4 ${isHighlighted ? 'text-blue-950 font-bold' : 'text-slate-800 font-medium'}">${cell}</td>`).join('')}
+                        ${row.map(cell => `<td class="p-4 scale-table-body ${isHighlighted ? 'text-blue-950 font-black' : 'text-slate-800 font-medium'}">${cell}</td>`).join('')}
                       </tr>
                     `;
                   }).join('')}
@@ -1379,8 +1413,8 @@
               </table>
             </div>
             ${slide.footerNote ? `
-              <div class="p-4 bg-blue-50/90 rounded-2xl border-2 border-blue-200 text-sm sm:text-base text-blue-950 flex items-start gap-3 font-semibold">
-                <i class="fa-solid fa-circle-info text-blue-600 text-lg mt-0.5"></i>
+              <div class="p-4 bg-blue-50/95 rounded-2xl border-2 border-blue-200 scale-body text-blue-950 flex items-start gap-3 font-semibold">
+                <i class="fa-solid fa-circle-info text-blue-600 text-xl mt-0.5"></i>
                 <div class="leading-relaxed">${slide.footerNote}</div>
               </div>
             ` : ''}
@@ -1389,25 +1423,30 @@
       } else if (slide.type === 'prompt') {
         return `
           <div class="space-y-4">
-            <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 relative">
-              <div class="flex items-center justify-between text-sm text-amber-400 font-bold mb-2">
-                <span><i class="fa-solid fa-terminal mr-2"></i> 프롬프트 입력문</span>
-                <button onclick="copyToClipboard(\`${slide.promptText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
-                  <i class="fa-regular fa-copy"></i> 복사
+            <div class="bg-slate-950 border-2 border-amber-500 rounded-2xl p-6 relative shadow-xl">
+              <div class="flex items-center justify-between text-sm text-amber-400 font-black mb-3">
+                <span class="scale-badge"><i class="fa-solid fa-terminal mr-2"></i> 복사용 실전 프롬프트</span>
+                <button onclick="copyToClipboard(\`${slide.promptText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-sm font-black transition flex items-center gap-1.5 shadow-lg">
+                  <i class="fa-regular fa-copy"></i> 복사하기
                 </button>
               </div>
-              <div class="text-lg sm:text-xl text-white font-mono whitespace-pre-line leading-relaxed">${slide.promptText}</div>
+              <div class="scale-body text-white font-mono whitespace-pre-line leading-relaxed select-all">${slide.promptText}</div>
             </div>
-            <div class="bg-blue-50 border border-blue-300 text-blue-950 rounded-xl p-4 text-base font-bold">
+            <div class="bg-blue-50 border-2 border-blue-300 text-blue-950 rounded-xl p-4 scale-body font-bold">
               ${slide.tip}
             </div>
           </div>
         `;
       } else if (slide.type === 'slogan') {
         return `
-          <div class="bg-blue-900 text-amber-300 rounded-2xl p-8 sm:p-12 text-center shadow-xl border-2 border-blue-600">
-            <div class="text-2xl sm:text-4xl font-extrabold whitespace-pre-line leading-relaxed mb-6">"${slide.slogan}"</div>
-            <p class="text-lg sm:text-2xl text-blue-100 font-medium">${slide.sub}</p>
+          <div class="bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900 text-amber-300 rounded-3xl p-8 sm:p-12 text-center shadow-2xl border-2 border-amber-500/40 relative overflow-hidden">
+            <div class="scale-slogan font-black whitespace-pre-line leading-relaxed mb-6">"${slide.slogan}"</div>
+            <p class="scale-subtitle text-blue-100 font-semibold max-w-3xl mx-auto">${slide.sub}</p>
+            ${slide.imageUrl ? `
+              <div class="mt-6">
+                <img src="${slide.imageUrl}" class="w-full max-h-72 object-cover rounded-2xl shadow-2xl border-2 border-amber-500/30 mx-auto">
+              </div>
+            ` : ''}
           </div>
         `;
       }
@@ -1464,6 +1503,7 @@
       const stage = document.getElementById('slideStage');
       if (stage) {
         stage.classList.add('is-fullscreen');
+        stage.style.setProperty('--font-scale', Math.max(currentFontScale, 1.4));
         document.body.classList.add('overflow-hidden');
         updateFullscreenUI(true);
       }
@@ -1580,7 +1620,7 @@
       }
     });
 
-    // Touch gesture swipe support for tablets and smartphones
+    // 터치 스와이프 제스처
     let touchStartX = 0;
     let touchStartY = 0;
     let touchEndX = 0;
