@@ -61,6 +61,39 @@ export default function HomePage() {
     const [sortBy, setSortBy] = useState<SortOption>('latest');
     const [queryInitialized, setQueryInitialized] = useState<boolean>(false);
 
+    // Phase 5: 강의 문의 양식 상태
+    const [inquiryName, setInquiryName] = useState('');
+    const [inquiryContact, setInquiryContact] = useState('');
+    const [inquiryTopic, setInquiryTopic] = useState('목회자·사역자 AI 세미나');
+    const [inquiryMessage, setInquiryMessage] = useState('');
+    const [inquiryConsent, setInquiryConsent] = useState(false);
+    const [inquirySummary, setInquirySummary] = useState<string | null>(null);
+    const [copiedInquiry, setCopiedInquiry] = useState(false);
+
+    const handleInquirySubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!inquiryName.trim() || !inquiryContact.trim() || !inquiryConsent) return;
+        const summary = [
+            `[한국AI연구소 강의/컨설팅 문의]`,
+            `- 성함/기관: ${inquiryName.trim()}`,
+            `- 연락처: ${inquiryContact.trim()}`,
+            `- 희망 주제: ${inquiryTopic}`,
+            `- 문의 내용: ${inquiryMessage.trim() || '(별도 내용 없음)'}`,
+        ].join('\n');
+        setInquirySummary(summary);
+        setCopiedInquiry(false);
+    };
+
+    const handleCopyInquiry = async () => {
+        if (!inquirySummary) return;
+        try {
+            await navigator.clipboard.writeText(inquirySummary);
+            setCopiedInquiry(true);
+        } catch {
+            setCopiedInquiry(false);
+        }
+    };
+
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const q = params.get('q') || '';
@@ -816,7 +849,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* ================= 6. 연구소 소개 ================= */}
+            {/* ================= 6. 연구소 소개 & 공동대표 ================= */}
             <section className="section about-section" id="about">
                 <div className="container fade-up">
                     <h2 className="section-title">연구소 소개</h2>
@@ -831,79 +864,255 @@ export default function HomePage() {
                     <div className="quote-highlight">
                         "AI는 기술을 넘어, 사람과 세상을 더 이롭게 연결하는 다리입니다."
                     </div>
+
+                    <div className="founders-grid">
+                        {/* 김태주 공동대표 */}
+                        <div className="founder-card">
+                            <div className="founder-card-header">
+                                {/* TODO: 실제 정보 입력 - 김태주 공동대표 프로필 사진 */}
+                                <div className="founder-photo-placeholder" aria-label="프로필 사진 등록 예정">
+                                    TODO<br />대표 사진
+                                </div>
+                                <div>
+                                    <span className="founder-title">Co-Representative</span>
+                                    <h3 className="founder-name">김태주 공동대표</h3>
+                                </div>
+                            </div>
+                            <div className="founder-bio">
+                                <p>
+                                    "혁신적인 디지털 기술이 시대를 이끌어가는 가운데, 누구도 소외받지 않고 새로운 미래를 준비할 수 있도록 따뜻한 기술과 통찰력을 제공하는 한국AI연구소가 되겠습니다."
+                                </p>
+                            </div>
+                            <div className="founder-history">
+                                <h4>주요 학력 및 경력</h4>
+                                <ul>
+                                    <li>성결대학교 신학과</li>
+                                    <li>서울신학대학교 대학원</li>
+                                    <li>현) 한국AI연구소 공동대표</li>
+                                    <li>현) 온교회 담임목사</li>
+                                    <li>다수의 IT 솔루션 기획 및 AI 비즈니스 컨설팅 수행</li>
+                                    <li>세컨드 브레인을 위한 옵시디언 강의 전문</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* 이광복 공동대표 */}
+                        <div className="founder-card">
+                            <div className="founder-card-header">
+                                {/* TODO: 실제 정보 입력 - 이광복 공동대표 프로필 사진 */}
+                                <div className="founder-photo-placeholder" aria-label="프로필 사진 등록 예정">
+                                    TODO<br />대표 사진
+                                </div>
+                                <div>
+                                    <span className="founder-title">Co-Representative</span>
+                                    <h3 className="founder-name">이광복 공동대표</h3>
+                                </div>
+                            </div>
+                            <div className="founder-bio">
+                                <p>
+                                    "기술은 결국 사람을 향해야 하며, 그 변화의 시작은 끊임없는 배움과 열정에서 시작된다고 믿습니다. 지속 가능한 성장을 꿈꾸는 모든 파트너와 함께 가치를 실현하겠습니다."
+                                </p>
+                            </div>
+                            <div className="founder-history">
+                                <h4>주요 학력 및 경력</h4>
+                                <ul>
+                                    <li>서울신학대학교 신학과</li>
+                                    <li>서울신학대학교 신학대학원</li>
+                                    <li>현) 한국AI연구소 공동대표</li>
+                                    <li>현) 로스터리 카페 라온트리 대표</li>
+                                    <li>현) 라온동행교회 담임목사</li>
+                                    <li>직업별 AI 맞춤 컨설팅 및 강의 전문</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* ================= Founders ================= */}
-            <section className="section founder-section">
+            {/* ================= 교육 성과 & 신뢰 지표 ================= */}
+            <section className="trust-section" aria-label="교육 성과 및 신뢰 지표">
                 <div className="container fade-up">
-                    <span className="founder-title">Co-Representative</span>
-                    <h2 className="founder-name">김태주 공동대표</h2>
-                    <div className="founder-bio">
-                        <p>
-                            "혁신적인 디지털 기술이 시대를 이끌어가는 가운데, 누구도 소외받지 않고 새로운 미래를 준비할 수 있도록<br />
-                            따뜻한 기술과 통찰력을 제공하는 한국AI연구소가 되겠습니다."
+                    <div className="section-header-compact" style={{ textAlign: 'center', marginBottom: '12px' }}>
+                        <span className="start-eyebrow">VERIFIED FEEDBACK</span>
+                        <h2 className="section-title">현장에서 검증된 교육 성과</h2>
+                        <p className="start-subtitle">
+                            라오스 선교사 AI 집중 교육 참가자 11인 설문 분석 보고서 실측 결과입니다.{' '}
+                            <a href="/data/laos_feedback.html" target="_blank" style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'underline' }}>
+                                결과 보고서 원문 보기 ↗
+                            </a>
                         </p>
                     </div>
-                    <div className="founder-history">
-                        <h4>주요 학력 및 경력</h4>
-                        <ul>
-                            <li>성결대학교 신학과</li>
-                            <li>서울신학대학교 대학원</li>
-                            <li>현) 한국AI연구소 공동대표</li>
-                            <li>현) 온교회 담임목사</li>
-                            <li>다수의 IT 솔루션 기획 및 AI 비즈니스 컨설팅 수행</li>
-                            <li>세컨드 브레인을 위한 옵시디언 강의 전문</li>
-                        </ul>
+
+                    <div className="trust-grid">
+                        <div className="trust-card">
+                            <div className="trust-metric">4.4 / 5.0</div>
+                            <div className="trust-label">교육 전반적 만족도</div>
+                            <div className="trust-sub">라오스 선교사 3일 집중 과정 설문 평균</div>
+                        </div>
+                        <div className="trust-card">
+                            <div className="trust-metric">4.4 / 5.0</div>
+                            <div className="trust-label">AI 활용 자신감 향상</div>
+                            <div className="trust-sub">막연한 두려움에서 실전 활용 가능으로 전환</div>
+                        </div>
+                        <div className="trust-card">
+                            <div className="trust-metric">4.5 / 5.0</div>
+                            <div className="trust-label">사역·업무 활용 가능성</div>
+                            <div className="trust-sub">교육 이후 지속 활용 의향 100% 응답</div>
+                        </div>
+                        {/* TODO: 실제 정보 입력 - 누적 교육 횟수 / 전체 수강생 수 */}
+                        <div className="trust-card trust-card-todo">
+                            <div className="trust-metric" style={{ color: '#92400e', fontSize: '1.2rem' }}>[TODO: 실제 수치 입력]</div>
+                            <div className="trust-label">누적 출강 · 수강생 수</div>
+                            <div className="trust-sub">확인된 누적 교육 횟수 및 수강 인원을 입력해 주세요.</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="section founder-section">
-                <div className="container fade-up">
-                    <span className="founder-title">Co-Representative</span>
-                    <h2 className="founder-name">이광복 공동대표</h2>
-                    <div className="founder-bio">
-                        <p>
-                            "기술은 결국 사람을 향해야 하며, 그 변화의 시작은 끊임없는 배움과 열정에서 시작된다고 믿습니다.<br />
-                            한국AI연구소는 여러분의 잠재력이 기술이라는 날개를 달아 높이 비상할 수 있도록 가장 가까운 곳에서 조력하겠습니다.<br />
-                            지속 가능한 성장을 꿈꾸는 모든 파트너와 함께, 혁신 그 이상의 가치를 실현하는 길을 걷겠습니다."
-                        </p>
-                    </div>
-                    <div className="founder-history">
-                        <h4>주요 학력 및 경력</h4>
-                        <ul>
-                            <li>서울신학대학교 신학과</li>
-                            <li>서울신학대학교 신학대학원</li>
-                            <li>현) 한국AI연구소 공동대표</li>
-                            <li>현) 로스터리 카페 라온트리 대표</li>
-                            <li>현) 라온동행교회 담임목사</li>
-                            <li>직업별 AI 맞춤 컨설팅 및 강의 전문</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            {/* ================= Contact ================= */}
+            {/* ================= 7. 오시는 길 & 강의 문의 ================= */}
             <section className="section" id="contact">
                 <div className="container fade-up">
-                    <h2 className="section-title">오시는 길 & 연락처</h2>
-                    <div className="contact-content">
-                        <div className="contact-info">
-                            <div className="info-item">
-                                <span className="label">주소</span>
-                                <span className="value">경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 3층</span>
+                    <h2 className="section-title">오시는 길 &amp; 강의 문의</h2>
+                    <p className="section-intro">
+                        교회·선교단체·사회복지기관 맞춤형 AI 특강 및 실무 워크숍을 진행합니다.
+                    </p>
+
+                    <div className="contact-layout">
+                        <div className="contact-panel">
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '18px', color: 'var(--black)' }}>
+                                연구소 안내 &amp; 연락처
+                            </h3>
+                            <div className="contact-info" style={{ gap: '16px' }}>
+                                <div className="info-item">
+                                    <span className="label">주소</span>
+                                    <span className="value">경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 3층</span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">전화</span>
+                                    <span className="value">
+                                        <a href="tel:010-5606-0845" style={{ color: 'var(--primary)', fontWeight: 800, textDecoration: 'none' }}>
+                                            010-5606-0845
+                                        </a>
+                                    </span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">이메일</span>
+                                    {/* TODO: 실제 정보 입력 - 공식 이메일 주소 */}
+                                    <span className="value">
+                                        <span className="todo-placeholder">[TODO: 공식 이메일 입력 예정]</span>
+                                    </span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">SNS / 채널</span>
+                                    {/* TODO: 실제 정보 입력 - 유튜브 / 카카오톡 채널 등 */}
+                                    <span className="value">
+                                        <span className="todo-placeholder">[TODO: 공식 SNS · 오픈채팅 링크 입력]</span>
+                                    </span>
+                                </div>
+                                <div className="map-btns" style={{ marginTop: '8px' }}>
+                                    <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
+                                        target="_blank" className="btn" style={{ backgroundColor: '#03C75A', color: '#fff', border: 'none', padding: '10px 18px' }}>네이버 지도</a>
+                                    <a href="https://map.kakao.com/link/search/경기부천시소사구소사본동소삼로36번길6"
+                                        target="_blank" className="btn" style={{ backgroundColor: '#FEE500', color: '#000', border: 'none', padding: '10px 18px' }}>카카오 맵</a>
+                                </div>
                             </div>
-                            <div className="info-item">
-                                <span className="label">전화</span>
-                                <span className="value">010-5606-0845</span>
-                            </div>
-                            <div className="map-btns">
-                                <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
-                                    target="_blank" className="btn" style={{ backgroundColor: '#03C75A', color: '#fff', border: 'none' }}>네이버 지도</a>
-                                <a href="https://map.kakao.com/link/search/경기부천시소사구소사본동소삼로36번길6"
-                                    target="_blank" className="btn" style={{ backgroundColor: '#FEE500', color: '#000', border: 'none' }}>카카오 맵</a>
-                            </div>
+                        </div>
+
+                        <div className="contact-panel">
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '6px', color: 'var(--black)' }}>
+                                강의·컨설팅 문의 양식
+                            </h3>
+                            <p style={{ fontSize: '0.88rem', color: 'var(--gray-700)', marginBottom: '16px' }}>
+                                아래 항목을 작성하시면 문자·전화로 바로 전달할 수 있는 문의 요약문이 생성됩니다.
+                                {/* TODO: 실제 정보 입력 - 이메일 또는 백엔드 문의 수신 API 연동 */}
+                            </p>
+
+                            <form className="inquiry-form" onSubmit={handleInquirySubmit}>
+                                <div className="inquiry-field">
+                                    <label htmlFor="inq-name">성함 / 교회·기관명 *</label>
+                                    <input
+                                        id="inq-name"
+                                        type="text"
+                                        required
+                                        value={inquiryName}
+                                        onChange={(e) => setInquiryName(e.target.value)}
+                                        placeholder="예: 홍길동 / OO교회"
+                                    />
+                                </div>
+                                <div className="inquiry-field">
+                                    <label htmlFor="inq-contact">연락처 (전화번호 또는 이메일) *</label>
+                                    <input
+                                        id="inq-contact"
+                                        type="text"
+                                        required
+                                        value={inquiryContact}
+                                        onChange={(e) => setInquiryContact(e.target.value)}
+                                        placeholder="예: 010-1234-5678"
+                                    />
+                                </div>
+                                <div className="inquiry-field">
+                                    <label htmlFor="inq-topic">희망 교육 주제</label>
+                                    <select
+                                        id="inq-topic"
+                                        value={inquiryTopic}
+                                        onChange={(e) => setInquiryTopic(e.target.value)}
+                                    >
+                                        <option value="목회자·사역자 AI 세미나">목회자·사역자 AI 세미나</option>
+                                        <option value="3일 집중 AI 실전 마스터 과정">3일 집중 AI 실전 마스터 과정</option>
+                                        <option value="바이브코딩 & 웹앱·홈페이지 제작 워크숍">바이브코딩 &amp; 웹앱·홈페이지 제작 워크숍</option>
+                                        <option value="사회복지사 AI 실무 활용 교육">사회복지사 AI 실무 활용 교육</option>
+                                        <option value="옵시디언 세컨드 브레인 · 목회 위키">옵시디언 세컨드 브레인 · 목회 위키</option>
+                                        <option value="기타 맞춤 컨설팅">기타 맞춤 컨설팅</option>
+                                    </select>
+                                </div>
+                                <div className="inquiry-field">
+                                    <label htmlFor="inq-msg">문의 내용 (희망 일정, 예상 인원 등)</label>
+                                    <textarea
+                                        id="inq-msg"
+                                        rows={3}
+                                        value={inquiryMessage}
+                                        onChange={(e) => setInquiryMessage(e.target.value)}
+                                        placeholder="예상 인원, 희망 날짜 및 장소, 궁금한 점을 적어주세요."
+                                    />
+                                </div>
+                                <label className="inquiry-consent">
+                                    <input
+                                        type="checkbox"
+                                        required
+                                        checked={inquiryConsent}
+                                        onChange={(e) => setInquiryConsent(e.target.checked)}
+                                    />
+                                    <span>
+                                        강의 상담 회신을 위한 개인정보 수집·이용에 동의합니다. (
+                                        <a href="/privacy" style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'underline' }}>
+                                            개인정보 처리방침 보기
+                                        </a>
+                                        )
+                                    </span>
+                                </label>
+                                <button type="submit" className="inquiry-submit-btn">
+                                    문의 요약 생성 및 접수 안내 보기
+                                </button>
+                            </form>
+
+                            {inquirySummary && (
+                                <div className="inquiry-success-box" role="status">
+                                    <strong>문의 내용이 정리되었습니다.</strong> 아래 내용을 복사해{' '}
+                                    <a href="tel:010-5606-0845" style={{ fontWeight: 800, color: '#065f46', textDecoration: 'underline' }}>
+                                        010-5606-0845
+                                    </a>
+                                    로 문자/전화 문의해 주세요.
+                                    <pre className="inquiry-summary-pre">{inquirySummary}</pre>
+                                    <button
+                                        type="button"
+                                        onClick={handleCopyInquiry}
+                                        className="filter-reset-btn"
+                                        style={{ marginTop: '10px' }}
+                                    >
+                                        {copiedInquiry ? '✓ 복사 완료!' : '문의 내용 복사하기'}
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

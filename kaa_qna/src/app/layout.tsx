@@ -70,6 +70,14 @@ export default function RootLayout({
               한국AI연구소<br />
               미래를 향한 실용적 통찰을 나눕니다.
             </p>
+            <div className="footer-links-row">
+              <a href="/#programs">자료실</a>
+              <a href="/#roadmap">학습 로드맵</a>
+              <a href="/#contact">강의 문의</a>
+              <a href="/privacy">개인정보 처리방침</a>
+              {/* TODO: 실제 정보 입력 - 공식 SNS 링크 (유튜브/카카오톡 등) */}
+              <span className="footer-todo">[TODO: 공식 SNS 링크]</span>
+            </div>
             <VisitorCounter />
             <p className="footer-copy">© 2026 Korea AI Research Institute. All rights reserved.</p>
           </div>
