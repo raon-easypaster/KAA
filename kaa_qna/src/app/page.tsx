@@ -283,22 +283,44 @@ export default function HomePage() {
     const [visits, setVisits] = useState<{ total: number; today: number }>({ total: 1380, today: 24 });
 
     useEffect(() => {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
         const fadeElements = document.querySelectorAll('.fade-up');
-        fadeElements.forEach(el => observer.observe(el));
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let observer: IntersectionObserver | null = null;
+        let revealVisibleElements: (() => void) | null = null;
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            fadeElements.forEach(el => el.classList.add('visible'));
+        } else {
+            revealVisibleElements = () => {
+                const triggerBottom = window.innerHeight + 250;
+                fadeElements.forEach(el => {
+                    if (!el.classList.contains('visible')) {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top <= triggerBottom) {
+                            el.classList.add('visible');
+                        }
+                    }
+                });
+            };
+
+            const observerOptions = {
+                threshold: 0,
+                rootMargin: "300px 0px 300px 0px"
+            };
+
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer?.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => observer?.observe(el));
+            revealVisibleElements();
+            window.addEventListener('scroll', revealVisibleElements, { passive: true });
+        }
 
         // Visitor counter fetch & recording
         try {
@@ -319,7 +341,12 @@ export default function HomePage() {
             console.warn(e);
         }
 
-        return () => observer.disconnect();
+        return () => {
+            observer?.disconnect();
+            if (revealVisibleElements) {
+                window.removeEventListener('scroll', revealVisibleElements);
+            }
+        };
     }, []);
 
     const filteredItems = audienceFilter === 'all'
@@ -331,7 +358,7 @@ export default function HomePage() {
             {/* ================= Hero ================= */}
             <section className="hero hero-main">
                 <div className="container">
-                    <div className="hero-content fade-up">
+                    <div className="hero-content">
                         <span className="hero-eyebrow">Korea AI Research Institute Archive</span>
                         <h1 className="hero-title">
                             미래를 여는 기술,<br />
