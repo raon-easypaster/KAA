@@ -1,282 +1,21 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import {
+    FEATURED_HIGHLIGHT_REFS,
+    formatUpdatedBadge,
+    getMaterialLink,
+    MATERIALS,
+    MATERIALS_BY_ID,
+    ROADMAP_STEPS,
+    START_GUIDE_REFS,
+} from '@/data/curations';
+import type { MaterialLevel } from '@/types/material';
 
-interface ArchiveItem {
-    id: string;
-    title: string;
-    description: string;
-    href: string;
-    target?: string;
-    category: string;
-    badgeClass: 'edu' | 'info' | 'web';
-    audience: 'pastor' | 'welfare' | 'general';
-    difficulty: '입문' | '중급' | '고급';
-    diffClass: 'easy' | 'medium' | 'hard';
-    time: string;
-    fileType: string;
-    actionText: string;
-    isImportant?: boolean;
+function getDiffClass(level: MaterialLevel): 'easy' | 'medium' | 'hard' {
+    if (level === '입문') return 'easy';
+    if (level === '중급') return 'medium';
+    return 'hard';
 }
-
-const ARCHIVE_ITEMS: ArchiveItem[] = [
-    {
-        id: 'pastor-ai-seminar',
-        title: 'AI는 부지런한 손, 목회자는 뜨거운 심장 (목회자 실전 AI 세미나)',
-        description: '설교 연구(미드라시·와키홀) & 2차 콘텐츠 & 라온동행교회(raondonghaeng.org) 실전 사례 25개 슬라이드',
-        href: '/data/pastor_ai_seminar.html?mode=slide',
-        target: '_blank',
-        category: '목회 AI 특강',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 20분',
-        fileType: '💻 반응형 슬라이드 & 문서',
-        actionText: '특강 슬라이드 보기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'ai-first-step',
-        title: 'AI, 두려움을 넘어 일상으로 (어서와 AI는 처음이지)',
-        description: '46개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)',
-        href: '/data/ai_first_step.html?mode=slide',
-        target: '_blank',
-        category: 'AI 첫걸음',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 15분',
-        fileType: '💻 반응형 슬라이드 & 문서',
-        actionText: '슬라이드 보기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'ai-education-guide',
-        title: '목회자와 사역자를 위한 AI 교육 가이드',
-        description: 'AI를 대하는 마인드셋과 소통 기술, 실무 적용 핵심 포인트를 안내합니다.',
-        href: '/data/ai_education_guide.html',
-        target: '_blank',
-        category: '가이드',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 30분',
-        fileType: '📄 인포그래픽',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'kaa-ai-guide',
-        title: '한국인을 위한 3일 집중 AI 교육 사전 안내',
-        description: '이광복·김태주 공동대표의 3일 집중 실전 AI 마스터 과정 사전 안내 & 준비물 체크리스트',
-        href: '/data/kaa-ai-guide.html',
-        target: '_blank',
-        category: '집중 교육',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 15분',
-        fileType: '📋 사전 안내서',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'vibe-coding-workshop',
-        title: '목회자 바이브코딩 워크숍 (코드를 몰라도 도구를 만든다)',
-        description: '사역용 앱 3개와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.',
-        href: '/data/vibe_coding_workshop.html',
-        target: '_blank',
-        category: '워크숍 마스터',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '중급',
-        diffClass: 'medium',
-        time: '약 40분',
-        fileType: '🛠️ 마스터 강의안',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'gen-ai-basics',
-        title: '생성형 AI 기초 과정 (Generative AI Basics)',
-        description: 'ChatGPT 활용법 및 기초 프롬프트 엔지니어링 강의안입니다.',
-        href: '/data/gen_ai_basics.html',
-        target: '_blank',
-        category: '교육자료',
-        badgeClass: 'edu',
-        audience: 'general',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 20분',
-        fileType: '📄 실무 가이드',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'ai-workshop',
-        title: '2026 AI 실무 워크북 (AI Workshop)',
-        description: '업무 효율화의 완성을 위한 가이드북입니다.',
-        href: '/data/ai_workshop.html',
-        target: '_blank',
-        category: '워크숍',
-        badgeClass: 'edu',
-        audience: 'general',
-        difficulty: '중급',
-        diffClass: 'medium',
-        time: '약 35분',
-        fileType: '🔗 열람 가능',
-        actionText: '확인하기 ↗️',
-        isImportant: false,
-    },
-    {
-        id: 'landing-page-guide',
-        title: '랜딩페이지란 무엇인가? (Landing Page Guide)',
-        description: '목회자를 위한 랜딩페이지 제작 가이드 (읽기 15분 · 실습 90분 워크북)',
-        href: '/data/landing_page_guide.html',
-        target: '_blank',
-        category: '목회자용',
-        badgeClass: 'info',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '읽기 15분 · 실습 90분',
-        fileType: '🔗 열람 가능',
-        actionText: '확인하기 ↗️',
-        isImportant: false,
-    },
-    {
-        id: 'welfare-landing-guide',
-        title: '장애인 사회복지사를 위한 랜딩페이지 워크북',
-        description: '디지털 복지 소통을 위한 랜딩페이지 제작 워크북 (Canva · GitHub · Gemini)',
-        href: '/data/welfare_landing_guide.html',
-        target: '_blank',
-        category: '사회복지사용',
-        badgeClass: 'info',
-        audience: 'welfare',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '읽기 15분 · 실습 90분',
-        fileType: '📋 워크북',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'github-guide',
-        title: '안티그래비티 & 깃허브 웹 배포 가이드 (13단계)',
-        description: '안티그래비티 및 제미나이 생성 코드를 깃허브로 무료 배포하는 13단계 안내입니다.',
-        href: '/data/github.html',
-        target: '_blank',
-        category: '배포 실무',
-        badgeClass: 'info',
-        audience: 'general',
-        difficulty: '중급',
-        diffClass: 'medium',
-        time: '약 25분',
-        fileType: '📄 인포그래픽',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'rd-aistudio',
-        title: '라온동행교회 AI 활용법',
-        description: '라온동행교회 교인들을 위한 AI 사용 방법 안내입니다.',
-        href: '/data/rd_aistudio.html',
-        target: '_blank',
-        category: '교회 적용',
-        badgeClass: 'info',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 15분',
-        fileType: '🔗 열람 가능',
-        actionText: '확인하기 ↗️',
-        isImportant: false,
-    },
-    {
-        id: 'aistudio',
-        title: 'AI스튜디오 활용법 (AI Studio)',
-        description: 'Google AI Studio 사용 방법 안내입니다.',
-        href: '/data/aistudio.html',
-        target: '_blank',
-        category: '도구 활용',
-        badgeClass: 'info',
-        audience: 'general',
-        difficulty: '중급',
-        diffClass: 'medium',
-        time: '약 25분',
-        fileType: '🔗 열람 가능',
-        actionText: '확인하기 ↗️',
-        isImportant: false,
-    },
-    {
-        id: 'easypastor',
-        title: '미래 목회를 위한 AI 신학 비서 (Easy Pastor)',
-        description: 'NotebookLM 신학 비서 3단계 구축법 및 실전 프롬프트 레시피 4선 가이드입니다.',
-        href: '/data/easypastor.html',
-        target: '_blank',
-        category: '신학 비서',
-        badgeClass: 'info',
-        audience: 'pastor',
-        difficulty: '중급',
-        diffClass: 'medium',
-        time: '약 25분',
-        fileType: '🔗 열람 가능',
-        actionText: '확인하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'obsidian-second-brain',
-        title: '지식관리의 진화 & 세컨드 브레인 (Obsidian & LLM Wiki)',
-        description: '듀이십진분류부터 루만 제텔카스텐, PARA/CODE, 카르파티 LLM Wiki까지 150년 지식관리의 진화 (정리: 김태주)',
-        href: '/data/obsidian_second_brain.html',
-        target: '_blank',
-        category: '세컨드 브레인',
-        badgeClass: 'edu',
-        audience: 'general',
-        difficulty: '중급',
-        diffClass: 'medium',
-        time: '약 20분',
-        fileType: '📄 인터랙티브 타임라인',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'pastoral-wiki-lecture',
-        title: '손에 익히기: 목회 위키 구축 실전 (Obsidian & Claude Code)',
-        description: '노트 4개로 시작하는 나만의 목회 위키 구축과 백링크 연결 실전 강의 (강사: 김태주 공동대표)',
-        href: 'https://smdjoo-stack.github.io/pastoral-wiki-lecture/',
-        target: '_blank',
-        category: 'LLM Wiki',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '고급',
-        diffClass: 'hard',
-        time: '약 30분',
-        fileType: '💻 슬라이드 덱',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-    {
-        id: 'laos-feedback',
-        title: '라오스 선교사 AI 교육 피드백 결과 (설문 분석 보고서)',
-        description: '3일간의 선교사 AI 집중 교육 만족도(4.4/5), 자신감 향상(4.4/5) 및 참가자 11인의 생생한 원문 피드백 수록',
-        href: '/data/laos_feedback.html',
-        target: '_blank',
-        category: '교육 보고서',
-        badgeClass: 'edu',
-        audience: 'pastor',
-        difficulty: '입문',
-        diffClass: 'easy',
-        time: '약 10분',
-        fileType: '📊 설문 분석 보고서',
-        actionText: '열람하기 ↗️',
-        isImportant: true,
-    },
-];
 
 export default function HomePage() {
     const [audienceFilter, setAudienceFilter] = useState<'all' | 'pastor' | 'welfare' | 'general'>('all');
@@ -350,8 +89,8 @@ export default function HomePage() {
     }, []);
 
     const filteredItems = audienceFilter === 'all'
-        ? ARCHIVE_ITEMS
-        : ARCHIVE_ITEMS.filter(item => item.audience === audienceFilter);
+        ? MATERIALS
+        : MATERIALS.filter(item => item.audience === audienceFilter);
 
     return (
         <>
@@ -705,7 +444,8 @@ export default function HomePage() {
                                 </div>
                             </div>
                             <div className="featured-footer">
-                                <span className="file-type">🛠️ 마스터 강의안 (260826)</span>
+                                <span className="file-type">🛠️ 마스터 강의안</span>
+                                <span className="badge-updated">2026.08 업데이트</span>
                                 <a href="/data/vibe_coding_workshop.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem' }}>
                                     워크숍 보기 ↗️
                                 </a>
@@ -731,7 +471,8 @@ export default function HomePage() {
                                 </div>
                             </div>
                             <div className="featured-footer">
-                                <span className="file-type">📊 설문 분석 보고서 (260904)</span>
+                                <span className="file-type">📊 설문 분석 보고서</span>
+                                <span className="badge-updated">2026.09 업데이트</span>
                                 <a href="/data/laos_feedback.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem', background: '#2d7a52', borderColor: '#2d7a52' }}>
                                     보고서 열람하기 ↗️
                                 </a>
@@ -985,55 +726,59 @@ export default function HomePage() {
                             className={`filter-btn ${audienceFilter === 'all' ? 'active' : ''}`}
                             onClick={() => setAudienceFilter('all')}
                         >
-                            전체보기 ({ARCHIVE_ITEMS.length})
+                            전체보기 ({MATERIALS.length})
                         </button>
                         <button
                             type="button"
                             className={`filter-btn ${audienceFilter === 'pastor' ? 'active' : ''}`}
                             onClick={() => setAudienceFilter('pastor')}
                         >
-                            목회자용 ({ARCHIVE_ITEMS.filter(i => i.audience === 'pastor').length})
+                            목회자용 ({MATERIALS.filter(i => i.audience === 'pastor').length})
                         </button>
                         <button
                             type="button"
                             className={`filter-btn ${audienceFilter === 'welfare' ? 'active' : ''}`}
                             onClick={() => setAudienceFilter('welfare')}
                         >
-                            사회복지사용 ({ARCHIVE_ITEMS.filter(i => i.audience === 'welfare').length})
+                            사회복지사용 ({MATERIALS.filter(i => i.audience === 'welfare').length})
                         </button>
                         <button
                             type="button"
                             className={`filter-btn ${audienceFilter === 'general' ? 'active' : ''}`}
                             onClick={() => setAudienceFilter('general')}
                         >
-                            일반 ({ARCHIVE_ITEMS.filter(i => i.audience === 'general').length})
+                            일반 ({MATERIALS.filter(i => i.audience === 'general').length})
                         </button>
                     </div>
 
                     <div className="archive-grid">
-                        {filteredItems.map(item => (
-                            <a
-                                key={item.id}
-                                href={item.href}
-                                target={item.target || '_blank'}
-                                className={`archive-card ${item.isImportant ? 'important' : ''}`}
-                                data-audience={item.audience}
-                            >
-                                <div>
-                                    <div className="card-meta-row">
-                                        <span className={`badge ${item.badgeClass}`}>{item.category}</span>
-                                        <span className={`badge-diff ${item.diffClass}`}>{item.difficulty}</span>
-                                        <span className="badge-time">⏱️ {item.time}</span>
+                        {filteredItems.map(item => {
+                            const href = getMaterialLink(item);
+                            return (
+                                <a
+                                    key={item.id}
+                                    href={href}
+                                    target="_blank"
+                                    className={`archive-card ${item.featured ? 'important' : ''}`}
+                                    data-audience={item.audience}
+                                >
+                                    <div>
+                                        <div className="card-meta-row">
+                                            <span className={`badge ${item.badgeClass}`}>{item.category}</span>
+                                            <span className={`badge-diff ${getDiffClass(item.level)}`}>{item.level}</span>
+                                            <span className="badge-time">⏱️ {item.duration}</span>
+                                            {item.updated && <span className="badge-updated">{formatUpdatedBadge(item.updated)}</span>}
+                                        </div>
+                                        <h3>{item.title}</h3>
+                                        <p>{item.description}</p>
                                     </div>
-                                    <h3>{item.title}</h3>
-                                    <p>{item.description}</p>
-                                </div>
-                                <div className="card-footer">
-                                    <span className="file-type">{item.fileType}</span>
-                                    <span className="download-link">{item.actionText}</span>
-                                </div>
-                            </a>
-                        ))}
+                                    <div className="card-footer">
+                                        <span className="file-type">{item.fileType}</span>
+                                        <span className="download-link">{item.actionText}</span>
+                                    </div>
+                                </a>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

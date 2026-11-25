@@ -974,6 +974,16 @@ footer {
     display: inline-block;
 }
 
+.badge-updated {
+    background: #eef2ff;
+    color: #3730a3;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
 /* ======================================================
    3. 대상별 필터 (Audience Filter Bar)
    ====================================================== */
