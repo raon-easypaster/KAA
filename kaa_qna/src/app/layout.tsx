@@ -37,14 +37,23 @@ export default function RootLayout({
                 <span className="hamburger-line"></span>
               </label>
               <div className="nav-menu">
-                <a href="/#about" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
-                  한국AI연구소 소개
+                <a href="/#programs" className="nav-link">
+                  자료실
                 </a>
-                <a href="/#programs" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
-                  자료실 & 아카이브
+                <a href="/#roadmap" className="nav-link">
+                  학습 로드맵
                 </a>
-                <a href="/#contact" className="qa-shortcut-btn" style={{ margin: "10px 0", background: "transparent", color: "var(--primary)", border: "none", fontSize: "1.1rem", cursor: "pointer" }}>
+                <a href="/#ai-tools" className="nav-link">
+                  AI 도구
+                </a>
+                <a href="/#about" className="nav-link">
+                  연구소 소개
+                </a>
+                <a href="/#contact" className="nav-link">
                   오시는 길
+                </a>
+                <a href="/#contact" className="nav-cta-btn">
+                  강의 문의
                 </a>
               </div>
             </div>

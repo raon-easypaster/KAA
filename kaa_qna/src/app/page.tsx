@@ -1,15 +1,30 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
-    FEATURED_HIGHLIGHT_REFS,
     formatUpdatedBadge,
     getMaterialLink,
     MATERIALS,
     MATERIALS_BY_ID,
     ROADMAP_STEPS,
-    START_GUIDE_REFS,
 } from '@/data/curations';
-import type { MaterialLevel } from '@/types/material';
+import type {
+    MaterialAudience,
+    MaterialFormat,
+    MaterialItem,
+    MaterialLevel,
+} from '@/types/material';
+
+type AudienceFilter = 'all' | MaterialAudience;
+type LevelFilter = 'all' | MaterialLevel;
+type FormatFilter = 'all' | MaterialFormat;
+type SortOption = 'latest' | 'shortest';
+
+const FORMAT_LABELS: Record<MaterialFormat, string> = {
+    slide: '슬라이드',
+    workbook: '워크북',
+    report: '보고서',
+    guide: '가이드',
+};
 
 function getDiffClass(level: MaterialLevel): 'easy' | 'medium' | 'hard' {
     if (level === '입문') return 'easy';
@@ -17,9 +32,54 @@ function getDiffClass(level: MaterialLevel): 'easy' | 'medium' | 'hard' {
     return 'hard';
 }
 
+function matchesSearch(item: MaterialItem, rawQuery: string): boolean {
+    const q = rawQuery.trim().toLowerCase();
+    if (!q) return true;
+    const haystack = [item.title, item.description, ...item.tags].join(' ').toLowerCase();
+    return haystack.includes(q);
+}
+
 export default function HomePage() {
-    const [audienceFilter, setAudienceFilter] = useState<'all' | 'pastor' | 'welfare' | 'general'>('all');
-    const [visits, setVisits] = useState<{ total: number; today: number }>({ total: 1380, today: 24 });
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [audienceFilter, setAudienceFilter] = useState<AudienceFilter>('all');
+    const [levelFilter, setLevelFilter] = useState<LevelFilter>('all');
+    const [formatFilter, setFormatFilter] = useState<FormatFilter>('all');
+    const [featuredOnly, setFeaturedOnly] = useState<boolean>(false);
+    const [sortBy, setSortBy] = useState<SortOption>('latest');
+    const [queryInitialized, setQueryInitialized] = useState<boolean>(false);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q') || '';
+        const aud = params.get('audience');
+        const lvl = params.get('level');
+        const fmt = params.get('format');
+        const feat = params.get('featured');
+        const sort = params.get('sort');
+
+        if (q) setSearchQuery(q);
+        if (aud === 'pastor' || aud === 'welfare' || aud === 'general') setAudienceFilter(aud);
+        if (lvl === '입문' || lvl === '중급' || lvl === '고급') setLevelFilter(lvl);
+        if (fmt === 'slide' || fmt === 'workbook' || fmt === 'report' || fmt === 'guide') setFormatFilter(fmt);
+        if (feat === '1' || feat === 'true') setFeaturedOnly(true);
+        if (sort === 'shortest' || sort === 'latest') setSortBy(sort);
+        setQueryInitialized(true);
+    }, []);
+
+    useEffect(() => {
+        if (!queryInitialized) return;
+        const params = new URLSearchParams();
+        if (searchQuery.trim()) params.set('q', searchQuery.trim());
+        if (audienceFilter !== 'all') params.set('audience', audienceFilter);
+        if (levelFilter !== 'all') params.set('level', levelFilter);
+        if (formatFilter !== 'all') params.set('format', formatFilter);
+        if (featuredOnly) params.set('featured', '1');
+        if (sortBy !== 'latest') params.set('sort', sortBy);
+
+        const qs = params.toString();
+        const nextUrl = qs ? `${window.location.pathname}?${qs}${window.location.hash}` : `${window.location.pathname}${window.location.hash}`;
+        window.history.replaceState(null, '', nextUrl);
+    }, [searchQuery, audienceFilter, levelFilter, formatFilter, featuredOnly, sortBy, queryInitialized]);
 
     useEffect(() => {
         const fadeElements = document.querySelectorAll('.fade-up');
@@ -44,7 +104,7 @@ export default function HomePage() {
 
             const observerOptions = {
                 threshold: 0,
-                rootMargin: "300px 0px 300px 0px"
+                rootMargin: '300px 0px 300px 0px',
             };
 
             observer = new IntersectionObserver((entries) => {
@@ -68,11 +128,8 @@ export default function HomePage() {
             fetch('/api/counter', { method })
                 .then(res => res.json())
                 .then(data => {
-                    if (data && data.total) {
-                        setVisits({ total: data.total, today: data.today });
-                        if (!hasHit) {
-                            sessionStorage.setItem('kaa_session_hit', 'true');
-                        }
+                    if (data && data.total && !hasHit) {
+                        sessionStorage.setItem('kaa_session_hit', 'true');
                     }
                 })
                 .catch(err => console.warn('Visitor counter fetch error:', err));
@@ -88,14 +145,99 @@ export default function HomePage() {
         };
     }, []);
 
-    const filteredItems = audienceFilter === 'all'
-        ? MATERIALS
-        : MATERIALS.filter(item => item.audience === audienceFilter);
+    const filteredItems = useMemo(() => {
+        const list = MATERIALS.filter(item => {
+            if (!matchesSearch(item, searchQuery)) return false;
+            if (audienceFilter !== 'all' && item.audience !== audienceFilter) return false;
+            if (levelFilter !== 'all' && item.level !== levelFilter) return false;
+            if (formatFilter !== 'all' && item.format !== formatFilter) return false;
+            if (featuredOnly && !item.featured) return false;
+            return true;
+        });
+
+        return [...list].sort((a, b) => {
+            if (sortBy === 'shortest') {
+                return a.durationMinutes - b.durationMinutes;
+            }
+            const dateDiff = b.updated.localeCompare(a.updated);
+            if (dateDiff !== 0) return dateDiff;
+            return Number(b.isNew) - Number(a.isNew);
+        });
+    }, [searchQuery, audienceFilter, levelFilter, formatFilter, featuredOnly, sortBy]);
+
+    // 각 필터별 건수 (나머지 활성 필터 기준)
+    const counts = useMemo(() => {
+        const matchBase = (item: MaterialItem, ignore: 'audience' | 'level' | 'format' | 'featured') => {
+            if (!matchesSearch(item, searchQuery)) return false;
+            if (ignore !== 'audience' && audienceFilter !== 'all' && item.audience !== audienceFilter) return false;
+            if (ignore !== 'level' && levelFilter !== 'all' && item.level !== levelFilter) return false;
+            if (ignore !== 'format' && formatFilter !== 'all' && item.format !== formatFilter) return false;
+            if (ignore !== 'featured' && featuredOnly && !item.featured) return false;
+            return true;
+        };
+
+        const audBase = MATERIALS.filter(i => matchBase(i, 'audience'));
+        const lvlBase = MATERIALS.filter(i => matchBase(i, 'level'));
+        const fmtBase = MATERIALS.filter(i => matchBase(i, 'format'));
+        const featBase = MATERIALS.filter(i => matchBase(i, 'featured'));
+
+        return {
+            audience: {
+                all: audBase.length,
+                pastor: audBase.filter(i => i.audience === 'pastor').length,
+                welfare: audBase.filter(i => i.audience === 'welfare').length,
+                general: audBase.filter(i => i.audience === 'general').length,
+            },
+            level: {
+                all: lvlBase.length,
+                입문: lvlBase.filter(i => i.level === '입문').length,
+                중급: lvlBase.filter(i => i.level === '중급').length,
+                고급: lvlBase.filter(i => i.level === '고급').length,
+            },
+            format: {
+                all: fmtBase.length,
+                slide: fmtBase.filter(i => i.format === 'slide').length,
+                workbook: fmtBase.filter(i => i.format === 'workbook').length,
+                report: fmtBase.filter(i => i.format === 'report').length,
+                guide: fmtBase.filter(i => i.format === 'guide').length,
+            },
+            featured: featBase.filter(i => i.featured).length,
+        };
+    }, [searchQuery, audienceFilter, levelFilter, formatFilter, featuredOnly]);
+
+    const hasActiveFilter =
+        searchQuery.trim() !== '' ||
+        audienceFilter !== 'all' ||
+        levelFilter !== 'all' ||
+        formatFilter !== 'all' ||
+        featuredOnly;
+
+    const resetAllFilters = () => {
+        setSearchQuery('');
+        setAudienceFilter('all');
+        setLevelFilter('all');
+        setFormatFilter('all');
+        setFeaturedOnly(false);
+        setSortBy('latest');
+    };
+
+    const handleQuickPath = (aud: AudienceFilter, lvl: LevelFilter) => {
+        setAudienceFilter(aud);
+        setLevelFilter(lvl);
+        setFormatFilter('all');
+        setFeaturedOnly(false);
+        document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const handleHeroSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     return (
         <>
-            {/* ================= Hero ================= */}
-            <section className="hero hero-main">
+            {/* ================= 1. Hero (검색창 포함) ================= */}
+            <section className="hero hero-main hero-compact">
                 <div className="container">
                     <div className="hero-content">
                         <span className="hero-eyebrow">Korea AI Research Institute Archive</span>
@@ -104,158 +246,263 @@ export default function HomePage() {
                             배움과 성장의 기록을 나눕니다
                         </h1>
                         <p className="hero-subtitle">
-                            한국AI연구소 아카이브는 AI 교육, 연구, 그리고 커뮤니티 성장을 돕는 자료를 지속적으로 공유하고 아카이빙하는 프로젝트입니다.
+                            목회자·사역자·사회복지사·일반 입문자를 위한 AI 강의 자료와 실습 워크북을 한곳에서 바로 찾으세요.
                         </p>
-                        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                            <a href="#start-guide" className="btn btn-primary">시작점 찾기 🚀</a>
-                            <a href="#programs" className="btn btn-secondary">전체 자료실 ⬇️</a>
-                            <a href="/data/laos_feedback.html" target="_blank" className="btn btn-secondary" style={{ background: 'rgba(45, 122, 82, 0.4)', borderColor: '#5db87a', color: '#ffffff' }}>📊 라오스 결과 보고서 ↗️</a>
+
+                        <form className="hero-search-form" onSubmit={handleHeroSearchSubmit} role="search">
+                            <input
+                                type="search"
+                                className="hero-search-input"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="강의 제목, 내용, 태그 검색 (예: 설교, 바이브코딩, 옵시디언)"
+                                aria-label="AI 강의 자료 검색"
+                            />
+                            {searchQuery && (
+                                <button
+                                    type="button"
+                                    className="hero-search-clear"
+                                    onClick={() => setSearchQuery('')}
+                                    aria-label="검색어 지우기"
+                                >
+                                    ✕
+                                </button>
+                            )}
+                            <button type="submit" className="hero-search-btn">
+                                자료 찾기
+                            </button>
+                        </form>
+
+                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                            <a href="#programs" className="btn btn-primary" style={{ padding: '10px 22px' }}>전체 자료실 ({MATERIALS.length}건) ⬇️</a>
+                            <a href="/data/laos_feedback.html" target="_blank" className="btn btn-secondary" style={{ padding: '10px 22px', background: 'rgba(45, 122, 82, 0.45)', borderColor: '#5db87a', color: '#ffffff' }}>📊 라오스 결과 보고서 ↗️</a>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* ================= 1. 시작점 선택 섹션 ================= */}
-            <section className="start-section" id="start-guide">
+            {/* ================= 2. 대상별 빠른 길 ================= */}
+            <section className="quick-path-section" aria-label="대상별 빠른 길">
+                <div className="container">
+                    <div className="quick-path-grid">
+                        <button
+                            type="button"
+                            className={`quick-path-card ${audienceFilter === 'pastor' && levelFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => handleQuickPath('pastor', 'all')}
+                        >
+                            <span className="quick-path-icon">⛪</span>
+                            <div>
+                                <div className="quick-path-title">목회자·사역자용</div>
+                                <div className="quick-path-desc">설교 연구·바이브코딩·목회 위키 자료 바로 보기</div>
+                            </div>
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`quick-path-card ${audienceFilter === 'welfare' && levelFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => handleQuickPath('welfare', 'all')}
+                        >
+                            <span className="quick-path-icon">🤝</span>
+                            <div>
+                                <div className="quick-path-title">사회복지사용</div>
+                                <div className="quick-path-desc">복지 현장 실무·홍보·랜딩페이지 제작 자료</div>
+                            </div>
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`quick-path-card ${audienceFilter === 'all' && levelFilter === '입문' ? 'active' : ''}`}
+                            onClick={() => handleQuickPath('all', '입문')}
+                        >
+                            <span className="quick-path-icon">🌱</span>
+                            <div>
+                                <div className="quick-path-title">처음 시작 (입문)</div>
+                                <div className="quick-path-desc">AI 첫걸음·기초 개념·프롬프트 입문 자료</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* ================= 3. 자료실 & 아카이브 ================= */}
+            <section className="section" id="programs" style={{ paddingTop: '48px' }}>
                 <div className="container fade-up">
-                    <div className="start-header">
-                        <span className="start-eyebrow">Custom Path</span>
-                        <h2 className="start-title">나에게 맞는 시작점 찾기</h2>
-                        <p className="start-subtitle">
-                            현재 고민이나 사역 상황에 맞춰 가장 알맞은 가이드와 워크숍을 추천해 드립니다.
-                        </p>
-                    </div>
+                    <h2 className="section-title">자료실 &amp; 아카이브</h2>
+                    <p className="section-intro">
+                        한국AI연구소에서 제공하는 최신 AI 교육 자료, 실습 워크북 및 결과 보고서를 조건별로 바로 찾아보세요.
+                    </p>
 
-                    <div className="start-grid">
-                        {/* Option 0 (NEW): 목회자 AI 특강 */}
-                        <div className="start-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderColor: '#d97706', background: 'linear-gradient(135deg, rgba(254, 243, 199, 0.5) 0%, #ffffff 100%)' }}>
-                            <a href="/data/pastor_ai_seminar.html" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                    <span className="start-card-icon" style={{ margin: 0 }}>💡</span>
-                                    <span style={{ background: '#b45309', color: '#ffffff', fontSize: '0.7rem', fontWeight: 800, padding: '2px 8px', borderRadius: '12px' }}>NEW 특강</span>
-                                </div>
-                                <h3 className="start-card-title">AI는 부지런한 손, 목회자는 뜨거운 심장</h3>
-                                <p className="start-card-desc">설교 연구(미드라시·와키홀) & 2차 콘텐츠 & 라온동행교회(raondonghaeng.org) 실전 사례 25선</p>
-                            </a>
-                            <div className="start-card-footer" style={{ flexDirection: 'column', gap: '8px', alignItems: 'stretch', marginTop: '12px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <span className="start-time-badge">⏱️ 약 20분</span>
-                                    <a href="/data/pastor_ai_seminar.html" target="_blank" className="start-card-arrow" style={{ textDecoration: 'none' }}>문서 보기 →</a>
-                                </div>
-                                <a href="/data/pastor_ai_seminar.html?mode=slide" target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '7px 12px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', borderRadius: '8px', textDecoration: 'none', boxShadow: '0 2px 6px rgba(217, 119, 6, 0.3)', transition: 'transform 0.15s' }}>
-                                    🖥️ 슬라이드 전체화면 발표 바로보기
-                                </a>
+                    <div className="archive-controls">
+                        <div className="archive-search-row">
+                            <div className="archive-search-box">
+                                <span aria-hidden="true">🔍</span>
+                                <input
+                                    type="search"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="제목, 설명, 태그로 실시간 검색 (예: 노트북LM, 깃허브, 세미나)"
+                                    aria-label="자료실 내 실시간 검색"
+                                />
+                                {searchQuery && (
+                                    <button
+                                        type="button"
+                                        className="hero-search-clear"
+                                        onClick={() => setSearchQuery('')}
+                                        aria-label="검색어 초기화"
+                                    >
+                                        ✕
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="archive-sort-group">
+                                <label htmlFor="archive-sort" className="archive-sort-label">정렬</label>
+                                <select
+                                    id="archive-sort"
+                                    className="archive-sort-select"
+                                    value={sortBy}
+                                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                                >
+                                    <option value="latest">최신순</option>
+                                    <option value="shortest">짧은 강의순</option>
+                                </select>
                             </div>
                         </div>
 
-                        {/* Option 1 */}
-                        <div className="start-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                            <a href="/data/ai_first_step.html" target="_blank" style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <span className="start-card-icon">🚀</span>
-                                <h3 className="start-card-title">AI 처음이에요</h3>
-                                <p className="start-card-desc">기초 개념부터 두려움을 깨는 46개 슬라이드 완벽 가이드</p>
-                            </a>
-                            <div className="start-card-footer" style={{ flexDirection: 'column', gap: '8px', alignItems: 'stretch', marginTop: '12px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <span className="start-time-badge">⏱️ 약 15분</span>
-                                    <a href="/data/ai_first_step.html" target="_blank" className="start-card-arrow" style={{ textDecoration: 'none' }}>문서 보기 →</a>
-                                </div>
-                                <a href="/data/ai_first_step.html?mode=slide" target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '7px 12px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', borderRadius: '8px', textDecoration: 'none', boxShadow: '0 2px 6px rgba(217, 119, 6, 0.3)', transition: 'transform 0.15s' }}>
-                                    🖥️ 슬라이드 전체화면 발표 바로보기
-                                </a>
-                            </div>
+                        {/* 대상 필터 */}
+                        <div className="filter-group-row">
+                            <span className="filter-group-label">대상</span>
+                            <button
+                                type="button"
+                                className={`filter-chip ${audienceFilter === 'all' ? 'active' : ''}`}
+                                onClick={() => setAudienceFilter('all')}
+                            >
+                                전체 ({counts.audience.all})
+                            </button>
+                            <button
+                                type="button"
+                                className={`filter-chip ${audienceFilter === 'pastor' ? 'active' : ''}`}
+                                onClick={() => setAudienceFilter('pastor')}
+                            >
+                                목회자용 ({counts.audience.pastor})
+                            </button>
+                            <button
+                                type="button"
+                                className={`filter-chip ${audienceFilter === 'welfare' ? 'active' : ''}`}
+                                onClick={() => setAudienceFilter('welfare')}
+                            >
+                                사회복지사용 ({counts.audience.welfare})
+                            </button>
+                            <button
+                                type="button"
+                                className={`filter-chip ${audienceFilter === 'general' ? 'active' : ''}`}
+                                onClick={() => setAudienceFilter('general')}
+                            >
+                                일반 ({counts.audience.general})
+                            </button>
                         </div>
 
-                        {/* Option 2: 3일 집중 교육 */}
-                        <a href="/data/kaa-ai-guide.html" target="_blank" className="start-card" style={{ borderColor: '#225d52', background: 'linear-gradient(135deg, rgba(230, 240, 235, 0.4) 0%, #ffffff 100%)' }}>
-                            <div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                    <span className="start-card-icon" style={{ margin: 0 }}>📋</span>
-                                    <span style={{ background: '#123b35', color: '#f8e3aa', fontSize: '0.7rem', fontWeight: 800, padding: '2px 8px', borderRadius: '12px' }}>NEW 신규</span>
-                                </div>
-                                <h3 className="start-card-title">3일 집중 AI 교육 사전 안내</h3>
-                                <p className="start-card-desc">3일 집중 실전 AI 마스터 과정 사전 준비 & 체크리스트</p>
-                            </div>
-                            <div className="start-card-footer">
-                                <span className="start-time-badge">⏱️ 약 15분</span>
-                                <span className="start-card-arrow" style={{ color: '#123b35' }}>안내서 보기 →</span>
-                            </div>
-                        </a>
+                        {/* 난이도 필터 */}
+                        <div className="filter-group-row">
+                            <span className="filter-group-label">난이도</span>
+                            {(['all', '입문', '중급', '고급'] as LevelFilter[]).map((lvl) => (
+                                <button
+                                    key={lvl}
+                                    type="button"
+                                    className={`filter-chip ${levelFilter === lvl ? 'active' : ''}`}
+                                    onClick={() => setLevelFilter(lvl)}
+                                >
+                                    {lvl === 'all' ? '전체' : lvl} ({counts.level[lvl]})
+                                </button>
+                            ))}
+                        </div>
 
-                        {/* Option 3 */}
-                        <a href="/data/gen_ai_basics.html" target="_blank" className="start-card">
-                            <div>
-                                <span className="start-card-icon">💼</span>
-                                <h3 className="start-card-title">업무에 AI를 활용하고 싶어요</h3>
-                                <p className="start-card-desc">ChatGPT 기본 사용법과 실무 프롬프트 엔지니어링</p>
-                            </div>
-                            <div className="start-card-footer">
-                                <span className="start-time-badge">⏱️ 약 20분</span>
-                                <span className="start-card-arrow">시작하기 →</span>
-                            </div>
-                        </a>
+                        {/* 형식 & 추천 필터 */}
+                        <div className="filter-group-row">
+                            <span className="filter-group-label">형식</span>
+                            <button
+                                type="button"
+                                className={`filter-chip ${formatFilter === 'all' ? 'active' : ''}`}
+                                onClick={() => setFormatFilter('all')}
+                            >
+                                전체 ({counts.format.all})
+                            </button>
+                            {(['slide', 'workbook', 'guide', 'report'] as MaterialFormat[]).map((fmt) => (
+                                <button
+                                    key={fmt}
+                                    type="button"
+                                    className={`filter-chip ${formatFilter === fmt ? 'active' : ''}`}
+                                    onClick={() => setFormatFilter(fmt)}
+                                >
+                                    {FORMAT_LABELS[fmt]} ({counts.format[fmt]})
+                                </button>
+                            ))}
+                            <button
+                                type="button"
+                                className={`filter-chip featured-chip ${featuredOnly ? 'active' : ''}`}
+                                onClick={() => setFeaturedOnly(prev => !prev)}
+                            >
+                                ★ 추천 ({counts.featured})
+                            </button>
+                        </div>
 
-                        {/* Option 4 */}
-                        <a href="/data/easypastor.html" target="_blank" className="start-card">
-                            <div>
-                                <span className="start-card-icon">🧠</span>
-                                <h3 className="start-card-title">나만의 AI를 만들고 싶어요</h3>
-                                <p className="start-card-desc">목회 데이터로 구축하는 AI 신학 비서 (NotebookLM & Gemini)</p>
-                            </div>
-                            <div className="start-card-footer">
-                                <span className="start-time-badge">⏱️ 약 25분</span>
-                                <span className="start-card-arrow">시작하기 →</span>
-                            </div>
-                        </a>
-
-                        {/* Option 5 */}
-                        <a href="/data/vibe_coding_workshop.html" target="_blank" className="start-card">
-                            <div>
-                                <span className="start-card-icon">🛠️</span>
-                                <h3 className="start-card-title">바이브코딩으로 앱을 만들고 싶어요</h3>
-                                <p className="start-card-desc">코드 없이 말로 사역용 웹앱 3개와 교회 홈페이지 제작</p>
-                            </div>
-                            <div className="start-card-footer">
-                                <span className="start-time-badge">⏱️ 약 40분</span>
-                                <span className="start-card-arrow">시작하기 →</span>
-                            </div>
-                        </a>
-
-                        {/* Option 6 */}
-                        <a href="/data/ai_education_guide.html" target="_blank" className="start-card">
-                            <div>
-                                <span className="start-card-icon">📖</span>
-                                <h3 className="start-card-title">강의를 진행하고 싶어요</h3>
-                                <p className="start-card-desc">목회자·사역자 AI 교육자를 위한 마인드셋 & 프롬프트 커리큘럼</p>
-                            </div>
-                            <div className="start-card-footer">
-                                <span className="start-time-badge">⏱️ 약 30분</span>
-                                <span className="start-card-arrow">시작하기 →</span>
-                            </div>
-                        </a>
+                        <div className="archive-result-bar">
+                            <span>
+                                검색 결과 <strong>{filteredItems.length}건</strong> / 전체 {MATERIALS.length}건
+                            </span>
+                            {hasActiveFilter && (
+                                <button type="button" className="filter-reset-btn" onClick={resetAllFilters}>
+                                    필터 전체 초기화 ↺
+                                </button>
+                            )}
+                        </div>
                     </div>
+
+                    {filteredItems.length === 0 ? (
+                        <div className="archive-empty-state">
+                            <h3>조건에 맞는 강의 자료가 없습니다</h3>
+                            <p>검색어를 바꾸거나 선택된 대상·난이도·형식 필터를 초기화해 보세요.</p>
+                            <button type="button" className="filter-reset-btn" onClick={resetAllFilters}>
+                                모든 필터 초기화하고 전체 보기
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="archive-grid">
+                            {filteredItems.map(item => {
+                                const href = getMaterialLink(item);
+                                return (
+                                    <a
+                                        key={item.id}
+                                        href={href}
+                                        target="_blank"
+                                        className={`archive-card ${item.featured ? 'important' : ''}`}
+                                        data-audience={item.audience}
+                                    >
+                                        <div>
+                                            <div className="card-meta-row">
+                                                <span className={`badge ${item.badgeClass}`}>{item.category}</span>
+                                                <span className={`badge-diff ${getDiffClass(item.level)}`}>{item.level}</span>
+                                                <span className="badge-time">⏱️ {item.duration}</span>
+                                                {item.isNew && <span className="badge-new">NEW</span>}
+                                                {item.featured && <span className="badge-featured-tag">추천</span>}
+                                                {item.updated && <span className="badge-updated">{formatUpdatedBadge(item.updated)}</span>}
+                                            </div>
+                                            <h3>{item.title}</h3>
+                                            <p>{item.description}</p>
+                                        </div>
+                                        <div className="card-footer">
+                                            <span className="file-type">{item.fileType}</span>
+                                            <span className="download-link">{item.actionText}</span>
+                                        </div>
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             </section>
 
-            {/* ================= About ================= */}
-            <section className="section about-section" id="about">
-                <div className="container fade-up">
-                    <h2 className="section-title">연구소 소개</h2>
-                    <div className="about-declaration">
-                        <p>
-                            한국AI연구소는 급변하는 인공지능 시대에 맞춰 우리 삶과 산업 현장에 가장 실용적이고 윤리적인 AI 활용 방안을 연구합니다.
-                        </p>
-                        <p>
-                            복잡한 기술의 진입 장벽을 낮추고, 누구나 쉽게 생성형 AI를 업무와 일상에 접목할 수 있도록 교육 및 아카이빙 프로젝트를 전개하고 있습니다.
-                        </p>
-                    </div>
-                    <div className="quote-highlight">
-                        "AI는 기술을 넘어, 사람과 세상을 더 이롭게 연결하는 다리입니다."
-                    </div>
-                </div>
-            </section>
-
-            {/* ================= 2. 학습 로드맵 섹션 ================= */}
+            {/* ================= 4. 9단계 학습 로드맵 ================= */}
             <section className="roadmap-section" id="roadmap">
                 <div className="container fade-up">
                     <div className="roadmap-header">
@@ -267,217 +514,24 @@ export default function HomePage() {
                     </div>
 
                     <div className="roadmap-grid">
-                        {/* Step 1 */}
-                        <a href="/data/ai_first_step.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">1</span>
-                                <h3 className="roadmap-step-title">AI 이해</h3>
-                                <p className="roadmap-step-desc">생성형 AI 기본 개념과 두려움 극복, 직관적 이해</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff easy">입문</span>
-                                <span className="badge-time">15분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 2 */}
-                        <a href="/data/ai_education_guide.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">2</span>
-                                <h3 className="roadmap-step-title">AI와 대화하기</h3>
-                                <p className="roadmap-step-desc">ACTF 4원칙과 대화형 프롬프트 소통법</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff easy">입문</span>
-                                <span className="badge-time">20분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 3 */}
-                        <a href="/data/gen_ai_basics.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">3</span>
-                                <h3 className="roadmap-step-title">문서/이미지 만들기</h3>
-                                <p className="roadmap-step-desc">실무 행정 문서, 기획안, 이미지 생성 활용</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff easy">입문</span>
-                                <span className="badge-time">20분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 4 */}
-                        <a href="/data/easypastor.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">4</span>
-                                <h3 className="roadmap-step-title">나만의 AI 만들기</h3>
-                                <p className="roadmap-step-desc">NotebookLM 기반 목회 신학 비서 구축</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff medium">중급</span>
-                                <span className="badge-time">25분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 5 */}
-                        <a href="/data/vibe_coding_workshop.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">5</span>
-                                <h3 className="roadmap-step-title">바이브코딩</h3>
-                                <p className="roadmap-step-desc">자연어 코딩으로 사역용 웹앱 3개 직접 제작</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff medium">중급</span>
-                                <span className="badge-time">40분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 6 */}
-                        <a href="/data/vibe_coding_workshop.html#s6" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">6</span>
-                                <h3 className="roadmap-step-title">데이터 연결</h3>
-                                <p className="roadmap-step-desc">구글 시트 연동 실시간 교인관리 대시보드</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff medium">중급</span>
-                                <span className="badge-time">25분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 7 */}
-                        <a href="/data/github.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">7</span>
-                                <h3 className="roadmap-step-title">홈페이지·앱 제작 & 배포</h3>
-                                <p className="roadmap-step-desc">안티그래비티 앱 제작 & 깃허브 무료 배포 (13단계)</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff hard">고급</span>
-                                <span className="badge-time">25분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 8 */}
-                        <a href="/data/obsidian_second_brain.html" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">8</span>
-                                <h3 className="roadmap-step-title">세컨드 브레인</h3>
-                                <p className="roadmap-step-desc">지식관리의 진화 & 옵시디언 (정리: 김태주)</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff hard">고급</span>
-                                <span className="badge-time">20분</span>
-                            </div>
-                        </a>
-
-                        {/* Step 9 */}
-                        <a href="https://smdjoo-stack.github.io/pastoral-wiki-lecture/" target="_blank" className="roadmap-step-card">
-                            <div>
-                                <span className="roadmap-step-num">9</span>
-                                <h3 className="roadmap-step-title">목회 위키 (LLM Wiki)</h3>
-                                <p className="roadmap-step-desc">옵시디언 & 클로드로 짓는 나만의 목회 위키 실전 (강의: 김태주)</p>
-                            </div>
-                            <div className="roadmap-badges">
-                                <span className="badge-diff hard">고급</span>
-                                <span className="badge-time">30분</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            {/* ================= 🌟 신규 추천 가이드 섹션 ================= */}
-            <section className="featured-section" id="featured">
-                <div className="container fade-up">
-                    <div className="section-header-compact">
-                        <span className="start-eyebrow">NEW RELEASE & HIGHLIGHT</span>
-                        <h2 className="section-title">신규 추천 가이드</h2>
-                        <p className="start-subtitle">
-                            한국AI연구소에서 새롭게 공개한 3일 집중 실전 가이드 및 핵심 워크숍 안내서입니다.
-                        </p>
-                    </div>
-
-                    <div className="featured-grid">
-                        {/* Featured Card 1: 3일 집중 교육 사전 안내 */}
-                        <div className="featured-card primary-featured">
-                            <div>
-                                <div className="featured-badge-row">
-                                    <span className="badge-featured">🔥 NEW RELEASE</span>
-                                    <span className="badge-diff easy">입문</span>
-                                    <span className="badge-time">⏱️ 약 15분</span>
-                                </div>
-                                <h3 className="featured-title">한국인을 위한 3일 집중 AI 교육 사전 안내</h3>
-                                <p className="featured-desc">
-                                    이광복·김태주 공동대표가 직접 전하는 3일 집중 AI 실전 마스터 사전 안내서입니다. AI 4대 기본 원칙, 3일간의 여정, 그리고 수업 첫날 필수 준비물 체크리스트를 확인하세요.
-                                </p>
-                                <div className="featured-highlights">
-                                    <div className="feat-item"><span>✅</span> 4대 기본 원칙 (소통/작업/커스터마이징/연결)</div>
-                                    <div className="feat-item"><span>✅</span> 3일 집중 커리큘럼 (기초 → 바이브코딩 → 세컨드 브레인)</div>
-                                    <div className="feat-item"><span>✅</span> 사전 준비물 &amp; Google/AI 계정 점검 체크리스트</div>
-                                </div>
-                            </div>
-                            <div className="featured-footer">
-                                <span className="file-type">📋 사전 안내서 · 체크리스트</span>
-                                <a href="/data/kaa-ai-guide.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem' }}>
-                                    가이드 열람하기 ↗️
+                        {ROADMAP_STEPS.map((step) => {
+                            const mat = MATERIALS_BY_ID[step.materialId];
+                            const baseHref = mat ? getMaterialLink(mat) : '#programs';
+                            const href = step.anchor ? `${baseHref}${step.anchor}` : baseHref;
+                            return (
+                                <a key={step.step} href={href} target="_blank" className="roadmap-step-card">
+                                    <div>
+                                        <span className="roadmap-step-num">{step.step}</span>
+                                        <h3 className="roadmap-step-title">{step.title}</h3>
+                                        <p className="roadmap-step-desc">{step.description}</p>
+                                    </div>
+                                    <div className="roadmap-badges">
+                                        <span className={`badge-diff ${getDiffClass(step.level)}`}>{step.level}</span>
+                                        <span className="badge-time">{step.duration}</span>
+                                    </div>
                                 </a>
-                            </div>
-                        </div>
-
-                        {/* Featured Card 2: 바이브코딩 마스터 워크숍 */}
-                        <div className="featured-card">
-                            <div>
-                                <div className="featured-badge-row">
-                                    <span className="badge-featured secondary">🛠️ MASTER WORKSHOP</span>
-                                    <span className="badge-diff medium">중급</span>
-                                    <span className="badge-time">⏱️ 약 40분</span>
-                                </div>
-                                <h3 className="featured-title">목회자 바이브코딩 워크숍 강의안</h3>
-                                <p className="featured-desc">
-                                    코드를 몰라도 자연어로 사역용 웹앱 3개(소그룹 나눔 질문기, 성경동화 생성기, 교인관리 대시보드)와 교회 홈페이지를 하루에 직접 만드는 마스터 진행안입니다.
-                                </p>
-                                <div className="featured-highlights">
-                                    <div className="feat-item"><span>💡</span> 브라우저만으로 완성하는 사역 앱 3종 실습</div>
-                                    <div className="feat-item"><span>⚡</span> 구글 시트 연동 실시간 교인관리 대시보드</div>
-                                    <div className="feat-item"><span>🚀</span> 안티그래비티 기반 교회 홈페이지 무료 배포</div>
-                                </div>
-                            </div>
-                            <div className="featured-footer">
-                                <span className="file-type">🛠️ 마스터 강의안</span>
-                                <span className="badge-updated">2026.08 업데이트</span>
-                                <a href="/data/vibe_coding_workshop.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem' }}>
-                                    워크숍 보기 ↗️
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Featured Card 3: 라오스 AI 교육 피드백 보고서 */}
-                        <div className="featured-card">
-                            <div>
-                                <div className="featured-badge-row">
-                                    <span className="badge-featured" style={{ background: '#2d7a52', color: '#fff' }}>📊 SPECIAL REPORT</span>
-                                    <span className="badge-diff easy">보고서</span>
-                                    <span className="badge-time">⏱️ 약 10분</span>
-                                </div>
-                                <h3 className="featured-title">라오스 선교사 AI 교육 피드백 결과</h3>
-                                <p className="featured-desc">
-                                    3일간의 선교사 AI 활용 집중 교육 참가자 설문 분석 보고서입니다. 전반적 만족도(4.4/5), 자신감 향상(4.4/5), 사역 활용 가능성(4.5/5) 및 참가자 11인의 생생한 원문 피드백을 확인하세요.
-                                </p>
-                                <div className="featured-highlights">
-                                    <div className="feat-item"><span>📈</span> 종합 만족도 4.4점 &amp; 지속 활용 의향 100% (4.5점)</div>
-                                    <div className="feat-item"><span>💡</span> '막연한 두려움 ➔ 자신감'으로의 실질적 인식 전환 입증</div>
-                                    <div className="feat-item"><span>📝</span> 참가자 11인 자유 의견 원문 &amp; 향후 심화 수요 분석</div>
-                                </div>
-                            </div>
-                            <div className="featured-footer">
-                                <span className="file-type">📊 설문 분석 보고서</span>
-                                <span className="badge-updated">2026.09 업데이트</span>
-                                <a href="/data/laos_feedback.html" target="_blank" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.95rem', background: '#2d7a52', borderColor: '#2d7a52' }}>
-                                    보고서 열람하기 ↗️
-                                </a>
-                            </div>
-                        </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -711,74 +765,20 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* ================= Archive & Filters ================= */}
-            <section className="section" id="programs">
+            {/* ================= 6. 연구소 소개 ================= */}
+            <section className="section about-section" id="about">
                 <div className="container fade-up">
-                    <h2 className="section-title">자료실 & 아카이브</h2>
-                    <p className="section-intro">
-                        한국AI연구소에서 제공하는 최신 AI 교육 자료, 실습 워크북 및 웹사이트 링크를 확인하세요.
-                    </p>
-
-                    {/* 3. 대상별 필터 버튼 */}
-                    <div className="filter-container">
-                        <button
-                            type="button"
-                            className={`filter-btn ${audienceFilter === 'all' ? 'active' : ''}`}
-                            onClick={() => setAudienceFilter('all')}
-                        >
-                            전체보기 ({MATERIALS.length})
-                        </button>
-                        <button
-                            type="button"
-                            className={`filter-btn ${audienceFilter === 'pastor' ? 'active' : ''}`}
-                            onClick={() => setAudienceFilter('pastor')}
-                        >
-                            목회자용 ({MATERIALS.filter(i => i.audience === 'pastor').length})
-                        </button>
-                        <button
-                            type="button"
-                            className={`filter-btn ${audienceFilter === 'welfare' ? 'active' : ''}`}
-                            onClick={() => setAudienceFilter('welfare')}
-                        >
-                            사회복지사용 ({MATERIALS.filter(i => i.audience === 'welfare').length})
-                        </button>
-                        <button
-                            type="button"
-                            className={`filter-btn ${audienceFilter === 'general' ? 'active' : ''}`}
-                            onClick={() => setAudienceFilter('general')}
-                        >
-                            일반 ({MATERIALS.filter(i => i.audience === 'general').length})
-                        </button>
+                    <h2 className="section-title">연구소 소개</h2>
+                    <div className="about-declaration">
+                        <p>
+                            한국AI연구소는 급변하는 인공지능 시대에 맞춰 우리 삶과 산업 현장에 가장 실용적이고 윤리적인 AI 활용 방안을 연구합니다.
+                        </p>
+                        <p>
+                            복잡한 기술의 진입 장벽을 낮추고, 누구나 쉽게 생성형 AI를 업무와 일상에 접목할 수 있도록 교육 및 아카이빙 프로젝트를 전개하고 있습니다.
+                        </p>
                     </div>
-
-                    <div className="archive-grid">
-                        {filteredItems.map(item => {
-                            const href = getMaterialLink(item);
-                            return (
-                                <a
-                                    key={item.id}
-                                    href={href}
-                                    target="_blank"
-                                    className={`archive-card ${item.featured ? 'important' : ''}`}
-                                    data-audience={item.audience}
-                                >
-                                    <div>
-                                        <div className="card-meta-row">
-                                            <span className={`badge ${item.badgeClass}`}>{item.category}</span>
-                                            <span className={`badge-diff ${getDiffClass(item.level)}`}>{item.level}</span>
-                                            <span className="badge-time">⏱️ {item.duration}</span>
-                                            {item.updated && <span className="badge-updated">{formatUpdatedBadge(item.updated)}</span>}
-                                        </div>
-                                        <h3>{item.title}</h3>
-                                        <p>{item.description}</p>
-                                    </div>
-                                    <div className="card-footer">
-                                        <span className="file-type">{item.fileType}</span>
-                                        <span className="download-link">{item.actionText}</span>
-                                    </div>
-                                </a>
-                            );
-                        })}
+                    <div className="quote-highlight">
+                        "AI는 기술을 넘어, 사람과 세상을 더 이롭게 연결하는 다리입니다."
                     </div>
                 </div>
             </section>
