@@ -19,6 +19,19 @@ type LevelFilter = 'all' | MaterialLevel;
 type FormatFilter = 'all' | MaterialFormat;
 type SortOption = 'latest' | 'shortest';
 
+const AUDIENCE_LABELS: Record<MaterialAudience, string> = {
+    pastor: '목회자용',
+    welfare: '사회복지사용',
+    general: '일반·공통',
+};
+
+const FORMAT_ICONS: Record<MaterialFormat, string> = {
+    slide: '🖥️',
+    workbook: '🛠️',
+    report: '📊',
+    guide: '📘',
+};
+
 const FORMAT_LABELS: Record<MaterialFormat, string> = {
     slide: '슬라이드',
     workbook: '워크북',
@@ -470,31 +483,66 @@ export default function HomePage() {
                         <div className="archive-grid">
                             {filteredItems.map(item => {
                                 const href = getMaterialLink(item);
+                                const slideUrl = item.links.slide && item.links.slide !== href ? item.links.slide : null;
                                 return (
-                                    <a
+                                    <article
                                         key={item.id}
-                                        href={href}
-                                        target="_blank"
                                         className={`archive-card ${item.featured ? 'important' : ''}`}
                                         data-audience={item.audience}
                                     >
-                                        <div>
-                                            <div className="card-meta-row">
-                                                <span className={`badge ${item.badgeClass}`}>{item.category}</span>
-                                                <span className={`badge-diff ${getDiffClass(item.level)}`}>{item.level}</span>
-                                                <span className="badge-time">⏱️ {item.duration}</span>
-                                                {item.isNew && <span className="badge-new">NEW</span>}
-                                                {item.featured && <span className="badge-featured-tag">추천</span>}
-                                                {item.updated && <span className="badge-updated">{formatUpdatedBadge(item.updated)}</span>}
+                                        <a
+                                            href={href}
+                                            target="_blank"
+                                            className="archive-thumb"
+                                            data-audience={item.audience}
+                                            aria-label={`${item.title} 썸네일`}
+                                        >
+                                            {item.thumbnail ? (
+                                                <img src={item.thumbnail} alt={item.title} />
+                                            ) : (
+                                                <>
+                                                    <div className="archive-thumb-top">
+                                                        <span className="archive-thumb-audience">{AUDIENCE_LABELS[item.audience]}</span>
+                                                        <span className="archive-thumb-format">{FORMAT_LABELS[item.format]}</span>
+                                                    </div>
+                                                    <div className="archive-thumb-center">
+                                                        <span className="archive-thumb-icon" aria-hidden="true">{FORMAT_ICONS[item.format]}</span>
+                                                        <span className="archive-thumb-label">{item.title}</span>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </a>
+
+                                        <div className="archive-card-body">
+                                            <div>
+                                                <div className="card-meta-row">
+                                                    <span className={`badge ${item.badgeClass}`}>{item.category}</span>
+                                                    <span className={`badge-diff ${getDiffClass(item.level)}`}>{item.level}</span>
+                                                    <span className="badge-time">⏱️ {item.duration}</span>
+                                                    {item.isNew && <span className="badge-new">NEW</span>}
+                                                    {item.featured && <span className="badge-featured-tag">추천</span>}
+                                                    {item.updated && <span className="badge-updated">{formatUpdatedBadge(item.updated)}</span>}
+                                                </div>
+                                                <h3>
+                                                    <a href={href} target="_blank">{item.title}</a>
+                                                </h3>
+                                                <p>{item.description}</p>
                                             </div>
-                                            <h3>{item.title}</h3>
-                                            <p>{item.description}</p>
+                                            <div className="card-footer">
+                                                <span className="file-type">{item.fileType}</span>
+                                                <div className="card-actions">
+                                                    {slideUrl && (
+                                                        <a href={slideUrl} target="_blank" className="slide-quick-link">
+                                                            🖥️ 발표 모드
+                                                        </a>
+                                                    )}
+                                                    <a href={href} target="_blank" className="download-link">
+                                                        자료 보기 →
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="card-footer">
-                                            <span className="file-type">{item.fileType}</span>
-                                            <span className="download-link">{item.actionText}</span>
-                                        </div>
-                                    </a>
+                                    </article>
                                 );
                             })}
                         </div>
@@ -519,15 +567,18 @@ export default function HomePage() {
                             const baseHref = mat ? getMaterialLink(mat) : '#programs';
                             const href = step.anchor ? `${baseHref}${step.anchor}` : baseHref;
                             return (
-                                <a key={step.step} href={href} target="_blank" className="roadmap-step-card">
+                                <a key={step.step} href={href} target="_blank" className="roadmap-step-card" data-level={step.level}>
                                     <div>
-                                        <span className="roadmap-step-num">{step.step}</span>
+                                        <div className="roadmap-step-head">
+                                            <span className="roadmap-step-num">STEP {step.step}</span>
+                                            <span className="roadmap-step-arrow" aria-hidden="true">→</span>
+                                        </div>
                                         <h3 className="roadmap-step-title">{step.title}</h3>
                                         <p className="roadmap-step-desc">{step.description}</p>
                                     </div>
                                     <div className="roadmap-badges">
                                         <span className={`badge-diff ${getDiffClass(step.level)}`}>{step.level}</span>
-                                        <span className="badge-time">{step.duration}</span>
+                                        <span className="badge-time">⏱️ {step.duration}</span>
                                     </div>
                                 </a>
                             );
