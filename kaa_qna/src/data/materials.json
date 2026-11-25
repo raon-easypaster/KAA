@@ -22,6 +22,27 @@
     "actionText": "특강 슬라이드 보기 ↗️"
   },
   {
+    "id": "dept-homepage-workshop",
+    "title": "AI 에이전트로 우리 부서 홈페이지 만들기 (교회학교 교사 교육)",
+    "description": "생성형 AI 이해부터 PRD 작성 실습, 에이전트로 만들고 고치기까지 한 번에 정리한 안내 페이지입니다.",
+    "audience": "pastor",
+    "level": "중급",
+    "format": "guide",
+    "duration": "약 30분",
+    "durationMinutes": 30,
+    "updated": "2026-10",
+    "links": {
+      "doc": "/data/dept_homepage_workshop.html"
+    },
+    "tags": ["교사교육", "교회학교", "부서홈페이지", "에이전트", "PRD"],
+    "featured": true,
+    "isNew": true,
+    "category": "교사 교육",
+    "badgeClass": "edu",
+    "fileType": "🛠️ 실습 가이드",
+    "actionText": "열람하기 ↗️"
+  },
+  {
     "id": "ai-first-step",
     "title": "AI, 두려움을 넘어 일상으로 (어서와 AI는 처음이지)",
     "description": "46개 핵심 슬라이드와 마스터 가이드북 (슬라이드 발표 모드 & 문서 뷰어 지원)",
