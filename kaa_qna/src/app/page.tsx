@@ -869,9 +869,8 @@ export default function HomePage() {
                         {/* 김태주 공동대표 */}
                         <div className="founder-card">
                             <div className="founder-card-header">
-                                {/* TODO: 실제 정보 입력 - 김태주 공동대표 프로필 사진 */}
-                                <div className="founder-photo-placeholder" aria-label="프로필 사진 등록 예정">
-                                    TODO<br />대표 사진
+                                <div className="founder-photo-frame">
+                                    <img src="/images/founder_kim.jpg" alt="김태주 공동대표" className="founder-photo-img img-kim" />
                                 </div>
                                 <div>
                                     <span className="founder-title">Co-Representative</span>
@@ -899,9 +898,8 @@ export default function HomePage() {
                         {/* 이광복 공동대표 */}
                         <div className="founder-card">
                             <div className="founder-card-header">
-                                {/* TODO: 실제 정보 입력 - 이광복 공동대표 프로필 사진 */}
-                                <div className="founder-photo-placeholder" aria-label="프로필 사진 등록 예정">
-                                    TODO<br />대표 사진
+                                <div className="founder-photo-frame">
+                                    <img src="/images/founder_lee.png" alt="이광복 공동대표" className="founder-photo-img img-lee" />
                                 </div>
                                 <div>
                                     <span className="founder-title">Co-Representative</span>
