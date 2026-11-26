@@ -8,7 +8,11 @@ import {
     ROADMAP_STEPS,
 } from '@/data/curations';
 import { COURSES, getCourseLessons } from '@/data/courses';
-import { OFFICIAL_EMAIL, OFFICIAL_SNS } from '@/data/site';
+import { getLectureStats } from '@/data/lectures';
+import { START_PATHS } from '@/data/startPaths';
+import FoundersGrid from '@/app/components/FoundersGrid';
+import Testimonials from '@/app/components/Testimonials';
+import { OFFICIAL_EMAIL, OFFICIAL_SNS, SLOGAN, USAGE_NOTICE } from '@/data/site';
 import type {
     MaterialAudience,
     MaterialFormat,
@@ -53,6 +57,8 @@ function matchesSearch(item: MaterialItem, rawQuery: string): boolean {
     const haystack = [item.title, item.description, ...item.tags].join(' ').toLowerCase();
     return haystack.includes(q);
 }
+
+const lectureStats = getLectureStats();
 
 export default function HomePage() {
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -313,13 +319,14 @@ export default function HomePage() {
             <section className="hero hero-main hero-compact">
                 <div className="container">
                     <div className="hero-content">
-                        <span className="hero-eyebrow">Korea AI Research Institute Archive</span>
+                        <span className="hero-eyebrow">한국AI연구소 · 이광복 목사 · 김태주 목사</span>
                         <h1 className="hero-title">
-                            미래를 여는 기술,<br />
-                            배움과 성장의 기록을 나눕니다
+                            이광복·김태주 목사와<br />
+                            함께 배우는 AI
                         </h1>
+                        <p className="hero-slogan">&ldquo;{SLOGAN}&rdquo;</p>
                         <p className="hero-subtitle">
-                            목회자·사역자·사회복지사·일반 입문자를 위한 AI 강의 자료와 실습 워크북을 한곳에서 바로 찾으세요.
+                            목회자·사역자·사회복지사·처음 시작하는 분을 위한 AI 강의 자료와 실습 워크북을 한곳에서 바로 찾으세요.
                         </p>
 
                         <form className="hero-search-form" onSubmit={handleHeroSearchSubmit} role="search">
@@ -395,6 +402,38 @@ export default function HomePage() {
                         </button>
                     </div>
 
+                    {/* 처음 오신 분은 여기부터: 대상별 3단계 맞춤길 */}
+                    <div className="start-paths" id="start">
+                        <div className="start-paths-head">
+                            <strong>🧭 처음 오신 분은 여기부터</strong>
+                            <span>나에게 맞는 길을 골라 세 단계만 따라오세요.</span>
+                        </div>
+                        <div className="start-paths-grid">
+                            {START_PATHS.map((path) => (
+                                <div key={path.key} className="start-path-card">
+                                    <div className="start-path-title"><span aria-hidden>{path.icon}</span> {path.title}</div>
+                                    <p className="start-path-desc">{path.desc}</p>
+                                    <ol className="start-path-steps">
+                                        {path.steps.map((st, i) => {
+                                            const mat = MATERIALS_BY_ID[st.materialId];
+                                            return (
+                                                <li key={st.materialId}>
+                                                    <a href={mat ? getMaterialLink(mat) : '#programs'} target="_blank" rel="noopener">
+                                                        <span className="start-step-num">{i + 1}</span>
+                                                        <span>
+                                                            <strong>{st.label}</strong>
+                                                            {mat && <small>{mat.title}</small>}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            );
+                                        })}
+                                    </ol>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     {/* 수업 중인 학생을 위한 강의별 과정 바로가기 */}
                     <div className="course-strip" id="courses">
                         <div className="course-strip-head">
@@ -432,6 +471,7 @@ export default function HomePage() {
                     <p className="section-intro">
                         한국AI연구소에서 제공하는 최신 AI 교육 자료, 실습 워크북 및 결과 보고서를 조건별로 바로 찾아보세요.
                     </p>
+                    <p className="usage-notice">📌 {USAGE_NOTICE}</p>
 
                     <div className="archive-controls">
                         <div className="archive-search-row">
@@ -926,65 +966,7 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    <div className="founders-grid">
-                        {/* 김태주 공동대표 */}
-                        <div className="founder-card">
-                            <div className="founder-card-header">
-                                <div className="founder-photo-frame">
-                                    <img src="/images/founder_kim.jpg" alt="김태주 공동대표" className="founder-photo-img img-kim" />
-                                </div>
-                                <div>
-                                    <span className="founder-title">Co-Representative</span>
-                                    <h3 className="founder-name">김태주 공동대표</h3>
-                                </div>
-                            </div>
-                            <div className="founder-bio">
-                                <p>
-                                    "혁신적인 디지털 기술이 시대를 이끌어가는 가운데, 누구도 소외받지 않고 새로운 미래를 준비할 수 있도록 따뜻한 기술과 통찰력을 제공하는 한국AI연구소가 되겠습니다."
-                                </p>
-                            </div>
-                            <div className="founder-history">
-                                <h4>주요 학력 및 경력</h4>
-                                <ul>
-                                    <li>성결대학교 신학과</li>
-                                    <li>서울신학대학교 대학원</li>
-                                    <li>현) 한국AI연구소 공동대표</li>
-                                    <li>현) 온교회 담임목사</li>
-                                    <li>다수의 IT 솔루션 기획 및 AI 비즈니스 컨설팅 수행</li>
-                                    <li>세컨드 브레인을 위한 옵시디언 강의 전문</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* 이광복 공동대표 */}
-                        <div className="founder-card">
-                            <div className="founder-card-header">
-                                <div className="founder-photo-frame">
-                                    <img src="/images/founder_lee.png" alt="이광복 공동대표" className="founder-photo-img img-lee" />
-                                </div>
-                                <div>
-                                    <span className="founder-title">Co-Representative</span>
-                                    <h3 className="founder-name">이광복 공동대표</h3>
-                                </div>
-                            </div>
-                            <div className="founder-bio">
-                                <p>
-                                    "기술은 결국 사람을 향해야 하며, 그 변화의 시작은 끊임없는 배움과 열정에서 시작된다고 믿습니다. 지속 가능한 성장을 꿈꾸는 모든 파트너와 함께 가치를 실현하겠습니다."
-                                </p>
-                            </div>
-                            <div className="founder-history">
-                                <h4>주요 학력 및 경력</h4>
-                                <ul>
-                                    <li>서울신학대학교 신학과</li>
-                                    <li>서울신학대학교 신학대학원</li>
-                                    <li>현) 한국AI연구소 공동대표</li>
-                                    <li>현) 로스터리 카페 라온트리 대표</li>
-                                    <li>현) 라온동행교회 담임목사</li>
-                                    <li>직업별 AI 맞춤 컨설팅 및 강의 전문</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <FoundersGrid />
                 </div>
             </section>
 
@@ -995,7 +977,7 @@ export default function HomePage() {
                         <span className="start-eyebrow">VERIFIED FEEDBACK</span>
                         <h2 className="section-title">현장에서 검증된 교육 성과</h2>
                         <p className="start-subtitle">
-                            라오스 선교사 AI 집중 교육 참가자 11인 설문 분석 보고서 실측 결과입니다.{' '}
+                            {lectureStats.since}부터 {lectureStats.total}회 강의, 라오스 선교사 AI 집중 교육 참가자 11인 설문 분석 결과입니다.{' '}
                             <a href="/data/laos_feedback.html" target="_blank" style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'underline' }}>
                                 결과 보고서 원문 보기 ↗
                             </a>
@@ -1018,8 +1000,14 @@ export default function HomePage() {
                             <div className="trust-label">사역·업무 활용 가능성</div>
                             <div className="trust-sub">교육 이후 지속 활용 의향 100% 응답</div>
                         </div>
-                        {/* 나중에 추가: 누적 출강 횟수·수강생 수 카드 (실제 수치가 확인되면 넣고, .trust-grid 열 수를 4로) */}
+                        <a href="/history" className="trust-card trust-card-link">
+                            <div className="trust-metric">{lectureStats.total}회</div>
+                            <div className="trust-label">누적 AI 강의</div>
+                            <div className="trust-sub">{lectureStats.since}부터 · 교회·기관 {lectureStats.orgCount}곳 · 해외 {lectureStats.countries.length}개국 · 강의 경력 보기 →</div>
+                        </a>
                     </div>
+
+                    <Testimonials />
                 </div>
             </section>
 

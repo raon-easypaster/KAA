@@ -2455,3 +2455,103 @@ footer {
     .contact-banner, .course-banner { max-height: 200px; }
     .hero-main.hero-compact { padding: 48px 0 56px; }
 }
+
+/* ===== 강의 경력 (/history) ===== */
+.trust-grid { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 960px) { .trust-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px) { .trust-grid { grid-template-columns: 1fr; } }
+.trust-card-link { text-decoration: none; color: inherit; border-color: var(--accent); background: var(--accent-soft); transition: transform .15s; }
+.trust-card-link:hover { transform: translateY(-2px); }
+.history-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0 36px; }
+.history-stats > div { background: #fff; border: 1px solid var(--gray-300); border-radius: 14px; padding: 18px; text-align: center; }
+.history-stats strong { display: block; font-size: 1.7rem; color: var(--primary); font-weight: 800; }
+.history-stats span { font-size: 0.85rem; color: var(--gray-700); }
+.history-year { margin-bottom: 32px; }
+.history-year h2 { font-size: 1.35rem; color: var(--black); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary); }
+.history-year h2 small { font-size: 0.9rem; color: var(--gray-500); font-weight: 600; margin-left: 6px; }
+.history-list { list-style: none; padding: 0; margin: 0; }
+.history-item { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 12px 4px; border-bottom: 1px solid var(--gray-300); }
+.history-date { color: var(--gray-500); font-variant-numeric: tabular-nums; font-size: 0.92rem; padding-top: 2px; }
+.history-body strong { display: block; color: var(--black); font-size: 1rem; }
+.history-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 4px; font-size: 0.85rem; color: var(--gray-700); align-items: center; }
+.history-cat { padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+.cat-church { background: #e8f0fb; color: #154c79; }
+.cat-welfare { background: #e6f4ea; color: #1e6b37; }
+.cat-youth { background: #fff4e0; color: #9a5b00; }
+.cat-general { background: #f0ecfa; color: #5b3e99; }
+.history-cta { margin-top: 20px; padding: 22px; border-radius: 16px; background: var(--accent-soft); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.history-cta p { font-weight: 700; color: var(--black); margin: 0; }
+@media (max-width: 720px) {
+    .history-stats { grid-template-columns: repeat(2, 1fr); }
+    .history-item { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ===== 사람 중심 첫 화면 ===== */
+.hero-slogan {
+    display: inline-block; margin: 0 auto 16px; padding: 8px 18px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 1.08rem; font-weight: 700; color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== 처음 오신 분 3단계 맞춤길 ===== */
+.start-paths { margin-top: 22px; padding: 20px; border-radius: 16px; background: #fff; border: 1px solid var(--gray-300); }
+.start-paths-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; margin-bottom: 14px; }
+.start-paths-head strong { font-size: 1.1rem; color: var(--black); }
+.start-paths-head span { color: var(--gray-700); font-size: 0.9rem; }
+.start-paths-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.start-path-card { padding: 16px; border-radius: 14px; background: #f5f8fb; }
+.start-path-title { font-weight: 800; color: var(--black); font-size: 1.02rem; }
+.start-path-desc { font-size: 0.85rem; color: var(--gray-700); margin: 6px 0 10px; line-height: 1.5; }
+.start-path-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.start-path-steps a { display: flex; gap: 10px; align-items: center; padding: 9px 10px; border-radius: 10px; background: #fff; text-decoration: none; color: inherit; border: 1px solid transparent; }
+.start-path-steps a:hover { border-color: var(--primary); }
+.start-step-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 0.85rem; display: grid; place-items: center; }
+.start-path-steps strong { display: block; font-size: 0.92rem; color: var(--black); }
+.start-path-steps small { display: block; font-size: 0.75rem; color: var(--gray-500); line-height: 1.35; }
+
+/* ===== 참가자 한마디 ===== */
+.testimonials { margin-top: 32px; }
+.testimonials-title { font-size: 1.15rem; color: var(--black); margin-bottom: 12px; text-align: center; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.testimonial-card { margin: 0; padding: 18px 20px; border-radius: 14px; background: #fff; border: 1px solid var(--gray-300); border-left: 4px solid var(--accent); }
+.testimonial-card blockquote { margin: 0 0 8px; color: var(--gray-900); line-height: 1.65; font-size: 0.97rem; }
+.testimonial-card figcaption { font-size: 0.8rem; color: var(--gray-500); }
+
+/* ===== 이용 안내 ===== */
+.usage-notice { margin: 0 0 18px; padding: 10px 14px; border-radius: 10px; background: #fff8ec; border: 1px solid #f3dcae; color: #7a4a00; font-size: 0.88rem; line-height: 1.55; }
+.footer-usage { font-size: 0.8rem; opacity: 0.75; margin: 10px auto; max-width: 640px; }
+
+/* ===== 소감 양식 ===== */
+.feedback-container { max-width: 640px; }
+.feedback-form { display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 16px; background: #fff; border: 1px solid var(--gray-300); }
+.feedback-form label { font-weight: 700; color: var(--black); font-size: 0.92rem; margin-top: 6px; }
+.feedback-form select, .feedback-form textarea { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--gray-300); font: inherit; font-size: 0.95rem; }
+.feedback-form .req { color: #c53030; }
+.feedback-check { display: flex; gap: 8px; align-items: flex-start; font-weight: 500 !important; color: var(--gray-700) !important; }
+.feedback-privacy { font-size: 0.8rem; color: var(--gray-500); margin: 4px 0; }
+.feedback-done { padding: 22px; border-radius: 16px; background: #e6f4ea; color: #1e6b37; font-weight: 700; }
+.feedback-fallback { margin-top: 10px; padding: 14px; border-radius: 12px; background: var(--accent-soft); display: flex; flex-direction: column; gap: 8px; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lesson-feedback { margin-top: 14px; padding: 14px 18px; border-radius: 14px; background: var(--accent-soft); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+/* ===== 강의용 QR ===== */
+.qr-container { max-width: 1040px; }
+.qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 18px; }
+.qr-card { margin: 0; padding: 16px; border-radius: 16px; background: #fff; border: 1px solid var(--gray-300); text-align: center; }
+.qr-img svg { width: 100%; max-width: 200px; height: auto; display: block; margin: 0 auto 10px; }
+.qr-card strong { display: block; color: var(--black); font-size: 0.98rem; }
+.qr-card span { display: block; color: var(--gray-700); font-size: 0.8rem; margin: 4px 0 6px; }
+.qr-url { font-size: 0.75rem; color: var(--primary); word-break: break-all; }
+
+/* ===== 섭외용 소개 ===== */
+.intro-slogan { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin: 4px 0 14px; }
+.intro-h2 { font-size: 1.35rem; color: var(--black); margin: 36px 0 14px; }
+.intro-courses { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.intro-courses a { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 12px; background: #fff; border: 1px solid var(--gray-300); text-decoration: none; color: inherit; }
+.intro-courses a > span:first-child { font-size: 1.5rem; }
+.intro-courses strong { display: block; color: var(--black); }
+.intro-courses small { color: var(--gray-700); font-size: 0.82rem; }
+
+@media (max-width: 860px) {
+    .start-paths-grid, .testimonials-grid, .intro-courses { grid-template-columns: 1fr; }
+}

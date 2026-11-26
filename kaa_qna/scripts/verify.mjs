@@ -204,6 +204,67 @@ try {
         }
         check('그림: 강의 페이지에 강의 대표 그림이 보인다', imgErr.length === 0, imgErr.join(', '));
 
+        // ----- 강의 경력 -----
+        const lecSrc = readFileSync(join(ROOT, 'src/data/lectures.ts'), 'utf8');
+        const lecRows = [...lecSrc.matchAll(/\{ date: '([0-9-]+)', title: '([^']+)'/g)].map(m => ({ date: m[1], title: m[2] }));
+        const lecKeys = lecRows.map(r => `${r.date} ${r.title}`);
+        const dupLec = lecKeys.filter((k, i) => lecKeys.indexOf(k) !== i);
+        check('경력: 같은 날 같은 강의가 두 번 적혀 있지 않다', dupLec.length === 0, dupLec.join(', '));
+        const badDate = lecRows.filter(r => !/^20\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(r.date)).map(r => r.date);
+        check('경력: 날짜가 모두 YYYY-MM-DD 형식이다', badDate.length === 0, badDate.join(', '));
+        const hist = await get('/history');
+        const missLec = lecRows.filter(r => !hist.text.includes(escapeHtml(r.title)));
+        check('경력: 강의 경력 페이지가 열리고 모든 강의가 보인다', hist.status === 200 && lecRows.length > 0 && missLec.length === 0,
+            `상태 ${hist.status}, 빠진 강의: ${missLec.map(r => r.title).join(', ')}`);
+        check('경력: 홈 교육 성과에 누적 강의 수와 경력 페이지 링크가 있다',
+            home.text.includes('href="/history"') && (home.text.includes(`${lecRows.length}<!-- -->회`) || home.text.includes(`${lecRows.length}회`)),
+            `누적 ${lecRows.length}회 표시 또는 /history 링크가 없습니다`);
+
+        // ----- 사람 중심 첫 화면 · 맞춤길 · 한마디 · 이용 안내 -----
+        check('홈: 첫 화면에 두 목사님 이름과 한마디가 있다',
+            home.text.includes('이광복·김태주 목사와') && home.text.includes('AI는 눈치 없는 신입사원, 우리는 염치 없는 사람'));
+        const spSrc = readFileSync(join(ROOT, 'src/data/startPaths.ts'), 'utf8');
+        const spIds = [...spSrc.matchAll(/materialId: '([^']+)'/g)].map(m => m[1]);
+        const badSp = spIds.filter(id => !ids.includes(id));
+        check('맞춤길: 3단계 맞춤길이 모두 자료실에 있는 자료를 가리킨다', spIds.length >= 9 && badSp.length === 0, `잘못된 id: ${badSp.join(', ')}`);
+        const spLinks = [...new Set(spIds)].map(id => materials.find(m => m.id === id)).filter(Boolean)
+            .map(m => m.links.slide || m.links.doc || m.links.download); // getMaterialLink 와 같은 순서
+        const missSpLink = spLinks.filter(l => !home.text.includes(`href="${escapeHtml(l)}"`));
+        check('맞춤길: 홈에 "처음 오신 분은 여기부터" 3단계 링크가 보인다',
+            home.text.includes('처음 오신 분은 여기부터') && missSpLink.length === 0, `빠진 링크: ${missSpLink.join(', ')}`);
+        const tSrc = readFileSync(join(ROOT, 'src/data/testimonials.ts'), 'utf8');
+        const tQuotes = [...tSrc.matchAll(/quote: '([^']+)'/g)].map(m => m[1]);
+        const missQ = tQuotes.filter(q => !home.text.includes(escapeHtml(q).replace(/"/g, '&quot;')) && !home.text.includes(escapeHtml(q)));
+        check('한마디: 홈에 참가자 한마디가 모두 보인다', tQuotes.length >= 3 && missQ.length === 0, `빠진 한마디 ${missQ.length}개`);
+        check('한마디: 참가자 이름이 실리지 않는다 (who 는 모두 "참가자")',
+            [...tSrc.matchAll(/who: '([^']+)'/g)].every(m => m[1].endsWith('참가자')));
+        check('이용 안내: 홈 자료실에 "개인 학습용" 안내가 있다', home.text.includes('개인 학습용으로만'));
+        const firstLesson = await get(`/course/${courses[0].slug}/1`);
+        check('이용 안내: 차시 페이지에도 "개인 학습용" 안내가 있다', firstLesson.text.includes('개인 학습용으로만'));
+
+        // ----- 활용법: QR · 소감 · 섭외용 소개 -----
+        const qr = await get('/qr');
+        const qrSvgCount = (qr.text.match(/<svg/g) || []).length;
+        check('QR: 강의용 QR 페이지가 열리고 강의마다 QR 그림이 있다',
+            qr.status === 200 && qrSvgCount >= courses.length + 3 && courses.every(c => qr.text.includes(`kaa-hub.vercel.app/course/${c.slug}`)),
+            `상태 ${qr.status}, QR ${qrSvgCount}개`);
+        const fb = await get('/feedback?course=' + courses[0].slug);
+        check('소감: 한 줄 소감 페이지가 열리고 양식이 있다', fb.status === 200 && fb.text.includes('id="fb-comment"') && fb.text.includes('소감 보내기'));
+        const lastN = lessonsOf(courses[0]).length;
+        const lastLesson = await get(`/course/${courses[0].slug}/${lastN}`);
+        check('소감: 마지막 차시에 한 줄 소감 남기기 링크가 있다', lastLesson.text.includes(`href="/feedback?course=${courses[0].slug}"`));
+        const postFb = (b) => fetch(`${base}/api/feedback`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) });
+        const f1 = await postFb({ comment: '' });
+        check('소감: 내용이 비면 접수하지 않는다 (400)', f1.status === 400, `상태 ${f1.status}`);
+        const f2 = await postFb({ comment: '좋았어요', website: 'spam' });
+        check('소감: 스팸 숨은 칸이 채워지면 조용히 무시한다 (200)', f2.status === 200, `상태 ${f2.status}`);
+        const f3 = await postFb({ comment: '좋았어요' });
+        check('소감: 발송 키가 없으면 503(not_configured)으로 알려 메일 앱 안내로 바뀐다', f3.status === 503, `상태 ${f3.status}`);
+        const intro = await get('/intro');
+        check('소개: 섭외용 소개 페이지에 공동대표·강의 수·문의가 있다',
+            intro.status === 200 && intro.text.includes('founder_kim') && intro.text.includes('founder_lee')
+            && intro.text.includes(`${lecRows.length}`) && intro.text.includes('href="/#contact"'), `상태 ${intro.status}`);
+
         // ----- 교회 사역 프로그램 -----
         check('홈: 교회 사역 프로그램 바로가기가 있다', home.text.includes('href="/programs"'));
         const pg = await get('/programs');

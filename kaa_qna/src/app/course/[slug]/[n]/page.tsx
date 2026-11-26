@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { COURSES, getCourse, getCourseLessons, getLessonViewUrl } from '@/data/courses';
+import { USAGE_NOTICE } from '@/data/site';
 
 export const dynamicParams = false;
 
@@ -68,6 +69,8 @@ export default async function LessonPage({ params }: { params: Params }) {
                     )}
                 </div>
 
+                <p className="usage-notice">📌 {USAGE_NOTICE}</p>
+
                 <div className="lesson-frame-wrap">
                     <iframe src={viewUrl} title={m.title} className="lesson-frame" loading="lazy" />
                 </div>
@@ -93,6 +96,12 @@ export default async function LessonPage({ params }: { params: Params }) {
                         </Link>
                     )}
                 </nav>
+                {!next && (
+                    <div className="lesson-feedback">
+                        <span>수업은 어떠셨나요? 한 줄 소감을 남겨 주세요.</span>
+                        <Link href={`/feedback?course=${course.slug}`} className="btn btn-secondary">✍️ 한 줄 소감 남기기</Link>
+                    </div>
+                )}
             </div>
         </section>
     );
