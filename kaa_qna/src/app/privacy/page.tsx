@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { OFFICIAL_EMAIL } from '@/data/site';
 
 export const metadata = {
     title: '개인정보 처리방침 | 한국AI연구소',
@@ -45,8 +46,8 @@ export default function PrivacyPage() {
                         <p style={{ color: 'var(--gray-700)', lineHeight: 1.7, fontSize: '0.95rem' }}>
                             - 기관명: 한국AI연구소<br />
                             - 주소: 경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 3층<br />
-                            - 전화: 010-5606-0845
-                            {/* 나중에 추가: 공식 이메일 주소 (<br />- 이메일: ...) */}
+                            - 전화: 010-5606-0845<br />
+                            - 이메일: {OFFICIAL_EMAIL}
                         </p>
                     </div>
                 </div>

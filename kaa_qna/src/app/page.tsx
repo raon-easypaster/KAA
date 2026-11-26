@@ -7,6 +7,8 @@ import {
     MATERIALS_BY_ID,
     ROADMAP_STEPS,
 } from '@/data/curations';
+import { COURSES, getCourseLessons } from '@/data/courses';
+import { OFFICIAL_EMAIL, OFFICIAL_SNS } from '@/data/site';
 import type {
     MaterialAudience,
     MaterialFormat,
@@ -69,8 +71,11 @@ export default function HomePage() {
     const [inquiryConsent, setInquiryConsent] = useState(false);
     const [inquirySummary, setInquirySummary] = useState<string | null>(null);
     const [copiedInquiry, setCopiedInquiry] = useState(false);
+    // 문의 전송 상태: idle → sending → sent(메일 전송 완료) / fallback(메일 앱으로 보내기 안내)
+    const [inquiryStatus, setInquiryStatus] = useState<'idle' | 'sending' | 'sent' | 'fallback'>('idle');
+    const [inquiryHoneypot, setInquiryHoneypot] = useState('');
 
-    const handleInquirySubmit = (e: React.FormEvent) => {
+    const handleInquirySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!inquiryName.trim() || !inquiryContact.trim() || !inquiryConsent) return;
         const summary = [
@@ -82,7 +87,29 @@ export default function HomePage() {
         ].join('\n');
         setInquirySummary(summary);
         setCopiedInquiry(false);
+        setInquiryStatus('sending');
+        try {
+            const r = await fetch('/api/inquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: inquiryName,
+                    contact: inquiryContact,
+                    topic: inquiryTopic,
+                    message: inquiryMessage,
+                    consent: inquiryConsent,
+                    website: inquiryHoneypot,
+                }),
+            });
+            setInquiryStatus(r.ok ? 'sent' : 'fallback');
+        } catch {
+            setInquiryStatus('fallback');
+        }
     };
+
+    const inquiryMailto = inquirySummary
+        ? `mailto:${OFFICIAL_EMAIL}?subject=${encodeURIComponent(`[강의 문의] ${inquiryName.trim()} · ${inquiryTopic}`)}&body=${encodeURIComponent(inquirySummary)}`
+        : `mailto:${OFFICIAL_EMAIL}`;
 
     const handleCopyInquiry = async () => {
         if (!inquirySummary) return;
@@ -366,6 +393,25 @@ export default function HomePage() {
                                 <div className="quick-path-desc">AI 첫걸음·기초 개념·프롬프트 입문 자료</div>
                             </div>
                         </button>
+                    </div>
+
+                    {/* 수업 중인 학생을 위한 강의별 과정 바로가기 */}
+                    <div className="course-strip" id="courses">
+                        <div className="course-strip-head">
+                            <strong>📚 수업 중이신가요? 강의별 과정</strong>
+                            <a href="/course" className="course-strip-all">전체 과정 보기 →</a>
+                        </div>
+                        <div className="course-strip-grid">
+                            {COURSES.map((course) => (
+                                <a key={course.slug} href={`/course/${course.slug}`} className="course-strip-card">
+                                    <span aria-hidden>{course.icon}</span>
+                                    <span>
+                                        <strong>{course.title}</strong>
+                                        <small>{course.audience} · 차시 {getCourseLessons(course).length}개</small>
+                                    </span>
+                                </a>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -988,7 +1034,22 @@ export default function HomePage() {
                                         </a>
                                     </span>
                                 </div>
-                                {/* 나중에 추가: 공식 이메일, SNS·카카오톡 오픈채팅 링크 (info-item 형식으로) */}
+                                <div className="info-item">
+                                    <span className="label">이메일</span>
+                                    <span className="value">
+                                        <a href={`mailto:${OFFICIAL_EMAIL}`} style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'none' }}>
+                                            {OFFICIAL_EMAIL}
+                                        </a>
+                                    </span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">SNS</span>
+                                    <span className="value">
+                                        <a href={OFFICIAL_SNS.url} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700, textDecoration: 'none' }}>
+                                            {OFFICIAL_SNS.label} ↗
+                                        </a>
+                                    </span>
+                                </div>
                                 <div className="map-btns" style={{ marginTop: '8px' }}>
                                     <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
                                         target="_blank" className="btn" style={{ backgroundColor: '#03C75A', color: '#fff', border: 'none', padding: '10px 18px' }}>네이버 지도</a>
@@ -1003,8 +1064,7 @@ export default function HomePage() {
                                 강의·컨설팅 문의 양식
                             </h3>
                             <p style={{ fontSize: '0.88rem', color: 'var(--gray-700)', marginBottom: '16px' }}>
-                                아래 항목을 작성하시면 문자·전화로 바로 전달할 수 있는 문의 요약문이 생성됩니다.
-                                {/* TODO: 실제 정보 입력 - 이메일 또는 백엔드 문의 수신 API 연동 */}
+                                아래 항목을 작성해 보내 주시면 연구소 이메일({OFFICIAL_EMAIL})로 바로 전달됩니다.
                             </p>
 
                             <form className="inquiry-form" onSubmit={handleInquirySubmit}>
@@ -1070,18 +1130,40 @@ export default function HomePage() {
                                         )
                                     </span>
                                 </label>
-                                <button type="submit" className="inquiry-submit-btn">
-                                    문의 요약 생성 및 접수 안내 보기
+                                {/* 스팸 방지용 숨은 칸 (사람에게는 보이지 않음) */}
+                                <input
+                                    type="text"
+                                    name="website"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    aria-hidden="true"
+                                    value={inquiryHoneypot}
+                                    onChange={(e) => setInquiryHoneypot(e.target.value)}
+                                    style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                                />
+                                <button type="submit" className="inquiry-submit-btn" disabled={inquiryStatus === 'sending'}>
+                                    {inquiryStatus === 'sending' ? '보내는 중…' : '문의 보내기'}
                                 </button>
                             </form>
 
-                            {inquirySummary && (
+                            {inquiryStatus === 'sent' && (
                                 <div className="inquiry-success-box" role="status">
-                                    <strong>문의 내용이 정리되었습니다.</strong> 아래 내용을 복사해{' '}
+                                    <strong>✓ 문의가 접수되었습니다.</strong> 연구소 이메일로 전달되었으며, 남겨 주신 연락처로 회신드리겠습니다.
+                                </div>
+                            )}
+
+                            {inquiryStatus === 'fallback' && inquirySummary && (
+                                <div className="inquiry-success-box" role="status">
+                                    <strong>자동 전송이 되지 않았습니다.</strong> 아래 버튼으로 메일을 보내 주시거나, 내용을 복사해{' '}
                                     <a href="tel:010-5606-0845" style={{ fontWeight: 800, color: '#065f46', textDecoration: 'underline' }}>
                                         010-5606-0845
                                     </a>
-                                    로 문자/전화 문의해 주세요.
+                                    로 문자 주세요.
+                                    <div style={{ marginTop: '10px' }}>
+                                        <a href={inquiryMailto} className="inquiry-submit-btn" style={{ display: 'inline-block', width: 'auto', padding: '10px 18px', textDecoration: 'none' }}>
+                                            ✉️ 메일 앱으로 보내기 ({OFFICIAL_EMAIL})
+                                        </a>
+                                    </div>
                                     <pre className="inquiry-summary-pre">{inquirySummary}</pre>
                                     <button
                                         type="button"

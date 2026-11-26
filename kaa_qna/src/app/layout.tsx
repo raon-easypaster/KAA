@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import VisitorCounter from "@/app/components/VisitorCounter";
+import { OFFICIAL_EMAIL, OFFICIAL_SNS } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "한국AI연구소",
@@ -40,6 +41,9 @@ export default function RootLayout({
                 <a href="/#programs" className="nav-link">
                   자료실
                 </a>
+                <a href="/course" className="nav-link">
+                  강의별 과정
+                </a>
                 <a href="/#roadmap" className="nav-link">
                   학습 로드맵
                 </a>
@@ -75,7 +79,8 @@ export default function RootLayout({
               <a href="/#roadmap">학습 로드맵</a>
               <a href="/#contact">강의 문의</a>
               <a href="/privacy">개인정보 처리방침</a>
-              {/* 나중에 추가: 공식 SNS 링크 (유튜브/카카오톡 등) */}
+              <a href={`mailto:${OFFICIAL_EMAIL}`}>이메일</a>
+              <a href={OFFICIAL_SNS.url} target="_blank" rel="noopener">{OFFICIAL_SNS.label}</a>
             </div>
             <VisitorCounter />
             <p className="footer-copy">© 2026 Korea AI Research Institute. All rights reserved.</p>

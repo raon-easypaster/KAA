@@ -47,6 +47,17 @@ const CHILDCARE = ['childcare-center-ai', 'childcare-evaluation-ai', 'childcare-
 const lostChildcare = CHILDCARE.filter(id => !ids.includes(id));
 check('자료: 돌봄센터 강의 자료 3건이 자료실에 있다', lostChildcare.length === 0, `빠진 자료: ${lostChildcare.join(', ')}`);
 
+// ---------- 1-2. 강의별 페이지 데이터 점검 ----------
+const courses = JSON.parse(readFileSync(join(ROOT, 'src/data/courses.json'), 'utf8'));
+const slugs = courses.map(c => c.slug);
+check('강의: 강의 주소(slug)가 서로 겹치지 않는다', new Set(slugs).size === slugs.length);
+const badRefs = courses.flatMap(c => c.sections.flatMap(s => s.lessons
+    .filter(l => !ids.includes(l.materialId)).map(l => `${c.slug}:${l.materialId}`)));
+check('강의: 강의의 모든 차시가 자료실에 있는 자료를 가리킨다', badRefs.length === 0, badRefs.join(', '));
+const emptyCourse = courses.filter(c => c.sections.flatMap(s => s.lessons).length === 0).map(c => c.slug);
+check('강의: 모든 강의에 차시가 1개 이상 있다', emptyCourse.length === 0, emptyCourse.join(', '));
+const lessonsOf = (c) => c.sections.flatMap(s => s.lessons.map(l => materials.find(m => m.id === l.materialId)));
+
 // ---------- 2. 빌드 ----------
 if (process.env.SKIP_BUILD !== '1') {
     console.log('\n… next build 실행 중');
@@ -58,7 +69,10 @@ if (process.env.SKIP_BUILD !== '1') {
 }
 
 // ---------- 3. 시험 서버로 실제 화면 점검 ----------
-const server = spawn('npx', ['next', 'start', '-p', String(PORT)], { cwd: ROOT, stdio: 'ignore', detached: true });
+// 시험 서버에서는 메일 발송 키를 비워 실제 메일이 나가지 않게 한다
+const testEnv = { ...process.env };
+delete testEnv.RESEND_API_KEY;
+const server = spawn('npx', ['next', 'start', '-p', String(PORT)], { cwd: ROOT, stdio: 'ignore', detached: true, env: testEnv });
 const base = `http://localhost:${PORT}`;
 const get = async (path) => {
     const r = await fetch(base + path);
@@ -79,6 +93,9 @@ try {
         check('홈: 강의 문의 양식이 있다', home.text.includes('id="inq-name"') && home.text.includes('id="inq-topic"'));
         check('홈: 두 공동대표 사진이 있다', home.text.includes('founder_kim') && home.text.includes('founder_lee'));
         check('홈: 오시는 길 전화번호가 있다', home.text.includes('010-5606-0845'));
+        check('홈: 공식 이메일(galeb1022@gmail.com) 링크가 있다', home.text.includes('mailto:galeb1022@gmail.com'));
+        check('홈: 페이스북 링크가 있다', home.text.includes('https://www.facebook.com/galeb76'));
+        check('홈: 문의 양식 버튼이 "문의 보내기"다', home.text.includes('문의 보내기'));
         // 버그 재발 방지: 작업용 [TODO] 문구가 방문자에게 보였던 문제 (2026-11)
         check('홈: 화면에 [TODO] 작업 문구가 보이지 않는다', !home.text.includes('[TODO'), '홈 HTML 안에 "[TODO" 가 있습니다');
 
@@ -86,6 +103,23 @@ try {
         check('개인정보: 처리방침 페이지가 열린다 (200)', privacy.status === 200, `상태 ${privacy.status}`);
         check('개인정보: 화면에 [TODO] 작업 문구가 보이지 않는다', !privacy.text.includes('[TODO'));
         check('개인정보: 문의 연락처(전화)가 있다', privacy.text.includes('010-5606-0845'));
+        check('개인정보: 공식 이메일이 있다', privacy.text.includes('galeb1022@gmail.com'));
+
+        // ----- 문의 메일 접수 API (실제 메일은 보내지 않음) -----
+        const post = (body) => fetch(`${base}/api/inquiry`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+        });
+        const good = { name: '시험', contact: '010-0000-0000', topic: '기타 맞춤 컨설팅', message: '점검', consent: true, website: '' };
+        const r1 = await post({ ...good, name: '' });
+        check('문의: 이름이 비면 접수하지 않는다 (400)', r1.status === 400, `상태 ${r1.status}`);
+        const r2 = await post({ ...good, consent: false });
+        check('문의: 개인정보 동의가 없으면 접수하지 않는다 (400)', r2.status === 400, `상태 ${r2.status}`);
+        const r3 = await post({ ...good, website: 'spam' });
+        check('문의: 스팸 숨은 칸이 채워지면 조용히 무시한다 (200)', r3.status === 200, `상태 ${r3.status}`);
+        const r4 = await post(good);
+        const j4 = await r4.json().catch(() => ({}));
+        check('문의: 발송 키가 없으면 503(not_configured)으로 알려 화면이 메일 앱 안내로 바뀐다',
+            r4.status === 503 && j4.reason === 'not_configured', `상태 ${r4.status} ${JSON.stringify(j4)}`);
 
         const json = await get('/data/materials.json');
         check('자료: /data/materials.json 이 열린다', json.status === 200, `상태 ${json.status}`);
@@ -104,6 +138,45 @@ try {
             if (r.status !== 200) badZip.push(`${z} (${r.status})`);
         }
         check('자료: 돌봄센터 자료 ZIP 내려받기가 된다', badZip.length === 0, badZip.join(', '));
+
+        // ----- 강의별 페이지 -----
+        check('홈: 강의별 페이지 바로가기가 있다', courses.every(c => home.text.includes(`href="/course/${c.slug}"`)),
+            '홈에 /course/<slug> 링크가 빠졌습니다');
+        const list = await get('/course');
+        check('강의: 강의 목록 페이지가 열리고 모든 강의가 보인다',
+            list.status === 200 && courses.every(c => list.text.includes(escapeHtml(c.title))), `상태 ${list.status}`);
+
+        const courseErr = [];
+        const navErr = [];
+        for (const c of courses) {
+            const lessons = lessonsOf(c);
+            const page = await get(`/course/${c.slug}`);
+            if (page.status !== 200) { courseErr.push(`${c.slug} (${page.status})`); continue; }
+            const miss = lessons.filter(m => !page.text.includes(escapeHtml(m.title)));
+            if (miss.length) courseErr.push(`${c.slug}: 차시 제목 빠짐 ${miss.map(m => m.id).join(', ')}`);
+            if (!page.text.includes(`href="/course/${c.slug}/1"`)) courseErr.push(`${c.slug}: 1차시 시작 링크 없음`);
+
+            for (let n = 1; n <= lessons.length; n++) {
+                const lp = await get(`/course/${c.slug}/${n}`);
+                const m = lessons[n - 1];
+                const where = `${c.slug}/${n}`;
+                if (lp.status !== 200) { navErr.push(`${where} (${lp.status})`); continue; }
+                if (!lp.text.includes(escapeHtml(m.title))) navErr.push(`${where}: 자료 제목 없음`);
+                const src = m.links.doc || m.links.slide;
+                if (!lp.text.includes(escapeHtml(src))) navErr.push(`${where}: 자료 화면(${src}) 없음`);
+                const hasPrev = lp.text.includes(`href="/course/${c.slug}/${n - 1}"`);
+                const hasNext = lp.text.includes(`href="/course/${c.slug}/${n + 1}"`);
+                if (n > 1 && !hasPrev) navErr.push(`${where}: 이전 링크 없음`);
+                if (n < lessons.length && !hasNext) navErr.push(`${where}: 다음 링크 없음`);
+                if (n === lessons.length && !lp.text.includes(`href="/course/${c.slug}"`)) navErr.push(`${where}: 마지막 차시에 과정으로 돌아가기 없음`);
+            }
+            const over = await get(`/course/${c.slug}/${lessons.length + 1}`);
+            if (over.status !== 404) navErr.push(`${c.slug}/${lessons.length + 1}: 없는 차시인데 ${over.status}`);
+        }
+        check('강의: 각 강의 페이지가 열리고 모든 차시 제목이 보인다', courseErr.length === 0, courseErr.join(' / '));
+        check('강의: 각 차시 페이지에 자료 화면과 이전·다음 이동이 맞게 있다', navErr.length === 0, navErr.join(' / '));
+        const nf = await get('/course/no-such-course');
+        check('강의: 없는 강의 주소는 404를 낸다', nf.status === 404, `상태 ${nf.status}`);
     }
 } finally {
     try { process.kill(-server.pid); } catch { }
