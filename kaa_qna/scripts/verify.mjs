@@ -178,6 +178,13 @@ try {
         const nf = await get('/course/no-such-course');
         check('강의: 없는 강의 주소는 404를 낸다', nf.status === 404, `상태 ${nf.status}`);
 
+        // ----- 로고 -----
+        const logo = await fetch(base + '/images/logo-mark.svg');
+        check('로고: 메뉴에 로고 이미지가 있고 열린다',
+            home.text.includes('src="/images/logo-mark.svg"') && logo.status === 200 && (logo.headers.get('content-type') || '').includes('svg'),
+            `상태 ${logo.status}`);
+        check('로고: 브라우저 탭 아이콘(icon.svg)이 연결되어 있다', /<link rel="icon" href="\/icon\.svg/.test(home.text));
+
         // ----- 교회 사역 프로그램 -----
         check('홈: 교회 사역 프로그램 바로가기가 있다', home.text.includes('href="/programs"'));
         const pg = await get('/programs');

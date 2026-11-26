@@ -28,8 +28,12 @@ export default function RootLayout({
         <header>
           <nav className="navbar">
             <div className="container">
-              <a href="/" className="logo">
-                🤖 한국AI연구소
+              <a href="/" className="logo" aria-label="한국AI연구소 홈">
+                <img src="/images/logo-mark.svg" alt="" className="logo-mark" width={40} height={40} />
+                <span className="logo-text">
+                  <span className="logo-name">한국<span className="logo-ai">AI</span>연구소</span>
+                  <span className="logo-sub">Korea AI Research Institute</span>
+                </span>
               </a>
               <input type="checkbox" id="menu-toggle" className="menu-toggle-checkbox" />
               <label htmlFor="menu-toggle" className="menu-toggle-label">

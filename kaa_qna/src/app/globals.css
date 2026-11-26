@@ -2416,3 +2416,19 @@ footer {
     .program-card { grid-template-columns: 1fr; padding: 18px; gap: 16px; }
     .program-poster { max-width: 320px; }
 }
+
+/* ===== 로고 ===== */
+.logo { gap: 10px; }
+.logo-mark { width: 40px; height: 40px; flex-shrink: 0; border-radius: 11px; box-shadow: 0 4px 12px rgba(21, 76, 121, 0.25); }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-name { font-size: 1.35rem; font-weight: 800; color: var(--black); letter-spacing: -0.5px; }
+.logo-ai {
+    background: linear-gradient(135deg, #2b7bc6, #22b8cf);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.logo-sub { font-size: 0.62rem; font-weight: 600; color: var(--gray-500); letter-spacing: 0.4px; margin-top: 2px; }
+@media (max-width: 720px) {
+    .logo-mark { width: 34px; height: 34px; }
+    .logo-name { font-size: 1.15rem; }
+    .logo-sub { font-size: 0.55rem; }
+}

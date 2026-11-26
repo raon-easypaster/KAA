@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="한국AI연구소 로고">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c2b44"/>
+      <stop offset="0.55" stop-color="#154c79"/>
+      <stop offset="1" stop-color="#2b7bc6"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7fe3ff"/>
+      <stop offset="1" stop-color="#5ee6c0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <!-- 신경망 연결선 -->
+  <g stroke="#9fd3ff" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round">
+    <line x1="32" y1="32" x2="16" y2="18"/>
+    <line x1="32" y1="32" x2="48" y2="18"/>
+    <line x1="32" y1="32" x2="14" y2="40"/>
+    <line x1="32" y1="32" x2="50" y2="40"/>
+    <line x1="32" y1="32" x2="32" y2="52"/>
+    <line x1="16" y1="18" x2="48" y2="18"/>
+    <line x1="14" y1="40" x2="32" y2="52"/>
+    <line x1="50" y1="40" x2="32" y2="52"/>
+  </g>
+  <!-- 바깥 노드 -->
+  <g fill="#ffffff">
+    <circle cx="16" cy="18" r="3.6"/>
+    <circle cx="48" cy="18" r="3.6"/>
+    <circle cx="14" cy="40" r="3.6"/>
+    <circle cx="50" cy="40" r="3.6"/>
+    <circle cx="32" cy="52" r="3.6"/>
+  </g>
+  <!-- 가운데 반짝이는 별(생성형 AI) -->
+  <path d="M32 19 C33.4 27 37 30.6 45 32 C37 33.4 33.4 37 32 45 C30.6 37 27 33.4 19 32 C27 30.6 30.6 27 32 19 Z" fill="url(#glow)"/>
+</svg>
