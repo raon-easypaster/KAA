@@ -15,6 +15,8 @@ export interface Course {
     audience: string;
     instructors: string;
     icon: string;
+    /** 강의 페이지 위쪽 그림 (선택) */
+    image?: string;
     sections: CourseSection[];
 }
 

@@ -1,6 +1,7 @@
 [
   {
     "slug": "3day",
+    "image": "/images/scenes/workshop.webp",
     "title": "3일 집중 AI 실전 마스터 과정",
     "subtitle": "AI를 이해하고 → 실제 업무에 쓰고 → 나만의 AI 활용법 만들기",
     "audience": "목회자 · 선교사 · 사역자",
@@ -43,6 +44,7 @@
   },
   {
     "slug": "childcare",
+    "image": "/images/scenes/welfare-team.webp",
     "title": "돌봄 현장 AI 실무 과정",
     "subtitle": "두려움을 넘어 → 평가 대비 실무 → 통합 AI 시스템으로",
     "audience": "지역아동센터 · 다함께돌봄센터 종사자",
@@ -68,6 +70,7 @@
   },
   {
     "slug": "teachers",
+    "image": "/images/scenes/growth-steps.webp",
     "title": "교회학교 교사 AI 교육",
     "subtitle": "AI 첫걸음 → 우리 부서 홈페이지 만들기",
     "audience": "교회학교 교사 · 부서 사역자",

@@ -39,6 +39,10 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                     </div>
                 </div>
 
+                {course.image && (
+                    <img src={course.image} alt={`${course.title} 대표 그림`} className="scene-img course-banner" />
+                )}
+
                 <Link href={`/course/${course.slug}/1`} className="btn btn-primary course-start-btn">
                     1차시부터 시작하기 →
                 </Link>

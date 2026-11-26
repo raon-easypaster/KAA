@@ -184,7 +184,7 @@ header {
 }
 
 .hero-main {
-    background-image: url("/kaamain1.png");
+    background-image: url("/images/scenes/hero-ai-together.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -2431,4 +2431,27 @@ footer {
     .logo-mark { width: 34px; height: 34px; }
     .logo-name { font-size: 1.15rem; }
     .logo-sub { font-size: 0.55rem; }
+}
+
+/* ===== 그림 배치 ===== */
+.hero-main { background-position: center 70%; }
+.hero-main::before {
+    background:
+        radial-gradient(ellipse 60% 70% at 50% 45%, rgba(12, 43, 68, 0.55) 0%, rgba(12, 43, 68, 0) 100%),
+        linear-gradient(180deg, rgba(12, 43, 68, 0.82) 0%, rgba(21, 76, 121, 0.68) 60%, rgba(12, 43, 68, 0.8) 100%);
+}
+.hero-main.hero-compact { padding: 72px 0 80px; }
+.hero-main .hero-title, .hero-main .hero-subtitle, .hero-main .hero-eyebrow { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45); }
+.scene-img { display: block; width: 100%; height: auto; border-radius: 18px; box-shadow: 0 10px 28px rgba(12, 43, 68, 0.12); }
+.roadmap-header-split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: center; text-align: left; }
+.roadmap-header-split .scene-img { max-height: 300px; object-fit: cover; }
+.about-bridge { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 40px; }
+.about-bridge .quote-highlight { margin-top: 0; }
+.contact-banner { max-height: 320px; object-fit: cover; object-position: center 35%; margin: 0 0 28px; }
+.course-banner { max-height: 300px; object-fit: cover; margin: 0 0 24px; }
+@media (max-width: 720px) {
+    .roadmap-header-split, .about-bridge { grid-template-columns: 1fr; gap: 18px; }
+    .roadmap-header-split { text-align: center; }
+    .contact-banner, .course-banner { max-height: 200px; }
+    .hero-main.hero-compact { padding: 48px 0 56px; }
 }

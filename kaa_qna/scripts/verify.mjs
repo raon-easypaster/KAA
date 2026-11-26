@@ -185,6 +185,25 @@ try {
             `상태 ${logo.status}`);
         check('로고: 브라우저 탭 아이콘(icon.svg)이 연결되어 있다', /<link rel="icon" href="\/icon\.svg/.test(home.text));
 
+        // ----- 그림 배치 -----
+        const SCENES = ['growth-steps', 'bridge', 'workshop'];
+        const missScene = SCENES.filter(n => !home.text.includes(`src="/images/scenes/${n}.webp"`));
+        check('그림: 홈의 로드맵·연구소 소개·강의 문의에 그림이 있다', missScene.length === 0, `빠진 그림: ${missScene.join(', ')}`);
+        const cssLinks = [...home.text.matchAll(/href="(\/_next\/static\/[^"]+\.css)"/g)].map(m => m[1]);
+        let css = '';
+        for (const c of cssLinks) css += await (await fetch(base + c)).text();
+        check('그림: 첫 화면 배경이 새 그림(hero-ai-together)이다', css.includes('/images/scenes/hero-ai-together.webp'));
+        const allScenes = ['hero-ai-together', 'growth-steps', 'bridge', 'workshop', 'welfare-team'];
+        const badScene = [];
+        for (const n of allScenes) { const r = await fetch(`${base}/images/scenes/${n}.webp`); if (r.status !== 200) badScene.push(`${n} (${r.status})`); }
+        check('그림: 그림 파일 5개가 모두 열린다', badScene.length === 0, badScene.join(', '));
+        const imgErr = [];
+        for (const c of courses.filter(c => c.image)) {
+            const cp = await get(`/course/${c.slug}`);
+            if (!cp.text.includes(`src="${c.image}"`)) imgErr.push(c.slug);
+        }
+        check('그림: 강의 페이지에 강의 대표 그림이 보인다', imgErr.length === 0, imgErr.join(', '));
+
         // ----- 교회 사역 프로그램 -----
         check('홈: 교회 사역 프로그램 바로가기가 있다', home.text.includes('href="/programs"'));
         const pg = await get('/programs');

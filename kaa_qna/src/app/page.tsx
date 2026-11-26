@@ -641,12 +641,15 @@ export default function HomePage() {
             {/* ================= 4. 9단계 학습 로드맵 ================= */}
             <section className="roadmap-section" id="roadmap">
                 <div className="container fade-up">
-                    <div className="roadmap-header">
-                        <span className="start-eyebrow">Curriculum Roadmap</span>
-                        <h2 className="section-title">AI 단계별 학습 로드맵</h2>
-                        <p className="start-subtitle">
-                            기초 이해부터 실무 도구 제작, 세컨드 브레인 구축까지 단계별 추천 학습 흐름입니다.
-                        </p>
+                    <div className="roadmap-header roadmap-header-split">
+                        <div>
+                            <span className="start-eyebrow">Curriculum Roadmap</span>
+                            <h2 className="section-title">AI 단계별 학습 로드맵</h2>
+                            <p className="start-subtitle">
+                                기초 이해부터 실무 도구 제작, 세컨드 브레인 구축까지 단계별 추천 학습 흐름입니다.
+                            </p>
+                        </div>
+                        <img src="/images/scenes/growth-steps.webp" alt="함께 손잡고 한 계단씩 올라가는 사람들 그림" className="scene-img" loading="lazy" />
                     </div>
 
                     <div className="roadmap-grid">
@@ -916,8 +919,11 @@ export default function HomePage() {
                             복잡한 기술의 진입 장벽을 낮추고, 누구나 쉽게 생성형 AI를 업무와 일상에 접목할 수 있도록 교육 및 아카이빙 프로젝트를 전개하고 있습니다.
                         </p>
                     </div>
-                    <div className="quote-highlight">
-                        "AI는 기술을 넘어, 사람과 세상을 더 이롭게 연결하는 다리입니다."
+                    <div className="about-bridge">
+                        <img src="/images/scenes/bridge.webp" alt="사회복지사와 목회자, 휠체어를 탄 이웃이 함께 다리를 건너는 그림" className="scene-img" loading="lazy" />
+                        <div className="quote-highlight">
+                            "AI는 기술을 넘어, 사람과 세상을 더 이롭게 연결하는 다리입니다."
+                        </div>
                     </div>
 
                     <div className="founders-grid">
@@ -1024,6 +1030,7 @@ export default function HomePage() {
                     <p className="section-intro">
                         교회·선교단체·사회복지기관 맞춤형 AI 특강 및 실무 워크숍을 진행합니다.
                     </p>
+                    <img src="/images/scenes/workshop.webp" alt="노트북을 펴고 함께 AI 실습을 하는 워크숍 모습" className="scene-img contact-banner" loading="lazy" />
 
                     <div className="contact-layout">
                         <div className="contact-panel">
