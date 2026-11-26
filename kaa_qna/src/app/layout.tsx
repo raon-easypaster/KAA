@@ -75,8 +75,7 @@ export default function RootLayout({
               <a href="/#roadmap">학습 로드맵</a>
               <a href="/#contact">강의 문의</a>
               <a href="/privacy">개인정보 처리방침</a>
-              {/* TODO: 실제 정보 입력 - 공식 SNS 링크 (유튜브/카카오톡 등) */}
-              <span className="footer-todo">[TODO: 공식 SNS 링크]</span>
+              {/* 나중에 추가: 공식 SNS 링크 (유튜브/카카오톡 등) */}
             </div>
             <VisitorCounter />
             <p className="footer-copy">© 2026 Korea AI Research Institute. All rights reserved.</p>

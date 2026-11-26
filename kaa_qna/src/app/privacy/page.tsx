@@ -45,9 +45,8 @@ export default function PrivacyPage() {
                         <p style={{ color: 'var(--gray-700)', lineHeight: 1.7, fontSize: '0.95rem' }}>
                             - 기관명: 한국AI연구소<br />
                             - 주소: 경기 부천시 소사구 소사본동 소삼로36번길 6 지에브리 3층<br />
-                            - 전화: 010-5606-0845<br />
-                            {/* TODO: 실제 정보 입력 - 공식 이메일 주소 */}
-                            - 이메일: <span className="todo-placeholder">[TODO: 공식 이메일 입력 예정]</span>
+                            - 전화: 010-5606-0845
+                            {/* 나중에 추가: 공식 이메일 주소 (<br />- 이메일: ...) */}
                         </p>
                     </div>
                 </div>

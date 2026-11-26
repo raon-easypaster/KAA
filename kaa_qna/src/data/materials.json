@@ -1,5 +1,71 @@
 [
   {
+    "id": "childcare-center-ai",
+    "title": "AI, 두려움을 넘어 돌봄 현장으로",
+    "description": "지역아동센터·다함께돌봄센터 종사자를 위한 83장 실전 AI 강의: 관찰·상담일지, 달란트 기록, 소식지, 신청서, 하원 알리미, 홈페이지 제작까지",
+    "audience": "welfare",
+    "level": "입문",
+    "format": "slide",
+    "duration": "약 60분",
+    "durationMinutes": 60,
+    "updated": "2026-11",
+    "links": {
+      "slide": "/data/childcare_center_ai.html",
+      "download": "/data/AI_두려움을_넘어_지역아동센터_다함께돌봄센터.zip"
+    },
+    "tags": ["돌봄", "지역아동센터", "다함께돌봄센터", "사회복지", "관찰일지", "상담일지", "소식지"],
+    "featured": true,
+    "isNew": true,
+    "category": "돌봄 현장 AI 실무",
+    "badgeClass": "edu",
+    "fileType": "💻 83장 반응형 슬라이드 · ZIP 다운로드",
+    "actionText": "강의자료 보기 ↗️"
+  },
+  {
+    "id": "childcare-evaluation-ai",
+    "title": "아동센터 평가 대비 AI 실무교육",
+    "description": "관찰일지·상담일지 표준화, 매월 원페이지 소식지 제작, 구글 시트 달란트·특이사항 누적과 기록 자동화를 다루는 3가지 현장 실무교육",
+    "audience": "welfare",
+    "level": "중급",
+    "format": "slide",
+    "duration": "약 45분",
+    "durationMinutes": 45,
+    "updated": "2026-11",
+    "links": {
+      "slide": "/data/childcare_evaluation_ai.html",
+      "download": "/data/AI_아동센터_평가대비_AI실무교육.zip"
+    },
+    "tags": ["돌봄", "지역아동센터", "평가", "사회복지", "구글시트", "달란트", "소식지"],
+    "featured": true,
+    "isNew": true,
+    "category": "아동센터 평가 대비",
+    "badgeClass": "edu",
+    "fileType": "💻 26장 실무 슬라이드 · 완성 프롬프트 ZIP",
+    "actionText": "실무교육 자료 보기 ↗️"
+  },
+  {
+    "id": "childcare-agent-system",
+    "title": "프롬프트를 넘어, 돌봄 현장 통합 AI 시스템으로",
+    "description": "관찰·상담일지 프로그램, 기존 소식지 분석, 달란트 데이터 연결을 하나의 비공개 업무 웹앱과 AI 에이전트 흐름으로 설계하는 32장 강의",
+    "audience": "welfare",
+    "level": "중급",
+    "format": "slide",
+    "duration": "약 50분",
+    "durationMinutes": 50,
+    "updated": "2026-11",
+    "links": {
+      "slide": "/data/childcare_agent_system.html",
+      "download": "/data/AI_돌봄현장_통합에이전트_업무시스템.zip"
+    },
+    "tags": ["돌봄", "지역아동센터", "사회복지", "에이전트", "업무시스템", "웹앱"],
+    "featured": true,
+    "isNew": true,
+    "category": "돌봄 현장 AI 에이전트",
+    "badgeClass": "edu",
+    "fileType": "💻 32장 시스템 설계 강의 · ZIP 다운로드",
+    "actionText": "통합 시스템 강의 보기 ↗️"
+  },
+  {
     "id": "pastor-ai-seminar",
     "title": "AI는 부지런한 손, 목회자는 뜨거운 심장 (목회자 실전 AI 세미나)",
     "description": "설교 연구(미드라시·와키홀) & 2차 콘텐츠 & 라온동행교회(raondonghaeng.org) 실전 사례 25개 슬라이드",

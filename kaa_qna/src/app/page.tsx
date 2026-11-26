@@ -957,12 +957,7 @@ export default function HomePage() {
                             <div className="trust-label">사역·업무 활용 가능성</div>
                             <div className="trust-sub">교육 이후 지속 활용 의향 100% 응답</div>
                         </div>
-                        {/* TODO: 실제 정보 입력 - 누적 교육 횟수 / 전체 수강생 수 */}
-                        <div className="trust-card trust-card-todo">
-                            <div className="trust-metric" style={{ color: '#92400e', fontSize: '1.2rem' }}>[TODO: 실제 수치 입력]</div>
-                            <div className="trust-label">누적 출강 · 수강생 수</div>
-                            <div className="trust-sub">확인된 누적 교육 횟수 및 수강 인원을 입력해 주세요.</div>
-                        </div>
+                        {/* 나중에 추가: 누적 출강 횟수·수강생 수 카드 (실제 수치가 확인되면 넣고, .trust-grid 열 수를 4로) */}
                     </div>
                 </div>
             </section>
@@ -993,20 +988,7 @@ export default function HomePage() {
                                         </a>
                                     </span>
                                 </div>
-                                <div className="info-item">
-                                    <span className="label">이메일</span>
-                                    {/* TODO: 실제 정보 입력 - 공식 이메일 주소 */}
-                                    <span className="value">
-                                        <span className="todo-placeholder">[TODO: 공식 이메일 입력 예정]</span>
-                                    </span>
-                                </div>
-                                <div className="info-item">
-                                    <span className="label">SNS / 채널</span>
-                                    {/* TODO: 실제 정보 입력 - 유튜브 / 카카오톡 채널 등 */}
-                                    <span className="value">
-                                        <span className="todo-placeholder">[TODO: 공식 SNS · 오픈채팅 링크 입력]</span>
-                                    </span>
-                                </div>
+                                {/* 나중에 추가: 공식 이메일, SNS·카카오톡 오픈채팅 링크 (info-item 형식으로) */}
                                 <div className="map-btns" style={{ marginTop: '8px' }}>
                                     <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%B3%B8%EB%8F%99%20%EC%86%8C%EC%82%AC%EB%A1%9C36%EB%B2%88%EA%B8%B8%206"
                                         target="_blank" className="btn" style={{ backgroundColor: '#03C75A', color: '#fff', border: 'none', padding: '10px 18px' }}>네이버 지도</a>
