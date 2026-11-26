@@ -44,6 +44,9 @@ export default function RootLayout({
                 <a href="/course" className="nav-link">
                   강의별 과정
                 </a>
+                <a href="/programs" className="nav-link">
+                  사역 프로그램
+                </a>
                 <a href="/#roadmap" className="nav-link">
                   학습 로드맵
                 </a>
@@ -76,6 +79,7 @@ export default function RootLayout({
             </p>
             <div className="footer-links-row">
               <a href="/#programs">자료실</a>
+              <a href="/programs">사역 프로그램</a>
               <a href="/#roadmap">학습 로드맵</a>
               <a href="/#contact">강의 문의</a>
               <a href="/privacy">개인정보 처리방침</a>

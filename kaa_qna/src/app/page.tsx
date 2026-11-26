@@ -413,6 +413,15 @@ export default function HomePage() {
                             ))}
                         </div>
                     </div>
+
+                    {/* 교회 사역 프로그램 바로가기 */}
+                    <a href="/programs" className="programs-strip">
+                        <span>
+                            <strong>🛠️ 교회 사역 프로그램 내려받기</strong>
+                            <small>예배송출 · 라온 플래너 · 라온 뮤직시트 · AI 콘솔메이트 · 라온 교회 올인원</small>
+                        </span>
+                        <span>프로그램 보기 →</span>
+                    </a>
                 </div>
             </section>
 

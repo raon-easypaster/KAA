@@ -2380,3 +2380,39 @@ footer {
     .lesson-frame { height: 70vh; min-height: 420px; }
     .course-list-card, .course-toc-section { padding: 18px; }
 }
+
+/* ===== 교회 사역 프로그램 (/programs) ===== */
+.programs-container { max-width: 1040px; }
+.program-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 28px; }
+.program-jump a {
+    padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--gray-300);
+    color: var(--primary); font-weight: 700; font-size: 0.9rem; text-decoration: none;
+}
+.program-jump a:hover { border-color: var(--primary); }
+.program-list { display: flex; flex-direction: column; gap: 22px; }
+.program-card {
+    display: grid; grid-template-columns: 280px 1fr; gap: 28px; padding: 24px; border-radius: 18px;
+    background: #fff; border: 1px solid var(--gray-300); scroll-margin-top: 90px;
+}
+.program-card.program-wip { grid-template-columns: 1fr; background: var(--bg-light); border-style: dashed; }
+.program-poster { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-300); align-self: start; }
+.program-poster img { display: block; width: 100%; height: auto; }
+.program-body h2 { font-size: 1.6rem; color: var(--black); margin: 10px 0 6px; }
+.program-tagline { font-size: 1.05rem; color: var(--gray-900); margin-bottom: 6px; }
+.program-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 800; }
+.badge-free { background: #e6f4ea; color: #1e6b37; }
+.badge-paid { background: #fff4e0; color: #9a5b00; }
+.badge-wip { background: var(--gray-300); color: var(--gray-700); }
+.program-features { margin: 14px 0 0 1.1rem; color: var(--gray-700); line-height: 1.8; }
+.program-note { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--gray-900); font-size: 0.92rem; line-height: 1.6; }
+.program-paid .program-note { background: #fff8ec; }
+.program-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.programs-strip { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 16px 20px; border-radius: 16px; background: #fff; border: 1px solid var(--gray-300); text-decoration: none; color: var(--black); }
+.programs-strip:hover { border-color: var(--primary); }
+.programs-strip small { display: block; color: var(--gray-700); font-size: 0.85rem; margin-top: 2px; }
+.programs-strip span:last-child { color: var(--primary); font-weight: 700; font-size: 0.9rem; }
+
+@media (max-width: 720px) {
+    .program-card { grid-template-columns: 1fr; padding: 18px; gap: 16px; }
+    .program-poster { max-width: 320px; }
+}
