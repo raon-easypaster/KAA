@@ -23,7 +23,7 @@ export default function ProgramsPage() {
 
                 <div className="program-list">
                     {PROGRAMS.map((p) => (
-                        <article key={p.id} id={p.id} className={`program-card program-${p.status}`}>
+                        <article key={p.id} id={p.id} className={`program-card program-${p.status}${p.poster ? '' : ' program-noposter'}`}>
                             {p.poster && (
                                 <a href={p.poster} target="_blank" rel="noopener" className="program-poster">
                                     <img src={p.poster} alt={`${p.name} 소개 이미지`} loading="lazy" />

@@ -271,12 +271,15 @@ try {
         check('프로그램: 소개 페이지가 열린다 (200)', pg.status === 200, `상태 ${pg.status}`);
         const PROGRAM_LINKS = [
             ['예배송출 다운로드', 'https://raon-easypaster.github.io/worship-caster/'],
-            ['라온 플래너 다운로드', 'https://raon-easypaster.github.io/raon-planner/'],
+            ['라온 플래너 다운로드', 'https://raondh.github.io/raon-planner/'],
+            ['라온 스트림덱 다운로드', 'https://raondh.github.io/easydeck/'],
             ['라온 뮤직시트 앱', 'https://raon-music-sheet.vercel.app'],
             ['라온 뮤직시트 사용설명서', 'https://raon-easypaster.github.io/raon-music-sheet-guide/'],
+            ['나만의 라이브위키 내려받기', 'https://github.com/smdjoo-stack/livewiki-me/releases'],
+            ['나만의 라이브위키 안내', 'https://github.com/smdjoo-stack/livewiki-me#readme'],
         ];
         const missLinks = PROGRAM_LINKS.filter(([, u]) => !pg.text.includes(`href="${u}"`)).map(([n]) => n);
-        check('프로그램: 예배송출·라온 플래너·라온 뮤직시트 링크가 모두 있다', missLinks.length === 0, `빠진 링크: ${missLinks.join(', ')}`);
+        check('프로그램: 예배송출·라온 스트림덱·라온 플래너·라온 뮤직시트·라이브위키 링크가 모두 있다', missLinks.length === 0, `빠진 링크: ${missLinks.join(', ')}`);
         check('프로그램: AI 콘솔메이트는 유료 세팅·교육 안내와 문의 연결이 있다',
             pg.text.includes('AI 콘솔메이트') && pg.text.includes('유료') && pg.text.includes('href="/#contact"'));
         check('프로그램: 라온 교회 올인원은 작업 중으로 안내한다',

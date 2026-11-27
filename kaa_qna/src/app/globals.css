@@ -2555,3 +2555,5 @@ footer {
 @media (max-width: 860px) {
     .start-paths-grid, .testimonials-grid, .intro-courses { grid-template-columns: 1fr; }
 }
+
+.program-card.program-noposter { grid-template-columns: 1fr; }

@@ -46,6 +46,27 @@ export const PROGRAMS: Program[] = [
         ],
     },
     {
+        id: 'easydeck',
+        name: '라온 스트림덱 (EasyDeck)',
+        tagline: '장비 없이, 화면 위 버튼판 하나로 방송 끝 — 무료 소프트웨어 스트림덱',
+        status: 'free',
+        statusLabel: '무료 · v1.3.0',
+        maker: '쉬운목사 이광복',
+        platforms: '맥(macOS 13 이상) · 윈도우 10·11',
+        features: [
+            '송출·자막 프로그램 단축키를 버튼 하나로',
+            '교회 이름·설교 제목 같은 글자를 한글 그대로 입력',
+            '방송 프로그램·찬양 폴더·유튜브 스튜디오를 버튼으로 열기',
+            '노브·슬라이더로 음량 조절, 설교·광고 타이머',
+            '끌어다 놓기만 하면 버튼 완성 — 설정 파일 만질 필요 없음',
+            '예배용·편집용 페이지 나누기, 만든 덱 내보내기·가져오기',
+        ],
+        links: [
+            { label: '📥 무료 다운로드 (맥·윈도우)', url: 'https://raondh.github.io/easydeck/', primary: true },
+        ],
+        note: '스트림덱 장비를 따로 사지 않아도 됩니다. 처음 한 번은 경고 창과 권한 질문(맥: 손쉬운 사용)이 나오는데, 다운로드 페이지의 설치 방법을 따라 하시면 됩니다.',
+    },
+    {
         id: 'raon-planner',
         name: '라온 플래너',
         tagline: '흩어진 하루를, 한 권에. 종이 수첩의 느낌 그대로.',
@@ -62,7 +83,7 @@ export const PROGRAMS: Program[] = [
         ],
         poster: '/images/programs/raon-planner.webp',
         links: [
-            { label: '📥 무료 다운로드', url: 'https://raon-easypaster.github.io/raon-planner/', primary: true },
+            { label: '📥 무료 다운로드', url: 'https://raondh.github.io/raon-planner/', primary: true },
         ],
     },
     {
@@ -84,6 +105,27 @@ export const PROGRAMS: Program[] = [
             { label: '📖 사용설명서', url: 'https://raon-easypaster.github.io/raon-music-sheet-guide/' },
         ],
         note: '공용 목록은 곡 정보만 제공하며, 악보는 사용 권한이 있는 자료를 직접 등록합니다.',
+    },
+    {
+        id: 'livewiki-me',
+        name: '나만의 라이브위키',
+        tagline: '유튜브 영상과 뉴스·블로그 글을 Claude로 요약해 크롬 옆 패널에 보여 주는 개인용 도구',
+        status: 'free',
+        statusLabel: '무료 · v0.3.0 테스트판',
+        maker: '한국AI연구소',
+        platforms: '맥 · 윈도우 (크롬·엣지 확장)',
+        features: [
+            '유튜브 영상 아래 ✨ 요약 버튼 — 핵심 요약 3가지 · 기사형 요약 · 타임라인 · 전체 스크립트',
+            '시간을 누르면 그 장면으로 바로 이동',
+            '💬 AI 채팅으로 영상 내용에 대해 질문',
+            '뉴스·블로그(네이버 블로그 포함) 글 요약',
+            '💾 요약을 마크다운(.md) 파일로 저장 — 옵시디언 정리에 바로 활용',
+        ],
+        links: [
+            { label: '📥 최신판 내려받기 (맥·윈도우)', url: 'https://github.com/smdjoo-stack/livewiki-me/releases', primary: true },
+            { label: '📖 설치·사용 안내', url: 'https://github.com/smdjoo-stack/livewiki-me#readme' },
+        ],
+        note: 'Claude Pro/Max 구독(Claude Code 로그인) 또는 Claude API 키가 필요합니다. 요약할 때 자막·글 내용이 사용자의 Claude 계정으로 전송되며, 연구소에는 아무 데이터도 오지 않습니다. 테스트판이라 설치는 내려받은 폴더의 안내서(INSTALL-GUIDE.html)를 따라 하시면 됩니다.',
     },
     {
         id: 'ai-consolemate',

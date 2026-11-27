@@ -13,6 +13,6 @@ export const QR_LINKS: QrLink[] = [
     { title: '목회자·사역자 자료만 보기', desc: '자료실을 목회자용으로 걸러서 엽니다', path: '/?audience=pastor#programs' },
     { title: '사회복지사 자료만 보기', desc: '자료실을 사회복지용으로 걸러서 엽니다', path: '/?audience=welfare#programs' },
     { title: '수업 한 줄 소감', desc: '강의를 마칠 때 띄워 소감을 받습니다', path: '/feedback' },
-    { title: '교회 사역 프로그램', desc: '예배송출 · 라온 플래너 · 라온 뮤직시트', path: '/programs' },
+    { title: '교회 사역 프로그램', desc: '예배송출 · 라온 스트림덱 · 라온 플래너 · 라온 뮤직시트', path: '/programs' },
     { title: '연구소 소개 (섭외용)', desc: '공동대표 · 강의 경력 · 문의를 한 장에', path: '/intro' },
 ];
